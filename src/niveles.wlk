@@ -20,6 +20,7 @@ object nivel{
 		  character = rick,
 		  objetos = [gun],
 		  siguienteNivel = 3 ))
+
 	}
 }
 

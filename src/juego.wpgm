@@ -11,6 +11,7 @@ program RaM {
 	laucher.lauchGame()
 	game.showAttributes(rick) //Debug 	 
 
+
     config.teclas()
 
 	game.start()
