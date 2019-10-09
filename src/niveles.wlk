@@ -7,15 +7,15 @@ object nivel{
 	method init(){
 		disponibles.put( 1, new Nivel(
 		  fondo = new Fondo(image = "assets/ram-fondo3.png"),
-		  character = r,
-		  objetos = [g] ))
+		  character = rick,
+		  objetos = [gun] ))
 		disponibles.put( 3, new Nivel(
 		  fondo = new Fondo(image = "assets/ram-fondo1.png"),
-		  character = r,
+		  character = rick,
 		  objetos = [] ))
 		disponibles.put( 2, new Nivel(
 		  fondo = new Fondo(image = "assets/ram-fondo2.png"),
-		  character = r,
+		  character = rick,
 		  objetos = [] ))
 	}
 }

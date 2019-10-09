@@ -11,7 +11,7 @@ program RaM {
         nivel.init()
         nivel.actual(nivel.disponibles().get(1))
         nivel.actual().show()
-	game.showAttributes(r) //Debug
+	game.showAttributes(rick) //Debug
 
         config.teclas()
 
