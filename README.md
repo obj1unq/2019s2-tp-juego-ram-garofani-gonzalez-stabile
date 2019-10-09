@@ -6,11 +6,12 @@
 
 Integrantes:
 
-- Juana Azurduy
-- Alicia Moreau
-- Joe Balachi
-- Benedict Arnold
-
+- Gabriel Alejandro Garofani
+- Matias Hernan Gonzalez
+- Juan Carlos Francisco Stabile
 #### Descripción e instrucciones
 
 (completar)
+
+
+
