@@ -2,7 +2,7 @@ import personajes.*
 import wollok.game.*
 
 object nivel{ 
-	var property actual
+	var property actual = self.disponibles().get(1)
 	const property disponibles = new Dictionary()
 	method init(){
 		disponibles.put( 1, new Nivel(
