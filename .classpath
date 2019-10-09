@@ -4,5 +4,14 @@
 	<classpathentry kind="src" path="assets"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="lib" path="/home/bolichep/U/PO1/TP-Juego/ram/assets/gun.png"/>
+	<classpathentry kind="lib" path="/home/bolichep/U/PO1/TP-Juego/ram/assets/gun1.png"/>
+	<classpathentry kind="lib" path="/home/bolichep/U/PO1/TP-Juego/ram/assets/portal.gif"/>
+	<classpathentry kind="lib" path="/home/bolichep/U/PO1/TP-Juego/ram/assets/portal.jpg"/>
+	<classpathentry kind="lib" path="/home/bolichep/U/PO1/TP-Juego/ram/assets/ram-fondo1.png"/>
+	<classpathentry kind="lib" path="/home/bolichep/U/PO1/TP-Juego/ram/assets/ram-fondo2.png"/>
+	<classpathentry kind="lib" path="/home/bolichep/U/PO1/TP-Juego/ram/assets/ram-fondo3.png"/>
+	<classpathentry kind="lib" path="/home/bolichep/U/PO1/TP-Juego/ram/assets/r-face-drunk.png"/>
+	<classpathentry kind="lib" path="/home/bolichep/U/PO1/TP-Juego/ram/assets/r-face-smile.png"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
