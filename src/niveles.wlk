@@ -7,16 +7,19 @@ object nivel{
 	method init(){
 		disponibles.put( 1, new Nivel(
 		  fondo = new Fondo(image = "assets/ram-fondo3.png"),
-		  character = r,
-		  objetos = [g] ))
+		  character = rick,
+		  objetos = [gun],
+		  siguienteNivel = 2 ))
 		disponibles.put( 3, new Nivel(
 		  fondo = new Fondo(image = "assets/ram-fondo1.png"),
-		  character = r,
-		  objetos = [] ))
+		  character = rick,
+		  objetos = [gun],
+		  siguienteNivel = 1 ))
 		disponibles.put( 2, new Nivel(
 		  fondo = new Fondo(image = "assets/ram-fondo2.png"),
-		  character = r,
-		  objetos = [] ))
+		  character = rick,
+		  objetos = [gun],
+		  siguienteNivel = 3 ))
 	}
 }
 
@@ -25,6 +28,7 @@ class Nivel{
 	const character 
 	const objetos = []
 	var visibles = []
+	const property siguienteNivel 
 
 	method show(){
 		visibles = [fondo, character] + objetos 

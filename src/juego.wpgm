@@ -4,16 +4,14 @@ import wollok.game.*
 import niveles.*
 
 program RaM {
+	
 	game.title("RaM")
 	game.height(10)
 	game.width(10)
-        // estos tres deben volar en un solo msg
-        nivel.init()
-        nivel.actual(nivel.disponibles().get(1))
-        nivel.actual().show()
-	game.showAttributes(r) //Debug
+	laucher.lauchGame()
+	game.showAttributes(rick) //Debug 	 
 
-        config.teclas()
+    config.teclas()
 
 	game.start()
 }
