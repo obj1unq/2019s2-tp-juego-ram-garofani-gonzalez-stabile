@@ -3,7 +3,7 @@ import niveles.*
 
 const rick = new Rick()
 
-object universo{
+object multiverso{
   var property enVista = null
   method add(visual) { game.addVisual(visual) } 
   method remove(visual) { game.removeVisual(visual) } 
@@ -18,7 +18,7 @@ class Rick{
 	var property image = "assets/r-face-smile.png"
 	const property isPortal = false
         var nroUniverso = 1 // C-137
-	var position = universo.at(5, 5, nroUniverso)
+	var position = multiverso.at(5, 5, nroUniverso)
 	var grabed = nada
 
 	method position() = position
@@ -30,7 +30,7 @@ class Rick{
             
 	method position(_position, _universo) { 
                 nroUniverso = _universo
-		self.position(universo.at(_position, nroUniverso))
+		self.position(multiverso.at(_position, nroUniverso))
 	}
 
 	method travel() { game.colliders(self).find{
@@ -57,7 +57,7 @@ object gun{
 	var property image = "assets/gun.png"
 	const property isPortal = false
         var nroUniverso = 1 // C-137
-	var property position = universo.at(5, 5, nroUniverso)
+	var property position = multiverso.at(5, 5, nroUniverso)
 
 	method trigger(nroUniversoDestino){
 		portal.createTo(position, nroUniverso, nroUniversoDestino)
@@ -70,8 +70,8 @@ object portal{
 		const portal = new Portal(position = position, nroUniverso = nroUniversoOrigen , tween = 
 			new Portal(position = positionRandom.apply(), nroUniverso = nroUniversoDestino, tween = portal)
 			)
-		universo.add(portal)
-		universo.add(portal.tween())
+		multiverso.add(portal)
+		multiverso.add(portal.tween())
 	}
 }
 
@@ -86,8 +86,8 @@ class Portal{
 		visual.position(tween.position(), tween.nroUniverso())
 	}
 	method disapear(){
-		universo.remove(tween)
-		universo.remove(self)
+		multiverso.remove(tween)
+		multiverso.remove(self)
 	}
 
 }
@@ -95,5 +95,5 @@ class Portal{
 class Fondo{
 	const image = null
 	const _universo = null
-	const position = universo.at(0, 0, _universo)
+	const position = multiverso.at(0, 0, _universo)
 }

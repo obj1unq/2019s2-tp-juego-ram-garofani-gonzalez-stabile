@@ -8,10 +8,10 @@ program RaM {
 	game.title("RaM")
 	game.height(10)
 	game.width(10)
-	universo.enVista(1)
-	universo.add(rick)
-	universo.add(gun)
-	gun.position(universo.at(1,1,1))
+	multiverso.enVista(1)
+	multiverso.add(rick)
+	multiverso.add(gun)
+	gun.position(multiverso.at(1,1,1))
 
 	game.showAttributes(rick) //Debug 	 
 

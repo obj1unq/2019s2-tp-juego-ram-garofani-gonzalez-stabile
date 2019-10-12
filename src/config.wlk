@@ -8,7 +8,7 @@ object config{
                 var buffer = null
 		(0..9).forEach{ n => keyboard.num(n).onPressDo({ buffer = n }) }
                 keyboard.alt().onPressDo({ console.println("buffer =" + buffer )
-                                            universo.enVista(buffer) buffer = 0})
+                                            multiverso.enVista(buffer) buffer = 0})
 		// teclas de rick
 		keyboard.up().onPressDo({ rick.position(rick.position().up(1)) })
 		keyboard.right().onPressDo({ rick.position(rick.position().right(1)) })
