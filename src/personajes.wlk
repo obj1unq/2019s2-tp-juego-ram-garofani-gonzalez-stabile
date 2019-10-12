@@ -1,23 +1,43 @@
 import wollok.game.*
 import niveles.*
 
-object rick{
-	var property image = "assets/r-face-smile.png"
-	var position = game.at(1,1)
-	var grabed = nada 
+const rick = new Rick()
 
-	method position() = return position
+object universo{
+  var property enVista = null
+  method add(visual) { game.addVisual(visual) } 
+  method remove(visual) { game.removeVisual(visual) } 
+  method at(x, y, z) = game.at(x + self.deltaX(z), y + self.deltaY(z)) 
+  method at(position, z) = self.at(position.x(), position.y(), z  ) 
+  method delta(universoLocal) = universoLocal - self.enVista()
+  method deltaX(universoLocal) =   self.delta(universoLocal) * game.width()
+  method deltaY(universoLocal) =   self.delta(universoLocal) * game.height()
+}
+
+class Rick{
+	var property image = "assets/r-face-smile.png"
+	const property isPortal = false
+        var nroUniverso = 1 // C-137
+	var position = universo.at(5, 5, nroUniverso)
+	var grabed = nada
+
+	method position() = position
 
 	method position(_position) { 
 		position = _position
 		grabed.position(position)
+        }
+            
+	method position(_position, _universo) { 
+                nroUniverso = _universo
+		self.position(universo.at(_position, nroUniverso))
 	}
 
 	method travel() { game.colliders(self).find{
-		visible=> visible.isPortal() }.travel()
+		visible=> visible.isPortal() }.travel(self)
 	}
 
-	method trigger() { grabed.trigger() }
+	method trigger(nroUniversoDestino) { grabed.trigger(nroUniversoDestino) }
 
 	method grab() { 
 		grabed = game.colliders(self).head()
@@ -35,31 +55,45 @@ object nada{
 
 object gun{
 	var property image = "assets/gun.png"
-	var property position = game.at(5,5)
 	const property isPortal = false
+        var nroUniverso = 1 // C-137
+	var property position = universo.at(5, 5, nroUniverso)
 
-	method trigger(){
-		game.addVisual(new Portal(position = self.position()))
+	method trigger(nroUniversoDestino){
+		portal.createTo(position, nroUniverso, nroUniversoDestino)
+	}
+}
+
+object portal{
+	const positionRandom = { game.at( 0.randomUpTo(game.width()), 0.randomUpTo(game.height()) ) }
+	method createTo(position, nroUniversoOrigen, nroUniversoDestino){
+		const portal = new Portal(position = position, nroUniverso = nroUniversoOrigen , tween = 
+			new Portal(position = positionRandom.apply(), nroUniverso = nroUniversoDestino, tween = portal)
+			)
+		universo.add(portal)
+		universo.add(portal.tween())
 	}
 }
 
 class Portal{
-	var property position
+        const property nroUniverso = null
+	const property position
 	const property image = "assets/portal.gif"
 	const property isPortal = true
-	
-	method travel() { 
-		nivel.actual().hide()
-		nivel.actual(nivel.disponibles().get(self.getNextLevel()))
-		nivel.actual().show()
+	const property tween = null
+
+	method travel(visual) {
+		visual.position(tween.position(), tween.nroUniverso())
 	}
-	
-	method getNextLevel(){
-		return (nivel.actual()).siguienteNivel()
+	method disapear(){
+		universo.remove(tween)
+		universo.remove(self)
 	}
 
 }
 
-class Fondo{ var property image = "assets/ram-fondo3.png"
-		var property position = game.origin()
+class Fondo{
+	const image = null
+	const _universo = null
+	const position = universo.at(0, 0, _universo)
 }

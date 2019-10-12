@@ -1,28 +1,23 @@
 import personajes.*
 import wollok.game.*
 
-object nivel{ 
-	var property actual //= disponibles.get(1)
-	const property disponibles = new Dictionary()
-	method init(){
-		disponibles.put( 1, new Nivel(
-		  fondo = new Fondo(image = "assets/ram-fondo3.png"),
-		  character = rick,
-		  objetos = [gun],
-		  siguienteNivel = 2 ))
-		disponibles.put( 3, new Nivel(
-		  fondo = new Fondo(image = "assets/ram-fondo1.png"),
-		  character = rick,
-		  objetos = [gun],
-		  siguienteNivel = 1 ))
-		disponibles.put( 2, new Nivel(
-		  fondo = new Fondo(image = "assets/ram-fondo2.png"),
-		  character = rick,
-		  objetos = [gun],
-		  siguienteNivel = 3 ))
-
-	}
-}
+const niveles = [
+	 new Nivel(
+	  fondo = new Fondo(image = "assets/ram-fondo3.png", _universo = 1),
+	  character = rick,
+	  objetos = [gun],
+	  siguienteNivel = 2 )
+	, new Nivel(
+	  fondo = new Fondo(image = "assets/ram-fondo1.png", _universo = 2),
+	  character = rick,
+	  objetos = [gun],
+	  siguienteNivel = 1 )
+	, new Nivel(
+	  fondo = new Fondo(image = "assets/ram-fondo2.png", _universo = 3),
+	  character = rick,
+	  objetos = [gun],
+	  siguienteNivel = 3 )
+	  ]
 
 class Nivel{
 	const fondo 

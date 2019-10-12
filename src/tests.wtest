@@ -1,6 +1,52 @@
+import wollok.game.*
+import niveles.*
+import personajes.*
 
+describe "RaM tests (muy describe)"{
+
+test "rick esta en el universo visible"{
+	universo.enVista(1)
+	rick.position(game.at(3,7), universo.enVista())
+	assert.equals(game.at(3,7), rick.position())
+}
+test "rick esta en un universo paralelo"{
+	game.width(10)
+	game.height(10)
+	universo.enVista(2)
+	rick.position(game.at(7,2), 1)
+	assert.equals( game.at(-3, -8) , rick.position())
+}
+test "rick esta en un universo paralelo a la derecha ;P"{
+	game.width(25)
+	game.height(25)
+	universo.enVista(0)
+	rick.position(game.at(7,2), 1)
+	assert.equals(game.at(32, 27), rick.position())
+}
+test "Se crea un portal y hay dos portales en el multiverso"{
+	universo.enVista(1)
+	gun.trigger(3)
+	assert.equals(2, game.allVisuals().size())
+}
+test "Se crea un portal y rick pasa por el apareciondo en el otro universo"{
+	const nroUniversoOrigen = 1
+	const nroUniversoDestino = 17
+	const position = game.at(3, 7)
+	game.clear()
+	universo.enVista(nroUniversoOrigen)
+	universo.add(rick)
+	universo.add(gun)
+	gun.position(universo.at(position, nroUniversoOrigen))
+	rick.position(universo.at(position, nroUniversoOrigen))
+	rick.grab()
+	rick.trigger(nroUniversoDestino)
+	assert.equals(universo.at(position, nroUniversoOrigen),  rick.position())
+	assert.equals(2, game.allVisuals().filter{obj => obj.isPortal()}.size() )
+	rick.travel()
+	assert.notEquals(universo.at(position, nroUniversoDestino), rick.position())
+}
 test "¡sep, vale hacer tests también!" {
 
-	assert.that(false)
-
+	assert.that(true)
+}
 }
