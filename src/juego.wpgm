@@ -10,8 +10,8 @@ program RaM {
 	game.width(10)
 	multiverso.enVista(1)
 	multiverso.add(rick)
+	gun.position(game.at(1,9), multiverso.enVista())
 	multiverso.add(gun)
-	gun.position(multiverso.at(1,1,1))
 
 	game.showAttributes(rick) //Debug 	 
 

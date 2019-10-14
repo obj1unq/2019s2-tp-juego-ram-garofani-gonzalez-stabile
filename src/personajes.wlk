@@ -10,7 +10,7 @@ class ObjetoDelMultiverso {
 	method position(_position) { position = _position }
 	method position(_position, universo) { 
                 nroUniverso = universo
-		self.position(multiverso.at(_position, nroUniverso))
+		self.position(multiverso.at(_position, universo))
 	}
 }
 
