@@ -1,14 +1,20 @@
 import wollok.game.*
 import niveles.*
-
+import Directions.*
 object rick{
-	var property image = "assets/r-face-smile.png"
+	//var property image = "assets/r-face-smile.png"
 	var position = game.at(1,1)
 	var grabed = nada 
-
+	var direction = DirectionDown
+	
+	method image(){
+		return direction.imageRick()
+	}
+	
 	method position() = return position
 
-	method position(_position) { 
+	method position(_position,rickDirection) { 
+		direction = rickDirection
 		position = _position
 		grabed.position(position)
 	}
@@ -63,3 +69,4 @@ class Portal{
 class Fondo{ var property image = "assets/ram-fondo3.png"
 		var property position = game.origin()
 }
+
