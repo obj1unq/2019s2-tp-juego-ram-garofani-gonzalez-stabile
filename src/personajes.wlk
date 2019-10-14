@@ -1,7 +1,18 @@
 import wollok.game.*
 import niveles.*
 
-const rick = new Rick()
+const rick = new Rick(position = game.at(3,7), nroUniverso = 1)
+
+class ObjetoDelMultiverso {
+	var position
+	var nroUniverso
+        method position() = multiverso.at(position, nroUniverso)
+	method position(_position) { position = _position }
+	method position(_position, universo) { 
+                nroUniverso = universo
+		self.position(multiverso.at(_position, nroUniverso))
+	}
+}
 
 object multiverso{
   var property enVista = null
@@ -9,29 +20,26 @@ object multiverso{
   method remove(visual) { game.removeVisual(visual) } 
   method at(x, y, z) = game.at(x + self.deltaX(z), y + self.deltaY(z)) 
   method at(position, z) = self.at(position.x(), position.y(), z  ) 
-  method delta(universoLocal) = universoLocal - self.enVista()
-  method deltaX(universoLocal) =   self.delta(universoLocal) * game.width()
-  method deltaY(universoLocal) =   self.delta(universoLocal) * game.height()
+  method delta(universoLocal)  = universoLocal - self.enVista()
+  method deltaX(universoLocal) = self.delta(universoLocal) * game.width()
+  method deltaY(universoLocal) = self.delta(universoLocal) * game.height()
 }
 
-class Rick{
+class Rick inherits ObjetoDelMultiverso{
 	var property image = "assets/r-face-smile.png"
 	const property isPortal = false
-        var nroUniverso = 1 // C-137
-	var position = multiverso.at(5, 5, nroUniverso)
 	var grabed = nada
 
-	method position() = position
-
-	method position(_position) { 
-		position = _position
+	override method position(_position) { 
+		super(_position)
 		grabed.position(position)
         }
             
+	/*
 	method position(_position, _universo) { 
                 nroUniverso = _universo
 		self.position(multiverso.at(_position, nroUniverso))
-	}
+	} */
 
 	method travel() { game.colliders(self).find{
 		visible=> visible.isPortal() }.travel(self)
@@ -53,11 +61,9 @@ object nada{
 	method trigger(){}
 }
 
-object gun{
+object gun inherits ObjetoDelMultiverso{
 	var property image = "assets/gun.png"
 	const property isPortal = false
-        var nroUniverso = 1 // C-137
-	var property position = multiverso.at(5, 5, nroUniverso)
 
 	method trigger(nroUniversoDestino){
 		portal.createTo(position, nroUniverso, nroUniversoDestino)
@@ -77,10 +83,12 @@ object portal{
 
 class Portal{
         const property nroUniverso = null
-	const property position
+	const position
 	const property image = "assets/portal.gif"
 	const property isPortal = true
 	const property tween = null
+
+        method position() = multiverso.at(position, nroUniverso)
 
 	method travel(visual) {
 		visual.position(tween.position(), tween.nroUniverso())
