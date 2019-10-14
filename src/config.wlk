@@ -5,10 +5,10 @@ import niveles.*
 
 object config{
 	method teclas(){
-                var buffer = null
-		(0..9).forEach{ n => keyboard.num(n).onPressDo({ buffer = n }) }
-                keyboard.alt().onPressDo({ console.println("buffer =" + buffer )
-                                            multiverso.enVista(buffer) buffer = 0})
+                var numero = 0
+		(0..9).forEach{ n => keyboard.num(n).onPressDo({ numero = n console.println("numero = " + numero )}) }
+                keyboard.alt().onPressDo({ 
+                                            multiverso.enVista(numero) numero = 0 })
 		// teclas de rick
 		keyboard.up().onPressDo({ rick.position(rick.position().up(1)) })
 		keyboard.right().onPressDo({ rick.position(rick.position().right(1)) })
@@ -17,7 +17,7 @@ object config{
 		//
 		keyboard.z().onPressDo({ rick.grab() })
 		keyboard.x().onPressDo({ rick.ungrab() })
-		keyboard.space().onPressDo({ rick.trigger(buffer) buffer = 0 })
+		keyboard.space().onPressDo({ rick.trigger(numero) numero = 0 })
 		keyboard.p().onPressDo({ rick.travel() })
 	}
 }
