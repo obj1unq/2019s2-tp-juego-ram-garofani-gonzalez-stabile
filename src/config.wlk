@@ -6,10 +6,10 @@ import Directions.*
 object config{
 	method teclas(){
 		// teclas de rick
-		keyboard.up().onPressDo({ rick.position(rick.position().up(1),DirectionUp) })
-		keyboard.right().onPressDo({ rick.position(rick.position().right(1),DirectionRight) })
-		keyboard.down().onPressDo({ rick.position(rick.position().down(1),DirectionDown) })
-		keyboard.left().onPressDo({ rick.position(rick.position().left(1),DirectionLeft) })
+		keyboard.up().onPressDo({ rick.position(rick.position().up(1),directionUp) })
+		keyboard.right().onPressDo({ rick.position(rick.position().right(1),directionRight) })
+		keyboard.down().onPressDo({ rick.position(rick.position().down(1),directionDown) })
+		keyboard.left().onPressDo({ rick.position(rick.position().left(1),directionLeft) })
 		//
 		keyboard.z().onPressDo({ rick.grab() })
 		keyboard.x().onPressDo({ rick.ungrab() })

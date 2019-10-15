@@ -5,7 +5,7 @@ object rick{
 	//var property image = "assets/r-face-smile.png"
 	var position = game.at(1,1)
 	var grabed = nada 
-	var direction = DirectionDown
+	var direction = directionDown
 	
 	method image(){
 		return direction.imageRick()

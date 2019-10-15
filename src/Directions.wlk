@@ -1,15 +1,15 @@
-object DirectionDown{
+object directionDown{
 	method imageRick() = "assets/RickFront.png"
 }
 
-object DirectionUp{
+object directionUp{
 	method imageRick() = "assets/RickBack.png"
 }
 
-object DirectionLeft{
+object directionLeft{
 	method imageRick() = "assets/RickLeft.png"
 }
 
-object DirectionRight{
+object directionRight{
 	method imageRick() = "assets/RickRight.png"
 }
