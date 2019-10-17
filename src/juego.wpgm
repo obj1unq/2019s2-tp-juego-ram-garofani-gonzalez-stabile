@@ -13,6 +13,6 @@ program RaM {
 
 
     config.teclas()
-
+	config.ticks()
 	game.start()
 }

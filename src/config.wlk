@@ -16,6 +16,16 @@ object config{
 		keyboard.space().onPressDo({ rick.trigger() })
 		keyboard.p().onPressDo({ rick.travel() })
 	}
+	
+	method ticks(){
+		game.onTick(500, "", { self.MoverObjetos() })		
+	}
+	
+	method MoverObjetos(){
+		(nivel.actual()).objetos().forEach { 
+			objeto => objeto.mover()
+		}
+	}
 }
 
 object laucher{

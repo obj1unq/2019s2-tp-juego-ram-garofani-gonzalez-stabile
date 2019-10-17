@@ -1,6 +1,7 @@
 import wollok.game.*
 import niveles.*
 import Directions.*
+import Movimientos.*
 object rick{
 	//var property image = "assets/r-face-smile.png"
 	var position = game.at(1,1)
@@ -47,6 +48,8 @@ object gun{
 	method trigger(){
 		game.addVisual(new Portal(position = self.position()))
 	}
+	
+	method mover(){}
 }
 
 class Portal{
@@ -68,5 +71,21 @@ class Portal{
 
 class Fondo{ var property image = "assets/ram-fondo3.png"
 		var property position = game.origin()
+}
+
+class Enemigo{
+	var property numeroEnemigo
+	//var property image = ""
+	var property position = game.origin()
+	var property direction = directionDown
+	var property tipoMovimiento
+	
+	method mover(){
+		tipoMovimiento.mover(self)
+	}
+	
+	method image(){
+		return direction.imageEnemy(numeroEnemigo)
+	}
 }
 
