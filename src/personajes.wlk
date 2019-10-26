@@ -9,17 +9,19 @@ object omniverse{
 }
 
 object rick{
-	//var property image = "assets/r-face-smile.png"
 	var position = game.at(1,1)
         var multiverse = 0
 	var grabed = nada 
 	var direction = directionDown
 	
-	method image() = return direction.imageRick()
+	method image() =  direction.imageRick()
 	
-        method multiverse(value) { multiverse = value }
+        method multiverse(value) { 
+            multiverse = value 
+            grabed.multiverse(multiverse)
+        }
         
-	method position() = return omniverse.position(position, multiverse)
+	method position() = omniverse.position(position, multiverse)
 
 	method position(_position) { 
 		position = _position
@@ -64,7 +66,7 @@ object gun{
 
         method multiverse(value) { multiverse = value }
         
-	method position() = return omniverse.position(position, multiverse)
+	method position() = omniverse.position(position, multiverse)
 
 	method trigger(){
             const portal = new Portal(position = position, multiverse = multiverse, exit = 
@@ -89,9 +91,9 @@ class Portal{
 
 	
 	method travel(traveler) { 
+            omniverse.current(exit.multiverse())
             traveler.multiverse(exit.multiverse())
             traveler.position(exit.position())
-            omniverse.current(exit.multiverse())
 		//nivel.actual().hide()
 		//nivel.actual(nivel.disponibles().get(self.getNextLevel()))
 		//nivel.actual().show()

@@ -13,6 +13,9 @@ object config{
 		//
 		keyboard.z().onPressDo({ rick.grab() })
 		keyboard.x().onPressDo({ rick.ungrab() })
+		keyboard.w().onPressDo({ console.println(rick.position()) console.println(gun.position())})
+		keyboard.w().onPressDo({ console.println(rick) console.println(rick.image())})
+		keyboard.e().onPressDo({ game.allVisuals().forEach{v=> console.println(v) }})
 		keyboard.space().onPressDo({ rick.trigger() })
 		keyboard.p().onPressDo({ rick.travel() })
                 keyboard.alt().onPressDo({ omniverse.current((omniverse.current()-1).abs()) })
