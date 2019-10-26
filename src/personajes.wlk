@@ -29,7 +29,7 @@ object rick{
         method direction(_direction) { direction = _direction }
 
 	method travel() { game.colliders(self).find{
-		visible => visible.isPortal() }.travel()
+		visible => visible.isPortal() }.travel(self)
 	}
 
 	method trigger() { grabed.trigger() }
@@ -41,11 +41,14 @@ object rick{
 	method ungrab() { 
 		grabed = nada
 	}
+
+        method mover() {}
 }
 
 object none{
         const property image = ""
         const property position = game.at(0,0)
+        method mover() {}
 }
 
 object nada{
@@ -64,8 +67,9 @@ object gun{
 	method position() = return omniverse.position(position, multiverse)
 
 	method trigger(){
-            const portal = new Portal(position = position , multiverse = multiverse, exit = 
-                        new Portal(position = position, multiverse = multiverse + 1, exit = portal))
+            const portal = new Portal(position = position, multiverse = multiverse, exit = 
+                           new Portal(position = position, multiverse = multiverse + 1, exit = null))
+            portal.exit().exit(portal)
             game.addVisual(portal)
             game.addVisual(portal.exit())
 	}
@@ -75,18 +79,19 @@ object gun{
 
 
 class Portal{
-	var property position 
-        var multiverse 
+	const property position 
+        const property multiverse 
 	const property image = "assets/portal.gif"
 	const property isPortal = true
-        const property exit
-
-        method multiverse(value) { multiverse = value }
+        var property exit
 
 	method position() = return omniverse.position(position, multiverse)
 
 	
-	method travel() { 
+	method travel(traveler) { 
+            traveler.multiverse(exit.multiverse())
+            traveler.position(exit.position())
+            omniverse.current(exit.multiverse())
 		//nivel.actual().hide()
 		//nivel.actual(nivel.disponibles().get(self.getNextLevel()))
 		//nivel.actual().show()
