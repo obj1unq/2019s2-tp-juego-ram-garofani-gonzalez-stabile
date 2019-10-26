@@ -2,26 +2,34 @@ import wollok.game.*
 import niveles.*
 import Directions.*
 import Movimientos.*
+
+object omniverse{
+    var property current = 0
+    method position(pos, multiverse) = game.at(pos.x() + game.width() * (multiverse - current), pos.y() + game.height() * (multiverse - current))
+}
+
 object rick{
 	//var property image = "assets/r-face-smile.png"
 	var position = game.at(1,1)
+        var multiverse = 0
 	var grabed = nada 
 	var direction = directionDown
 	
-	method image(){
-		return direction.imageRick()
-	}
+	method image() = return direction.imageRick()
 	
-	method position() = return position
+        method multiverse(value) { multiverse = value }
+        
+	method position() = return omniverse.position(position, multiverse)
 
-	method position(_position,rickDirection) { 
-		direction = rickDirection
+	method position(_position) { 
 		position = _position
 		grabed.position(position)
 	}
 
+        method direction(_direction) { direction = _direction }
+
 	method travel() { game.colliders(self).find{
-		visible=> visible.isPortal() }.travel()
+		visible => visible.isPortal() }.travel()
 	}
 
 	method trigger() { grabed.trigger() }
@@ -43,19 +51,30 @@ object nada{
 object gun{
 	var property image = "assets/gun.png"
 	var property position = game.at(5,5)
+        var multiverse = 0
 	const property isPortal = false
 
+        method multiverse(value) { multiverse = value }
+        
+	method position() = return omniverse.position(position, multiverse)
+
 	method trigger(){
-		game.addVisual(new Portal(position = self.position()))
+		game.addVisual(new Portal(position = position , multiverse = multiverse))
 	}
 	
 	method mover(){}
 }
 
 class Portal{
-	var property position
+	var property position 
+        var multiverse 
 	const property image = "assets/portal.gif"
 	const property isPortal = true
+
+        method multiverse(value) { multiverse = value }
+
+	method position() = return omniverse.position(position, multiverse)
+
 	
 	method travel() { 
 		nivel.actual().hide()
@@ -70,16 +89,28 @@ class Portal{
 }
 
 class Fondo{ var property image = "assets/ram-fondo3.png"
-		var property position = game.origin()
+	var position = game.origin()
+        var multiverse 
+        method multiverse(value) { multiverse = value }
+	method position() = return omniverse.position(position, multiverse)
 }
 
 class Enemigo{
 	var property numeroEnemigo
 	//var property image = ""
-	var property position = game.origin()
-	var property direction = directionDown
+	var property direction = directionDown  // property to make Movimientos work
 	var property tipoMovimiento
 	
+	var property position = game.origin() // property to make Movimientos work
+
+        var multiverse 
+
+        method multiverse(value) { multiverse = value }
+
+	method position() = return omniverse.position(position, multiverse)
+
+        method direction(_direction) { direction = _direction } 
+
 	method mover(){
 		tipoMovimiento.mover(self)
 	}

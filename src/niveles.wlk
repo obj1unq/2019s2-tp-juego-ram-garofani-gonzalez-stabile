@@ -6,17 +6,17 @@ object nivel{
 	const property disponibles = new Dictionary()
 	method init(){
 		disponibles.put( 1, new Nivel(
-		  fondo = new Fondo(image = "assets/ram-fondo3.png"),
+		  fondo = new Fondo(multiverse = 0, image = "assets/ram-fondo3.png"),
 		  character = rick,
 		  objetos = [gun] + self.getListOfEnemies(),
 		  siguienteNivel = 2 ))
 		disponibles.put( 3, new Nivel(
-		  fondo = new Fondo(image = "assets/ram-fondo1.png"),
+		  fondo = new Fondo(multiverse = 1,image = "assets/ram-fondo1.png"),
 		  character = rick,
 		  objetos = [gun] + self.getListOfEnemies(),
 		  siguienteNivel = 1 ))
 		disponibles.put( 2, new Nivel(
-		  fondo = new Fondo(image = "assets/ram-fondo2.png"),
+		  fondo = new Fondo(multiverse = 2,image = "assets/ram-fondo2.png"),
 		  character = rick,
 		  objetos = [gun] + self.getListOfEnemies(),
 		  siguienteNivel = 3 ))
@@ -33,8 +33,10 @@ object nivel{
 	method numberOfEnemies() = new Range(start = 1, end = 4).anyOne()
 	
 	method createNewEnemy(number){
-		return new Enemigo(	tipoMovimiento = self.getRandomMovementType(),
+                const range14 = new Range(start=1,end=3)
+		return new Enemigo(tipoMovimiento = self.getRandomMovementType(),
 							numeroEnemigo = number,
+                                                        multiverse = range14.anyOne(),
 						 	position = game.at(new Range(start = 1, end = 10).anyOne(),new Range(start = 1, end = 10).anyOne())
 		)
 	}
