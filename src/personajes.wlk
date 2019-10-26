@@ -43,6 +43,11 @@ object rick{
 	}
 }
 
+object none{
+        const property image = ""
+        const property position = game.at(0,0)
+}
+
 object nada{
 	var property position = null
 	method trigger(){}
@@ -59,17 +64,22 @@ object gun{
 	method position() = return omniverse.position(position, multiverse)
 
 	method trigger(){
-		game.addVisual(new Portal(position = position , multiverse = multiverse))
+            const portal = new Portal(position = position , multiverse = multiverse, exit = 
+                        new Portal(position = position, multiverse = multiverse + 1, exit = portal))
+            game.addVisual(portal)
+            game.addVisual(portal.exit())
 	}
 	
 	method mover(){}
 }
+
 
 class Portal{
 	var property position 
         var multiverse 
 	const property image = "assets/portal.gif"
 	const property isPortal = true
+        const property exit
 
         method multiverse(value) { multiverse = value }
 
@@ -77,14 +87,15 @@ class Portal{
 
 	
 	method travel() { 
-		nivel.actual().hide()
-		nivel.actual(nivel.disponibles().get(self.getNextLevel()))
-		nivel.actual().show()
+		//nivel.actual().hide()
+		//nivel.actual(nivel.disponibles().get(self.getNextLevel()))
+		//nivel.actual().show()
 	}
 	
+        /*
 	method getNextLevel(){
 		return (nivel.actual()).siguienteNivel()
-	}
+	} */
 
 }
 

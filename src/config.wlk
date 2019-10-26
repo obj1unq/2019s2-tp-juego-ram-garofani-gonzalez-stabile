@@ -23,12 +23,13 @@ object config{
 	}
 	
 	method MoverObjetos(){
-		(nivel.actual()).objetos().forEach { 
+		(niveles.actual()).objetos().forEach { 
 			objeto => objeto.mover()
 		}
 	}
 }
 
+/*
 object laucher{
 	method lauchGame(){
 		nivel.init()
@@ -36,3 +37,4 @@ object laucher{
         nivel.actual().show()
 	}
 }
+*/
