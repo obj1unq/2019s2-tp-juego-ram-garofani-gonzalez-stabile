@@ -26,6 +26,10 @@ object config{
 			objeto => objeto.mover()
 		}
 	}
+	
+	method configurarColisiones(){
+		game.onCollideDo(rick, { algo => algo.colisionasteCon(rick)})
+	}
 }
 
 object laucher{

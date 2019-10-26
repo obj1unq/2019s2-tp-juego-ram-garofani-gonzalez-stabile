@@ -14,5 +14,6 @@ program RaM {
 
     config.teclas()
 	config.ticks()
+	config.configurarColisiones()
 	game.start()
 }

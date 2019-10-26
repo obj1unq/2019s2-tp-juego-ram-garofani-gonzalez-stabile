@@ -33,6 +33,9 @@ object rick{
 	method ungrab() { 
 		grabed = nada
 	}
+	
+	method colisionasteCon(alguien){
+	}
 }
 
 object nada{
@@ -50,6 +53,10 @@ object gun{
 	}
 	
 	method mover(){}
+	
+	method colisionasteCon(alguien){
+		game.say(alguien,"Al fin, mi pistola de portales")
+	}
 }
 
 class Portal{
@@ -66,6 +73,8 @@ class Portal{
 	method getNextLevel(){
 		return (nivel.actual()).siguienteNivel()
 	}
+	
+	method colisionasteCon(alguien){}
 
 }
 
@@ -86,6 +95,11 @@ class Enemigo{
 	
 	method image(){
 		return direction.imageEnemy(numeroEnemigo)
+	}
+	
+	method colisionasteCon(alguien){
+		game.say(alguien,"Perdi!!!!!")
+		game.schedule(3000,{game.stop()})
 	}
 }
 
