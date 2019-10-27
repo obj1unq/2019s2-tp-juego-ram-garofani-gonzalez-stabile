@@ -73,5 +73,5 @@ object movHorizontal{
 }
 
 object movEle{
-	method mover(objeto){MovHorizontal.mover(objeto)}
+	method mover(objeto){movHorizontal.mover(objeto)}
 }
