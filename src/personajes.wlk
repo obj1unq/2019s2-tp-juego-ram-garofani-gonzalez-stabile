@@ -1,11 +1,13 @@
 import wollok.game.*
 import niveles.*
-import Directions.*
-import Movimientos.*
+import directions.*
+import movimientos.*
 
 object omniverse{
     var property current = 0
-    method position(pos, multiverse) = game.at(pos.x() + game.width() * (multiverse - current), pos.y() + game.height() * (multiverse - current))
+    method position(pos, multiverse) = game.at(self.xfor(pos, multiverse), self.yfor(pos, multiverse) )
+    method xfor(pos, multiverse) = pos.x() + game.width() * (multiverse - current)
+    method yfor(pos, multiverse) = pos.y() + game.height() * (multiverse - current)
 }
 
 object rick{
@@ -34,7 +36,7 @@ object rick{
 		visible => visible.isPortal() }.travel(self)
 	}
 
-	method trigger() { grabed.trigger() }
+	method trigger(destino) { grabed.trigger(destino) }
 
 	method grab() { 
 		grabed = game.colliders(self).head()
@@ -68,9 +70,9 @@ object gun{
         
 	method position() = omniverse.position(position, multiverse)
 
-	method trigger(){
+	method trigger(multiversoDestino){
             const portal = new Portal(position = position, multiverse = multiverse, exit = 
-                           new Portal(position = position, multiverse = multiverse + 1, exit = null))
+                           new Portal(position = position, multiverse = multiversoDestino, exit = null))
             portal.exit().exit(portal)
             game.addVisual(portal)
             game.addVisual(portal.exit())
@@ -81,60 +83,53 @@ object gun{
 
 
 class Portal{
-	const property position 
+	const position 
         const property multiverse 
 	const property image = "assets/portal.gif"
 	const property isPortal = true
         var property exit
 
-	method position() = return omniverse.position(position, multiverse)
+	method position() = omniverse.position(position, multiverse)
 
 	
 	method travel(traveler) { 
             omniverse.current(exit.multiverse())
             traveler.multiverse(exit.multiverse())
             traveler.position(exit.position())
-		//nivel.actual().hide()
-		//nivel.actual(nivel.disponibles().get(self.getNextLevel()))
-		//nivel.actual().show()
 	}
-	
-        /*
-	method getNextLevel(){
-		return (nivel.actual()).siguienteNivel()
-	} */
 
+	method mover(){}
 }
 
 class Fondo{ var property image = "assets/ram-fondo3.png"
 	var position = game.origin()
         var multiverse 
         method multiverse(value) { multiverse = value }
-	method position() = return omniverse.position(position, multiverse)
+	method position() = omniverse.position(position, multiverse)
+	method mover(){}
 }
 
 class Enemigo{
 	var property numeroEnemigo
-	//var property image = ""
 	var property direction = directionDown  // property to make Movimientos work
 	var property tipoMovimiento
 	
-	var property position = game.origin() // property to make Movimientos work
+	var  position = game.origin() 
 
         var multiverse 
 
         method multiverse(value) { multiverse = value }
 
-	method position() = return omniverse.position(position, multiverse)
+	method position() = omniverse.position(position, multiverse)
+
+        method position(_position) { position = _position }
 
         method direction(_direction) { direction = _direction } 
 
-	method mover(){
-		tipoMovimiento.mover(self)
-	}
+        method direction() = direction
+
+	method mover(){ tipoMovimiento.mover(self) }
 	
-	method image(){
-		return direction.imageEnemy(numeroEnemigo)
-	}
+	method image() = direction.imageEnemy(numeroEnemigo)
 }
 

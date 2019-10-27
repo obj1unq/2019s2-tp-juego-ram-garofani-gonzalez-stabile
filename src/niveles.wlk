@@ -1,9 +1,9 @@
 import personajes.*
 import wollok.game.*
-import Movimientos.*
+import movimientos.*
 
 object random{
-    method up(n1,n2) = n1.randomUpTo(n2).roundUp(0)
+    method up(n1,n2) = (n1-1).randomUpTo(n2).roundUp(0)
 }
 
 object niveles{
@@ -44,7 +44,8 @@ object niveles{
                 tipoMovimiento = self.getRandomMovementType(),
                 numeroEnemigo = number,
                 multiverse = random.up(0,2),
-                position = game.at(new Range(start = 1, end = 10).anyOne(),new Range(start = 1, end = 10).anyOne())
+                //position = game.at(new Range(start = 1, end = 10).anyOne(),new Range(start = 1, end = 10).anyOne())
+                position = game.at(random.up(0,9), random.up(0,9))
             )
     }
     
@@ -65,10 +66,4 @@ class Nivel{
 	method show(){
             objetos.forEach{v => game.addVisual(v)}
         }
-        /*
-	method hide(){
-		//game.allVisuals() No funca
-		visibles.forEach{v => game.removeVisual(v)}
-	}
-        */
 }
