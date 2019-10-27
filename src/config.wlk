@@ -31,14 +31,9 @@ object config{
 	method MoverObjetos(){
             game.allVisuals().forEach { objeto => objeto.mover() }
         }
-}
-
-/*
-object laucher{
-	method lauchGame(){
-		nivel.init()
-     	nivel.actual(nivel.disponibles().get(1))
-        nivel.actual().show()
+	
+	method configurarColisiones(){
+		game.onCollideDo(rick, { algo => algo.colisionasteCon(rick)})
 	}
 }
-*/
+

@@ -53,11 +53,14 @@ object none{
         const property image = ""
         const property position = game.at(0,0)
         method mover() {}
+	
 }
 
 object nada{
 	var property position = null
 	method trigger(){}
+	method colisionasteCon(alguien){
+	}
 }
 
 object gun{
@@ -79,6 +82,10 @@ object gun{
 	}
 	
 	method mover(){}
+	
+	method colisionasteCon(alguien){
+		game.say(alguien,"Al fin, mi pistola de portales")
+	}
 }
 
 
@@ -97,6 +104,8 @@ class Portal{
             traveler.multiverse(exit.multiverse())
             traveler.position(exit.position())
 	}
+	
+	method colisionasteCon(alguien){}
 
 	method mover(){}
 }
@@ -131,5 +140,10 @@ class Enemigo{
 	method mover(){ tipoMovimiento.mover(self) }
 	
 	method image() = direction.imageEnemy(numeroEnemigo)
+
+	method colisionasteCon(alguien){
+		game.say(alguien,"Perdi!!!!!")
+		game.schedule(3000,{game.stop()})
+	}
 }
 
