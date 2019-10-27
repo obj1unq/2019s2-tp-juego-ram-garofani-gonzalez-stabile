@@ -1,5 +1,6 @@
 import personajes.*
 import wollok.game.*
+import directions.*
 import movimientos.*
 
 object random{
@@ -43,14 +44,16 @@ object niveles{
             return new Enemigo(
                 tipoMovimiento = self.getRandomMovementType(),
                 numeroEnemigo = number,
-                multiverse = random.up(0,2),
-                //position = game.at(new Range(start = 1, end = 10).anyOne(),new Range(start = 1, end = 10).anyOne())
-                position = game.at(random.up(0,9), random.up(0,9))
+                //multiverse = random.up(0,2),
+                multiverse = new Range(start = 0, end = 2).anyOne(),
+                position = game.at(new Range(start = 1, end = 10).anyOne(),new Range(start = 1, end = 10).anyOne())
+                //position = game.at(random.up(0,9), random.up(0,9))
             )
     }
     
     method getRandomMovementType(){
-            return (new Movimientos()).disponibles().anyOne()
+            //return (new Movimientos()).disponibles().anyOne()
+            return [up, down, left, right].anyOne()
     }
 }
 

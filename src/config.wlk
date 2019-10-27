@@ -16,19 +16,23 @@ object config{
 		//
 		keyboard.z().onPressDo({ rick.grab() })
 		keyboard.x().onPressDo({ rick.ungrab() })
-		keyboard.q().onPressDo({ console.println(rick.position()) console.println(gun.position())})
-		keyboard.w().onPressDo({ console.println(rick) console.println(rick.image())})
-		keyboard.e().onPressDo({ game.allVisuals().forEach{v=> console.println(v) }})
 		keyboard.space().onPressDo({ rick.trigger(numero) })
 		keyboard.p().onPressDo({ rick.travel() })
                 keyboard.alt().onPressDo({ lastMultiverso = omniverse.current() omniverse.current(numero) })
+
+                // to Debug
+		keyboard.q().onPressDo({ console.println(rick.position()) console.println(gun.position())})
+		keyboard.w().onPressDo({ console.println(rick) console.println(rick.image())})
+		keyboard.e().onPressDo({ game.allVisuals().forEach{v=> console.println(v) }})
+		keyboard.r().onPressDo({ game.allVisuals().forEach{visual => visual.mover()}})
 	}
 	
 	method ticks(){
-		game.onTick(3500, "", { self.MoverObjetos() })		
+		//game.onTick(500, "", { self.moverObjetos() })		
+		//game.onTick(3500, "", { game.allVisuals().forEach{v=> console.println(v) }})
 	}
 	
-	method MoverObjetos(){
+	method moverObjetos(){
             game.allVisuals().forEach { objeto => objeto.mover() }
         }
 	
