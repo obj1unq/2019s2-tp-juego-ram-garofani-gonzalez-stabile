@@ -110,11 +110,15 @@ class Portal{
 	method mover(){}
 }
 
-class Fondo{ var property image = "assets/ram-fondo3.png"
+class Fondo{ 
+        var property image = "assets/ram-fondo3.png"
 	var position = game.origin()
         var multiverse 
+
         method multiverse(value) { multiverse = value }
+
 	method position() = omniverse.position(position, multiverse)
+
 	method mover(){}
 }
 
@@ -137,7 +141,9 @@ class Enemigo{
 
         method direction() = direction
 
-	method mover(){ tipoMovimiento.mover(self) }
+	method mover(){ 
+            tipoMovimiento.newPosition(self)
+        }
 	
 	method image() = direction.imageEnemy(numeroEnemigo)
 
