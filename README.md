@@ -19,3 +19,5 @@ Algunas imagenes desde https://www.spriters-resource.com/mobile/pocketmortys/ qu
 *...if your project is 100% free (e.g. a free fan-game or non-monetized YouTube video - basically any project that was made just for the sake of making it and will not be used in any way to make you money), use away! This is one of the primary reasons we collected all of these resources and we'd love to see what you do with them!*
 
 Algunas imagenes desde https://wallpaperaccess.com/rick-and-morty-psychedelic : *A collection of the top 55 Rick and Morty Psychedelic wallpapers and backgrounds available for download for free.* 
+
+https://www.iamag.co/rick-and-morty-80-character-design-background-collection/rick-morty-ca59/
