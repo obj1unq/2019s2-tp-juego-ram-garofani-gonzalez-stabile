@@ -25,34 +25,34 @@ object directionRight{
 }
 
 object up{
-    method newPosition(objeto) { 
-        if (objeto.position().y() == game.height()-1) 
+    method newMposition(objeto) { 
+        if (objeto.mposition().y() == game.height()-1) 
             objeto.tipoMovimiento(down)
         else 
-            objeto.position(objeto.position().up(1))
+            objeto.mposition(objeto.mposition().up(1))
     }
 }
 object down{
-    method newPosition(objeto) { 
-        if (objeto.position().y() == 0 ) 
+    method newMposition(objeto) { 
+        if (objeto.mposition().y() == 0 ) 
             objeto.tipoMovimiento(up)
         else 
-            objeto.position(objeto.position().down(1))
+            objeto.mposition(objeto.mposition().down(1))
     }
 }
 object left{
-    method newPosition(objeto) { 
-        if (objeto.position().y() == game.width()-1) 
+    method newMposition(objeto) { 
+        if (objeto.mposition().x() == 0 ) 
             objeto.tipoMovimiento(right)
         else 
-            objeto.position(objeto.position().left(1))
+            objeto.mposition(objeto.mposition().left(1))
     }
 }
 object right{
-    method newPosition(objeto) { 
-        if (objeto.position().y() == 0 ) 
+    method newMposition(objeto) { 
+        if (objeto.mposition().x() == game.width()-1) 
             objeto.tipoMovimiento(left)
         else 
-            objeto.position(objeto.position().right(1))
+            objeto.mposition(objeto.mposition().right(1))
     }
 }

@@ -6,8 +6,18 @@ import movimientos.*
 object omniverse{
     var property current = 0
     method position(pos, multiverse) = game.at(self.xfor(pos, multiverse), self.yfor(pos, multiverse) )
-    method xfor(pos, multiverse) = pos.x() + game.width() * (multiverse - current)
-    method yfor(pos, multiverse) = pos.y() + game.height() * (multiverse - current)
+    method xfor(pos, multiverse) = pos.x() + (game.width() * (multiverse - current))
+    method yfor(pos, multiverse) = pos.y() + (game.height() * (multiverse - current))
+}
+
+class OmniObjeto{
+	var property mposition = game.origin() 
+
+        var multiverse 
+
+        method multiverse(value) { multiverse = value }
+
+	method position() = omniverse.position(mposition, multiverse)
 }
 
 object rick{
@@ -110,39 +120,24 @@ class Portal{
 	method mover(){}
 }
 
-class Fondo{ 
+class Fondo inherits OmniObjeto{ 
         var property image = "assets/ram-fondo3.png"
-	var position = game.origin()
-        var multiverse 
-
-        method multiverse(value) { multiverse = value }
-
-	method position() = omniverse.position(position, multiverse)
 
 	method mover(){}
 }
 
-class Enemigo{
+class Enemigo inherits OmniObjeto{
 	var property numeroEnemigo
 	var property direction = directionDown  // property to make Movimientos work
 	var property tipoMovimiento
 	
-	var  position = game.origin() 
-
-        var multiverse 
-
-        method multiverse(value) { multiverse = value }
-
-	method position() = omniverse.position(position, multiverse)
-
-        method position(_position) { position = _position }
 
         method direction(_direction) { direction = _direction } 
 
         method direction() = direction
 
 	method mover(){ 
-            tipoMovimiento.newPosition(self)
+            tipoMovimiento.newMposition(self)
         }
 	
 	method image() = direction.imageEnemy(numeroEnemigo)
