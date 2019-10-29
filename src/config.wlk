@@ -28,8 +28,7 @@ object config{
 	}
 	
 	method ticks(){
-		//game.onTick(500, "", { self.moverObjetos() })		
-		//game.onTick(3500, "", { game.allVisuals().forEach{v=> console.println(v) }})
+		game.onTick(500, "", { self.moverObjetos() })		
 	}
 	
 	method moverObjetos(){
