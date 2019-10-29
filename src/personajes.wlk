@@ -7,7 +7,7 @@ object omniverse{
     var property current = 0
     method position(pos, multiverse) = game.at(self.xfor(pos, multiverse), self.yfor(pos, multiverse) )
     method xfor(pos, multiverse) = pos.x() + game.width() * (multiverse - current)
-    method yfor(pos, multiverse) = pos.y() + game.height() * (multiverse - current)
+    method yfor(pos, multiverse) = pos.y() + (game.height()-1) * (multiverse - current)
 }
 
 class OmniObjeto{

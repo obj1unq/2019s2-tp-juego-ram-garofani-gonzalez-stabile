@@ -7,7 +7,7 @@ object up{
     method imageEnemy(numeroEnemigo) = "assets/Enemy_"+numeroEnemigo+"_Back.png"
 
     method newMposition(objeto) { 
-        if (objeto.mposition().y() == game.height()-1) 
+        if (objeto.mposition().y() == game.height()-2) 
             objeto.direction(down)
         else 
             objeto.mposition(objeto.mposition().up(1))
