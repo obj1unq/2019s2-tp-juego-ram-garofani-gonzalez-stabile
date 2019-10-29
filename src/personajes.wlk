@@ -6,8 +6,8 @@ import movimientos.*
 object omniverse{
     var property current = 0
     method position(pos, multiverse) = game.at(self.xfor(pos, multiverse), self.yfor(pos, multiverse) )
-    method xfor(pos, multiverse) = pos.x() + (game.width() * (multiverse - current))
-    method yfor(pos, multiverse) = pos.y() + (game.height() * (multiverse - current))
+    method xfor(pos, multiverse) = pos.x() + game.width() * (multiverse - current)
+    method yfor(pos, multiverse) = pos.y() + game.height() * (multiverse - current)
 }
 
 class OmniObjeto{
@@ -83,13 +83,25 @@ object gun{
         
 	method position() = omniverse.position(position, multiverse)
 
-	method trigger(multiversoDestino){
+	method trigger(multiverseDestino){
+            self.verificarMultiversoDestinoEsDiferenteAlActual(multiverseDestino)
+            self.crearPortalA(multiverseDestino)
+	}
+
+        method crearPortalA(multiverseDestino){
             const portal = new Portal(position = position, multiverse = multiverse, exit = 
-                           new Portal(position = position, multiverse = multiversoDestino, exit = null))
+                           new Portal(position = position, multiverse = multiverseDestino, exit = null))
             portal.exit().exit(portal)
             game.addVisual(portal)
             game.addVisual(portal.exit())
-	}
+        }
+
+        method verificarMultiversoDestinoEsDiferenteAlActual(multiversoDestino){
+            if (multiversoDestino == multiverse)  {
+                game.errorReporter(self)
+                self.error("Dame un multiverso destino!")
+            }
+        }
 	
 	method mover(){}
 	
