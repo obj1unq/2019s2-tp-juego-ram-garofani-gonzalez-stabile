@@ -1,6 +1,6 @@
 import directions.*
 import wollok.game.*
-
+/*
 class Movimientos{
 	const property disponibles = [movVertical,movHorizontal,movEle]
 	const property movimientoActual
@@ -71,3 +71,4 @@ object movHorizontal{
 object movEle{
 	method mover(objeto){movHorizontal.mover(objeto)}
 }
+*/

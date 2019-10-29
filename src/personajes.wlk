@@ -24,7 +24,7 @@ object rick{
 	var position = game.at(1,1)
         var multiverse = 0
 	var grabed = nada 
-	var direction = directionDown
+	var direction = down
 	
 	method image() =  direction.imageRick()
 	
@@ -68,7 +68,7 @@ object none{
 
 object nada{
 	var property position = null
-	method trigger(){}
+	method trigger(detino){}
 	method colisionasteCon(alguien){
 	}
 }
@@ -140,16 +140,14 @@ class Fondo inherits OmniObjeto{
 
 class Enemigo inherits OmniObjeto{
 	var property numeroEnemigo
-	var property direction = directionDown  // property to make Movimientos work
-	var property tipoMovimiento
-	
+	var property direction = down
 
         method direction(_direction) { direction = _direction } 
 
         method direction() = direction
 
 	method mover(){ 
-            tipoMovimiento.newMposition(self)
+            direction.newMposition(self)
         }
 	
 	method image() = direction.imageEnemy(numeroEnemigo)

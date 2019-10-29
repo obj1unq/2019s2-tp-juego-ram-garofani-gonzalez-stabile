@@ -42,7 +42,7 @@ object niveles{
     
     method createNewEnemy(number){
             return new Enemigo(
-                tipoMovimiento = self.getRandomMovementType(),
+                direction = self.getRandomMovementType(),
                 numeroEnemigo = number,
                 //multiverse = random.up(0,2),
                 multiverse = new Range(start = 0, end = 2).anyOne(),
