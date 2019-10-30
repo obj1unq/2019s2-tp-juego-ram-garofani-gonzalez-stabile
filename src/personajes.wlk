@@ -160,6 +160,7 @@ class Enemigo inherits OmniObjeto{
 
 class Bloque inherits OmniObjeto{
 	var property image = "assets/fail.png"
-	var property position
+    //saco esto. debe ser mposition y esta en OmniObjeto
+	//var property position
 }
 
