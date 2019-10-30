@@ -13,26 +13,26 @@ object omniverse{
 class OmniObjeto{
 	var property mposition = game.origin() 
 
-        var multiverse 
+	var multiverse 
 
-        method multiverse(value) { multiverse = value }
+    method multiverse(value) { multiverse = value }
 
 	method position() = omniverse.position(mposition, multiverse)
 }
 
 object rick{
 	var position = game.at(1,1)
-        var multiverse = 0
+    var multiverse = 0
 	var grabed = nada 
 	var direction = down
 	
 	method image() =  direction.imageRick()
 	
-        method multiverse(value) { 
-            multiverse = value 
-            grabed.multiverse(multiverse)
-        }
-        
+    method multiverse(value) { 
+        multiverse = value 
+        grabed.multiverse(multiverse)
+    }
+    
 	method position() = omniverse.position(position, multiverse)
 
 	method position(_position) { 
@@ -40,7 +40,7 @@ object rick{
 		grabed.position(position)
 	}
 
-        method direction(_direction) { direction = _direction }
+   	method direction(_direction) { direction = _direction }
 
 	method travel() { game.colliders(self).find{
 		visible => visible.isPortal() }.travel(self)
@@ -56,7 +56,7 @@ object rick{
 		grabed = nada
 	}
 
-        method mover() {}
+    method mover() {}
 }
 
 object none{
@@ -133,7 +133,7 @@ class Portal{
 }
 
 class Fondo inherits OmniObjeto{ 
-        var property image = "assets/ram-fondo3.png"
+   	var property image = "assets/ram-fondo3.png"
 
 	method mover(){}
 }
@@ -142,13 +142,13 @@ class Enemigo inherits OmniObjeto{
 	var property numeroEnemigo
 	var property direction = down
 
-        method direction(_direction) { direction = _direction } 
+    method direction(_direction) { direction = _direction } 
 
-        method direction() = direction
+    method direction() = direction
 
 	method mover(){ 
-            direction.newMposition(self)
-        }
+        direction.newMposition(self)
+    }
 	
 	method image() = direction.imageEnemy(numeroEnemigo)
 
@@ -156,5 +156,10 @@ class Enemigo inherits OmniObjeto{
 		game.say(alguien,"Perdi!!!!!")
 		game.schedule(3000,{game.stop()})
 	}
+}
+
+class Bloque inherits OmniObjeto{
+	var property image = "assets/fail.png"
+	var property position
 }
 
