@@ -58,9 +58,13 @@ object rick{ // Wubba lubba dub dub
 
         method direction(_direction) { direction = _direction }
 
-	method travel() { game.colliders(self).find{
-		visible => visible.isPortal() }.travel(self)
-	}
+	method travel() { self.verificarSiHayPortal() self.takePortal() }
+
+        method verificarSiHayPortal() { 
+            if (not game.colliders(self).any{ visible => visible.isPortal() }) game.say(self, "No hay por donde viajar")
+        }
+
+        method takePortal() { game.colliders(self).find{ visible => visible.isPortal() }.travel(self) }
 
 	method trigger(destino) { grabed.trigger(destino) }
 
@@ -77,11 +81,11 @@ object rick{ // Wubba lubba dub dub
         method catched() {
             vidas -= 1
             if ( vidas == 0) {
-		game.say(self, "Perdi!!!!!")
+		game.say(self, "Perdi!!!!!\nBye Bye!")
                 // pensar ir a pantalla con estadisticas
 		game.schedule(3000,{game.stop()})
-            }
-
+            } else 
+                game.say(self, "Outch!!!!!")
         }
 
 }
@@ -100,7 +104,16 @@ object nada{
 	}
 }
 
-object gun{
+object raygun{
+        const property image = "assets/ray-gun.png"
+        var property mposition = game.at(10, 10)
+        var multiverse = 1
+
+        method position() = omniverse.position(mposition, multiverse)
+
+        method mover() {}
+}
+object portalgun{
 	var property image = "assets/gun.png"
 	var property position = game.at(5,5)
         var multiverse = 1
