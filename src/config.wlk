@@ -22,7 +22,7 @@ object config{
                 keyboard.control().onPressDo({ omniverse.current(lastMultiverso) })
 
                 // to Debug
-		keyboard.q().onPressDo({ console.println(rick.position()) console.println(gun.position())})
+		keyboard.q().onPressDo({ console.println(rick.position()) console.println(portalgun.position())})
 		keyboard.w().onPressDo({ console.println(rick) console.println(rick.image())})
 		keyboard.e().onPressDo({ game.allVisuals().forEach{v=> console.println(v) }})
 		keyboard.r().onPressDo({ game.allVisuals().forEach{visual => visual.mover()}})
