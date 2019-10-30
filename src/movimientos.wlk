@@ -1,6 +1,8 @@
-import Directions.*
+import directions.*
+import wollok.game.*
+/*
 class Movimientos{
-	const property disponibles = [MovVertical,MovHorizontal,MovEle]
+	const property disponibles = [movVertical,movHorizontal,movEle]
 	const property movimientoActual
 	
 	method mover(objeto){
@@ -8,7 +10,7 @@ class Movimientos{
 	}	
 }
 
-object MovVertical{
+object movVertical{
 	method mover(objeto){		
 		var dir = objeto.direction()
 		if(dir == directionDown){
@@ -28,7 +30,7 @@ object MovVertical{
 	}
 	
 	method moverHaciaArriba(objeto){
-		if(objeto.position().y() < 10){
+		if(objeto.position().y() < game.height()-1 ){
 			objeto.position(objeto.position().up(1))
 			objeto.direction(directionUp)
 		}else{
@@ -37,7 +39,7 @@ object MovVertical{
 	}
 }
 
-object MovHorizontal{
+object movHorizontal{
 	method mover(objeto){		
 		var dir = objeto.direction()
 		if(dir == directionLeft){
@@ -57,7 +59,7 @@ object MovHorizontal{
 	}
 	
 	method moverHaciaDerecha(objeto){
-		if(objeto.position().x() < 10){
+		if(objeto.position().x() < game.width()-1){
 			objeto.position(objeto.position().right(1))
 			objeto.direction(directionRight)
 		}else{
@@ -66,6 +68,7 @@ object MovHorizontal{
 	}
 }
 
-object MovEle{
-	method mover(objeto){MovHorizontal.mover(objeto)}
+object movEle{
+	method mover(objeto){movHorizontal.mover(objeto)}
 }
+*/

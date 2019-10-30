@@ -6,9 +6,12 @@ import niveles.*
 program RaM {
 	
 	game.title("RaM")
-	game.height(10)
-	game.width(10)
-	laucher.lauchGame()
+	game.height(14)
+	game.width(13)
+	//laucher.lauchGame()
+        console.println("presentado niveles")
+        niveles.presentar()
+        console.println("niveles presentados")
 	game.showAttributes(rick) //Debug 	 
 
 

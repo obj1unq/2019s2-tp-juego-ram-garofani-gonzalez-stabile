@@ -1,63 +1,72 @@
 import personajes.*
 import wollok.game.*
-import Movimientos.*
-object nivel{ 
-	var property actual //= disponibles.get(1)
-	const property disponibles = new Dictionary()
-	method init(){
-		disponibles.put( 1, new Nivel(
-		  fondo = new Fondo(image = "assets/ram-fondo3.png"),
-		  character = rick,
-		  objetos = [gun] + self.getListOfEnemies(),
-		  siguienteNivel = 2 ))
-		disponibles.put( 3, new Nivel(
-		  fondo = new Fondo(image = "assets/ram-fondo1.png"),
-		  character = rick,
-		  objetos = [gun] + self.getListOfEnemies(),
-		  siguienteNivel = 1 ))
-		disponibles.put( 2, new Nivel(
-		  fondo = new Fondo(image = "assets/ram-fondo2.png"),
-		  character = rick,
-		  objetos = [gun] + self.getListOfEnemies(),
-		  siguienteNivel = 3 ))
-	}
-	
-	method getListOfEnemies(){		
-		var enemies = []
-		new Range(start = 1, end = self.numberOfEnemies()).forEach { 
-			 value => enemies.add(self.createNewEnemy(value))
-		}
-		return enemies
-	}
-	
-	method numberOfEnemies() = new Range(start = 1, end = 4).anyOne()
-	
-	method createNewEnemy(number){
-		return new Enemigo(	tipoMovimiento = self.getRandomMovementType(),
-							numeroEnemigo = number,
-						 	position = game.at(new Range(start = 1, end = 10).anyOne(),new Range(start = 1, end = 10).anyOne())
-		)
-	}
-	
-	method getRandomMovementType(){
-		return (new Movimientos()).disponibles().anyOne()
-	}
+import directions.*
+import movimientos.*
+
+object random{
+    method up(n1,n2) = (n1-1).randomUpTo(n2).roundUp(0)
+}
+
+object niveles{
+    const property catalogo = [
+		 new Nivel(
+		  fondo = new Fondo(multiverse = 1, image = "assets/ram-fondo3.png"),
+		  objetos = [rick, gun] + self.getListOfEnemies(),
+		  siguienteNivel = null ),
+                 new Nivel(
+		  fondo = new Fondo(multiverse = 2,image = "assets/ram-fondo1.png"),
+		  objetos = self.getListOfEnemies(),
+		  siguienteNivel = null ),
+                 new Nivel(
+		  fondo = new Fondo(multiverse = 3,image = "assets/ram-fondo2.png"),
+		  objetos = self.getListOfEnemies(),
+		  siguienteNivel = null )]
+    var property actual = catalogo.first() 
+    
+    method presentar() { 
+        self.presenteFondo()
+        self.showAll()
+    }
+
+    method presenteFondo() { catalogo.forEach{nivel => nivel.presentarFondo()} }
+
+    method showAll() { catalogo.forEach{nivel => nivel.show()} }
+
+    method numberOfEnemies() = random.up(1,4)
+
+    method getListOfEnemies(){ //Refac: var             
+            var enemies = []
+            (1..self.numberOfEnemies()).forEach { value => enemies.add(self.createNewEnemy(value)) }
+            return enemies
+    }
+    
+    method createNewEnemy(number){
+            return new Enemigo(
+                direction = self.getRandomMovementType(),
+                numeroEnemigo = number,
+                //multiverse = random.up(0,2),
+                multiverse = new Range(start = 0, end = 2).anyOne(),
+                mposition = game.at(new Range(start = 1, end = 10).anyOne(),new Range(start = 1, end = 10).anyOne())
+                //mposition = game.at(random.up(0,9), random.up(0,9))
+            )
+    }
+    
+    method getRandomMovementType(){
+            //return (new Movimientos()).disponibles().anyOne()
+            return [up, down, left, right].anyOne()
+    }
 }
 
 class Nivel{
 	const fondo 
-	const character 
 	const property objetos = []
-	var visibles = []
-	const property siguienteNivel 
+	const property siguienteNivel // Refac: obsoleto?
+
+        method presentarFondo() { 
+            game.addVisual(fondo) 
+        }
 
 	method show(){
-		visibles = [fondo, character] + objetos 
-		console.println(visibles)
-		visibles.forEach{v => game.addVisual(v)}
-	}
-	method hide(){
-		//game.allVisuals() No funca
-		visibles.forEach{v => game.removeVisual(v)}
-	}
+            objetos.forEach{v => game.addVisual(v)}
+        }
 }
