@@ -104,16 +104,23 @@ object nada{
 	}
 }
 
-object raygun{
+mixin Collectable{
+	method colisionasteCon(alguien){
+		game.say(alguien,"Hare guiso de lentejas con esto!")
+	}
+}
+
+object raygun mixed with Collectable{
         const property image = "assets/ray-gun.png"
-        var property mposition = game.at(10, 10)
+        var property mposition = game.at(10, 2)
         var multiverse = 1
 
         method position() = omniverse.position(mposition, multiverse)
 
         method mover() {}
+
 }
-object portalgun{
+object portalgun mixed with Collectable{
 	var property image = "assets/gun.png"
 	var property position = game.at(5,5)
         var multiverse = 1
@@ -145,7 +152,7 @@ object portalgun{
 	
 	method mover(){}
 	
-	method colisionasteCon(alguien){
+	override method colisionasteCon(alguien){
 		game.say(alguien,"Al fin, mi pistola de portales")
 	}
 }
