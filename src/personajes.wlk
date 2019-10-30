@@ -47,9 +47,13 @@ object rick{
 	method position() = omniverse.position(position, multiverse)
 
 	method position(_position) { 
+            if (not self.estaFueraDeLosLimites(_position)){
 		position = _position
 		grabed.position(position)
+            }
 	}
+
+        method estaFueraDeLosLimites(pos) = pos.x() < 0 or pos.x() > omniverse.ancho()-1 or pos.y() < 0 or pos.y() > omniverse.alto()-1
 
         method direction(_direction) { direction = _direction }
 

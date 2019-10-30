@@ -6,8 +6,8 @@ import directions.*
 object config{
 	method teclas(){
 		// teclas de rick
-                var numero = 0
-                var lastMultiverso = 0
+                var numero = 1
+                var lastMultiverso = 1
 		(1..3).forEach{ n => keyboard.num(n).onPressDo({ numero = n console.println("numero = " + numero )}) }
 		keyboard.up().onPressDo({ rick.position(rick.position().up(1)) rick.direction(up) })
 		keyboard.right().onPressDo({ rick.position(rick.position().right(1)) rick.direction(right) })
@@ -19,6 +19,7 @@ object config{
 		keyboard.space().onPressDo({ rick.trigger(numero) })
 		keyboard.p().onPressDo({ rick.travel() })
                 keyboard.alt().onPressDo({ lastMultiverso = omniverse.current() omniverse.current(numero) })
+                keyboard.control().onPressDo({ omniverse.current(lastMultiverso) })
 
                 // to Debug
 		keyboard.q().onPressDo({ console.println(rick.position()) console.println(gun.position())})

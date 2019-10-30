@@ -34,20 +34,21 @@ object niveles{
 
     method numberOfEnemies() = random.up(1,4)
 
-    method getListOfEnemies(){ //Refac: var             
-            var enemies = []
-            (1..self.numberOfEnemies()).forEach { value => enemies.add(self.createNewEnemy(value)) }
-            return enemies
-    }
+    method getListOfEnemies() = (1..self.numberOfEnemies()).fold([], { enemies, value => enemies.add(self.createNewEnemy(value)) return enemies })
+//    method getListOfEnemies(){ //Refac: var             
+//            var enemies = []
+//            (1..self.numberOfEnemies()).forEach { value => enemies.add(self.createNewEnemy(value)) }
+//            return enemies
+//    }
     
     method createNewEnemy(number){
             return new Enemigo(
                 direction = self.getRandomMovementType(),
                 numeroEnemigo = number,
-                //multiverse = random.up(0,2),
-                multiverse = new Range(start = 0, end = 2).anyOne(),
+                //multiverse = random.up(1,3),
+                multiverse = new Range(start = 1, end = 3).anyOne(),
                 mposition = game.at(new Range(start = 1, end = 10).anyOne(),new Range(start = 1, end = 10).anyOne())
-                //mposition = game.at(random.up(0,9), random.up(0,9))
+                //mposition = game.at(random.up(0,12), random.up(0,12))
             )
     }
     
