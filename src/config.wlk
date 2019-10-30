@@ -8,7 +8,7 @@ object config{
 		// teclas de rick
                 var numero = 0
                 var lastMultiverso = 0
-		(0..2).forEach{ n => keyboard.num(n).onPressDo({ numero = n console.println("numero = " + numero )}) }
+		(1..3).forEach{ n => keyboard.num(n).onPressDo({ numero = n console.println("numero = " + numero )}) }
 		keyboard.up().onPressDo({ rick.position(rick.position().up(1)) rick.direction(up) })
 		keyboard.right().onPressDo({ rick.position(rick.position().right(1)) rick.direction(right) })
 		keyboard.down().onPressDo({ rick.position(rick.position().down(1))  rick.direction(down) })

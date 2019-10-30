@@ -10,15 +10,15 @@ object random{
 object niveles{
     const property catalogo = [
 		 new Nivel(
-		  fondo = new Fondo(multiverse = 0, image = "assets/ram-fondo3.png"),
+		  fondo = new Fondo(multiverse = 1, image = "assets/ram-fondo3.png"),
 		  objetos = [rick, gun] + self.getListOfEnemies(),
 		  siguienteNivel = null ),
                  new Nivel(
-		  fondo = new Fondo(multiverse = 1,image = "assets/ram-fondo1.png"),
+		  fondo = new Fondo(multiverse = 2,image = "assets/ram-fondo1.png"),
 		  objetos = self.getListOfEnemies(),
 		  siguienteNivel = null ),
                  new Nivel(
-		  fondo = new Fondo(multiverse = 2,image = "assets/ram-fondo2.png"),
+		  fondo = new Fondo(multiverse = 3,image = "assets/ram-fondo2.png"),
 		  objetos = self.getListOfEnemies(),
 		  siguienteNivel = null )]
     var property actual = catalogo.first() 

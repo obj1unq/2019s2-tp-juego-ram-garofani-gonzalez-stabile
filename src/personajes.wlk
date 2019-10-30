@@ -4,7 +4,8 @@ import directions.*
 import movimientos.*
 
 object omniverse{
-    var property current = 0
+    var property current = 1
+
     method position(pos, multiverse) = game.at(self.xfor(pos, multiverse), self.yfor(pos, multiverse) )
 
     method xfor(pos, multiverse) = self.origenXde(multiverse) + pos.x()
@@ -32,7 +33,7 @@ class OmniObjeto{
 
 object rick{
 	var position = game.at(1,1)
-        var multiverse = 0
+        var multiverse = 1
 	var grabed = nada 
 	var direction = down
 	
@@ -86,7 +87,7 @@ object nada{
 object gun{
 	var property image = "assets/gun.png"
 	var property position = game.at(5,5)
-        var multiverse = 0
+        var multiverse = 1
 	const property isPortal = false
 
         method multiverse(value) { multiverse = value }
