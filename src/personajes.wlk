@@ -36,6 +36,7 @@ object rick{
         var multiverse = 1
 	var grabed = nada 
 	var direction = down
+        var vidas = 3
 	
 	method image() =  direction.imageRick()
 	
@@ -72,6 +73,17 @@ object rick{
 	}
 
         method mover() {}
+
+        method catched() {
+            vidas -= 1
+            if ( vidas == 0) {
+		game.say(self, "Perdi!!!!!")
+                // pensar ir a pantalla con estadisticas
+		game.schedule(3000,{game.stop()})
+            }
+
+        }
+
 }
 
 object none{
@@ -168,8 +180,7 @@ class Enemigo inherits OmniObjeto{
 	method image() = direction.imageEnemy(numeroEnemigo)
 
 	method colisionasteCon(alguien){
-		game.say(alguien,"Perdi!!!!!")
-		game.schedule(3000,{game.stop()})
+            alguien.catched()
 	}
 }
 
