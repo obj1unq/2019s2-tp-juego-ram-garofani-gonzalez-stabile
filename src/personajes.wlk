@@ -6,8 +6,18 @@ import movimientos.*
 object omniverse{
     var property current = 0
     method position(pos, multiverse) = game.at(self.xfor(pos, multiverse), self.yfor(pos, multiverse) )
-    method xfor(pos, multiverse) = pos.x() + game.width() * (multiverse - current)
-    method yfor(pos, multiverse) = pos.y() + (game.height()-1) * (multiverse - current)
+
+    method xfor(pos, multiverse) = self.origenXde(multiverse) + pos.x()
+
+    method yfor(pos, multiverse) = self.origenYde(multiverse) + pos.y()
+
+    method ancho() = game.width()
+
+    method alto() = game.height() - 1
+
+    method origenXde(multiverse) = self.ancho() * (multiverse - current)
+
+    method origenYde(multiverse) = self.alto() * (multiverse - current)
 }
 
 class OmniObjeto{
