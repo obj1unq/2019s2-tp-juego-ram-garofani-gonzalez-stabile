@@ -31,7 +31,7 @@ class OmniObjeto{
 	method position() = omniverse.position(mposition, multiverse)
 }
 
-object rick{
+object rick{ // Wubba lubba dub dub
 	var position = game.at(1,1)
         var multiverse = 1
 	var grabed = nada 
