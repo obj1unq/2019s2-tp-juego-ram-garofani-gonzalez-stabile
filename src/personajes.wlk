@@ -31,16 +31,31 @@ class OmniObjeto{
 	method position() = omniverse.position(mposition, multiverse)
 }
 
+object barra{
+    const contenidos = []
+    const property image = "assets/barra.png"
+    const property mposition = game.at(0, 13)
+
+	method position() = omniverse.position(mposition, omniverse.current())
+
+    method agregar(visual) { 
+        visual.position(game.at(mposition.x() + contenidos.size(), mposition.y() ))
+        visual.multiverse(omniverse.current())
+        contenidos.add(visual)
+    }
+    
+    method mover() {}
+}
 object rick{ // Wubba lubba dub dub
 	var position = game.at(1,1)
-        var multiverse = 1
+    var multiverse = 1
 	var grabed = nada 
 	var direction = down
-        var vidas = 3
+    var vidas = 3
 	
 	method image() =  direction.imageRick()
 	
-        method multiverse(value) { 
+    method multiverse(value) { 
             multiverse = value 
             grabed.multiverse(multiverse)
         }
@@ -54,39 +69,41 @@ object rick{ // Wubba lubba dub dub
             }
 	}
 
-        method estaFueraDeLosLimites(pos) = pos.x() < 0 or pos.x() > omniverse.ancho()-1 or pos.y() < 0 or pos.y() > omniverse.alto()-1
+    method estaFueraDeLosLimites(pos) = pos.x() < 0 or pos.x() > omniverse.ancho()-1 or pos.y() < 0 or pos.y() > omniverse.alto()-1
 
-        method direction(_direction) { direction = _direction }
+    method direction(_direction) { direction = _direction }
 
 	method travel() { self.verificarSiHayPortal() self.takePortal() }
 
-        method verificarSiHayPortal() { 
+    method verificarSiHayPortal() { 
             if (not game.colliders(self).any{ visible => visible.isPortal() }) game.say(self, "No hay por donde viajar")
         }
 
-        method takePortal() { game.colliders(self).find{ visible => visible.isPortal() }.travel(self) }
+    method takePortal() { game.colliders(self).find{ visible => visible.isPortal() }.travel(self) }
 
 	method trigger(destino) { grabed.trigger(destino) }
 
 	method grab() { 
 		grabed = game.colliders(self).head()
+        barra.agregar(grabed)
+        self.ungrab()
 	}
 
 	method ungrab() { 
 		grabed = nada
 	}
 
-        method mover() {}
+    method mover() {}
 
-        method catched() {
-            vidas -= 1
-            if ( vidas == 0) {
-		game.say(self, "Perdi!!!!!\nBye Bye!")
-                // pensar ir a pantalla con estadisticas
-		game.schedule(3000,{game.stop()})
-            } else 
-                game.say(self, "Outch!!!!!")
-        }
+    method catched() {
+        vidas -= 1
+        if ( vidas == 0) {
+            game.say(self, "Perdi!!!!!\nBye Bye!")
+            // pensar ir a pantalla con estadisticas
+            game.schedule(3000,{game.stop()})
+        } else 
+            game.say(self, "Outch!!!!!")
+    }
 
 }
 
@@ -111,13 +128,20 @@ mixin Collectable{
 }
 
 object raygun mixed with Collectable{
-        const property image = "assets/ray-gun.png"
-        var property mposition = game.at(10, 2)
-        var multiverse = 1
 
-        method position() = omniverse.position(mposition, multiverse)
+    const property image = "assets/ray-gun.png"
+    var property mposition = game.at(10, 2)
+    var multiverse = 1
 
-        method mover() {}
+    method position() = omniverse.position(mposition, multiverse)
+
+    method position(_position) { mposition = _position }
+
+	method multiverse(value) {
+		multiverse = value
+	}
+
+    method mover() {}
 
 }
 object portalgun mixed with Collectable{

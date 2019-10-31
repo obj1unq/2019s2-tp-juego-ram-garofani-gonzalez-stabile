@@ -11,7 +11,7 @@ object niveles{
     const property catalogo = [
 		 new Nivel(
 		  fondo = new Fondo(multiverse = 1, image = "assets/ram-fondo3.png"),
-		  objetos = [rick, portalgun, raygun] + self.getListOfEnemies(),
+		  objetos = [barra, rick, portalgun, raygun] + self.getListOfEnemies(),
 		  siguienteNivel = null ),
                  new Nivel(
 		  fondo = new Fondo(multiverse = 2,image = "assets/ram-fondo1.png"),
