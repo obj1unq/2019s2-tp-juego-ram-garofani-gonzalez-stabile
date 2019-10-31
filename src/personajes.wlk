@@ -136,6 +136,8 @@ class Fondo inherits OmniObjeto{
    	var property image = "assets/ram-fondo3.png"
 
 	method mover(){}
+	
+	method colisionasteCon(alguien){}
 }
 
 class Enemigo inherits OmniObjeto{
@@ -159,8 +161,22 @@ class Enemigo inherits OmniObjeto{
 }
 
 class Bloque inherits OmniObjeto{
-	var property image = "assets/fail.png"
+	var property image = "assets/blockOculto.jpg"
+	
     //saco esto. debe ser mposition y esta en OmniObjeto
 	//var property position
+	method colisionasteCon(alguien){}
+	method mover(){}
+}
+
+object nightVisionGoggles{
+	var property image = "assets/nightVisionGoggles.png"
+	var property position = game.at(0,0)
+	var multiverse = 3
+	method mover(){}
+	method multiverse(value) { multiverse = value }        
+	method position() = omniverse.position(position, multiverse)
+	method colisionasteCon(alguien){}
+	method mover(){}
 }
 

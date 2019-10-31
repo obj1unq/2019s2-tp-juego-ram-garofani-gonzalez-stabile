@@ -20,7 +20,7 @@ object niveles{
 		  	objetos = self.getListOfEnemies() ),
 		 new Nivel(
 		  	fondo = new Fondo(multiverse = 3,image = "assets/ram-fondo4.jpg"),
-		  	objetos = [],
+		  	objetos = [nightVisionGoggles],
 		  	zonasProhibidas = self.armarZonasProhibidasNivelTres() )
 		  ]
 		  	
@@ -69,9 +69,9 @@ object niveles{
 					game.at(4,1),game.at(4,7),
 					game.at(5,1),game.at(5,2),game.at(5,3),game.at(5,4),game.at(5,5),game.at(5,6),game.at(5,7),
 					game.at(6,1),game.at(6,7),game.at(6,9),game.at(6,10),game.at(6,11),game.at(6,12),
-					game.at(7,1),game.at(7,4),game.at(7,7),
-					game.at(8,1),game.at(8,4),game.at(8,7),
-					game.at(9,1),game.at(9,2),game.at(9,3),game.at(9,4),game.at(9,7),game.at(9,8),game.at(9,9),	
+					game.at(7,1),game.at(7,4),game.at(7,7),game.at(7,12),
+					game.at(8,1),game.at(8,4),game.at(8,7),game.at(8,12),
+					game.at(9,1),game.at(9,2),game.at(9,3),game.at(9,4),game.at(9,7),game.at(9,8),game.at(9,9),game.at(9,12),	
 					game.at(10,12),
 					game.at(11,3),game.at(11,6),game.at(11,7),game.at(11,8),game.at(11,9),game.at(11,10),game.at(11,11),game.at(11,12),
 					game.at(12,0),game.at(12,3)
@@ -82,6 +82,18 @@ object niveles{
     	catalogo.forEach{
     		nivel => nivel.presentarZonasProhibidas()
     	}    	
+    }
+    
+    method puedeMoverSiguientePosicion(posX,posY){
+    	return posX >= 0 and
+    		   posX < game.width() and
+    		   posY >= 0 and
+    		   posY < game.height() and
+    		   !self.esZonaProhibida(posX,posY)
+    }	
+    
+    method esZonaProhibida(posX,posY){
+    	return self.catalogo().get(omniverse.current()).zonasProhibidas().contains(game.at(posX,posY))
     }
 }
 
@@ -106,5 +118,6 @@ class Nivel{
                 								//position = zona), 
                                                 //zona)
     	}
-    }
+    }   
+    
 }

@@ -13,29 +13,29 @@ object config{
 			console.println("numero = " + numero )
 		}) }
 		
-		keyboard.up().onPressDo({ 
-						
-			if(!niveles.catalogo().get(omniverse.current()).
-				zonasProhibidas().
-				contains(game.at(
-						rick.position().x(),rick.position().y() + 1)
-				)){
-				
+		keyboard.up().onPressDo({ 			
+			if(niveles.puedeMoverSiguientePosicion(rick.position().x(),rick.position().y() + 1)){
 				rick.position(rick.position().up(1)) 
 				rick.direction(up)
 			}
 		})
 		keyboard.right().onPressDo({ 
-			rick.position(rick.position().right(1)) 
-			rick.direction(right)
+			if(niveles.puedeMoverSiguientePosicion(rick.position().x() + 1,rick.position().y())){
+				rick.position(rick.position().right(1)) 
+				rick.direction(right)			
+			}
 		})
 		keyboard.down().onPressDo({ 
-			rick.position(rick.position().down(1))  
-			rick.direction(down)
+			if(niveles.puedeMoverSiguientePosicion(rick.position().x(),rick.position().y()-1)){
+				rick.position(rick.position().down(1))  
+				rick.direction(down)			
+			}
 		})
 		keyboard.left().onPressDo({ 
-			rick.position(rick.position().left(1))  
-			rick.direction(left)
+			if(niveles.puedeMoverSiguientePosicion(rick.position().x() - 1,rick.position().y())){
+				rick.position(rick.position().left(1))  
+				rick.direction(left)			
+			}
 		})
 		//
 		keyboard.z().onPressDo({ rick.grab() })
