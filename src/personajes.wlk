@@ -33,7 +33,6 @@ class OmniObjeto{
 
 object barra{
     // Refac
-    const contenidosDe = rick
     const property image = "assets/barra.png"
     const property mposition = game.at(0, 13)
 
@@ -42,6 +41,7 @@ object barra{
     method mover() {}
 
 }
+
 object rick{ // Wubba lubba dub dub
 	var position = game.at(1,1)
     var multiverse = 1
@@ -84,17 +84,23 @@ object rick{ // Wubba lubba dub dub
 	method trigger(destino) { grabed.trigger(destino) }
 
     // Refac
-    method guardar(visual) { 
-        visual.position(game.at(barra.mposition().x() + mochila.size(), barra.mposition().y() ))
-        visual.multiverse(omniverse.current())
-        mochila.add(visual)
+    method guardar() { 
+        grabed.position(game.at(barra.mposition().x() + mochila.size(), barra.mposition().y() ))
+        grabed.multiverse(omniverse.current())
+        mochila.add(grabed)
+        self.ungrab()
+    }
+
+    method sacar() {
+        grabed = mochila.head()
+        mochila.drop(1)
+        grabed.position(position)
+        grabed.multiverse(multiverse)
     }
 
 	method grab() { 
         self.verificarSiHayGrabbable()
 		grabed = game.colliders(self).head()
-        self.guardar(grabed)
-        self.ungrab()
 	}
 
     method verificarSiHayGrabbable(){

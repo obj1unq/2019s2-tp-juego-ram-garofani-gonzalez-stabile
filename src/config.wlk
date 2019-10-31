@@ -18,8 +18,10 @@ object config{
 		keyboard.x().onPressDo({ rick.ungrab() })
 		keyboard.space().onPressDo({ rick.trigger(numero) })
 		keyboard.p().onPressDo({ rick.travel() })
-                keyboard.alt().onPressDo({ lastMultiverso = omniverse.current() omniverse.current(numero) })
-                keyboard.control().onPressDo({ omniverse.current(lastMultiverso) })
+		keyboard.m().onPressDo({ rick.guardar() })
+		keyboard.n().onPressDo({ rick.sacar() })
+        keyboard.alt().onPressDo({ lastMultiverso = omniverse.current() omniverse.current(numero) })
+        keyboard.control().onPressDo({ omniverse.current(lastMultiverso) })
 
                 // to Debug
 		keyboard.q().onPressDo({ console.println(rick.position()) console.println(portalgun.position())})
