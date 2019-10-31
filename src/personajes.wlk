@@ -87,10 +87,18 @@ object rick{ // Wubba lubba dub dub
 	method trigger(destino) { grabed.trigger(destino) }
 
 	method grab() { 
+        self.verificarSiHayGrabbable()
 		grabed = game.colliders(self).head()
         barra.agregar(grabed)
         self.ungrab()
 	}
+
+    method verificarSiHayGrabbable(){
+        if (game.colliders(self).isEmpty()) {
+                game.errorReporter(self)
+                self.error("No hay que agarrar")
+        }
+    }
 
 	method ungrab() { 
 		grabed = nada
