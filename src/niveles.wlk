@@ -10,22 +10,26 @@ object random{
 object niveles{
     const property catalogo = [
 		 new Nivel(
-		  fondo = new Fondo(multiverse = 1, image = "assets/ram-fondo3.png"),
-		  objetos = [barra, rick, portalgun, raygun] + self.getListOfEnemies(),
-		  siguienteNivel = null ),
-                 new Nivel(
-		  fondo = new Fondo(multiverse = 2,image = "assets/ram-fondo1.png"),
-		  objetos = self.getListOfEnemies(),
-		  siguienteNivel = null ),
-                 new Nivel(
-		  fondo = new Fondo(multiverse = 3,image = "assets/ram-fondo2.png"),
-		  objetos = self.getListOfEnemies(),
-		  siguienteNivel = null )]
+		 	fondo = new Fondo(multiverse = 0, image = "assets/ram-fondo3.png"),
+		  	objetos = [barra, rick, portalgun, raygun ] + self.getListOfEnemies(0) ),
+         new Nivel(
+		  	fondo = new Fondo(multiverse = 1,image = "assets/ram-fondo1.png"),
+		  	objetos = self.getListOfEnemies(1) ),
+         new Nivel(
+		  	fondo = new Fondo(multiverse = 2,image = "assets/ram-fondo2.png"),
+		  	objetos = self.getListOfEnemies(2) ),
+		 new Nivel(
+		  	fondo = new Fondo(multiverse = 3,image = "assets/ram-fondo4.jpg"),
+		  	objetos = [nightVisionGoggles],
+		  	zonasProhibidas = self.armarZonasProhibidasNivelTres() )
+		  ]
+		  	
     var property actual = catalogo.first() 
     
     method presentar() { 
         self.presenteFondo()
         self.showAll()
+        self.showBlocksInProhibitedAreas()
     }
 
     method presenteFondo() { catalogo.forEach{nivel => nivel.presentarFondo()} }
@@ -34,19 +38,18 @@ object niveles{
 
     method numberOfEnemies() = random.up(1,4)
 
-    method getListOfEnemies() = (1..self.numberOfEnemies()).fold([], { enemies, value => enemies.add(self.createNewEnemy(value)) return enemies })
+    method getListOfEnemies(multiverse) = (1..self.numberOfEnemies()).fold([], { enemies, value => enemies.add(self.createNewEnemy(value, multiverse)) return enemies })
 //    method getListOfEnemies(){ //Refac: var             
 //            var enemies = []
 //            (1..self.numberOfEnemies()).forEach { value => enemies.add(self.createNewEnemy(value)) }
 //            return enemies
 //    }
     
-    method createNewEnemy(number){
+    method createNewEnemy(number, multiverse){
             return new Enemigo(
                 direction = self.getRandomMovementType(),
                 numeroEnemigo = number,
-                //multiverse = random.up(1,3),
-                multiverse = new Range(start = 1, end = 3).anyOne(),
+                multiverse = multiverse, 
                 mposition = game.at(new Range(start = 1, end = 10).anyOne(),new Range(start = 1, end = 10).anyOne())
                 //mposition = game.at(random.up(0,12), random.up(0,12))
             )
@@ -56,18 +59,60 @@ object niveles{
             //return (new Movimientos()).disponibles().anyOne()
             return [up, down, left, right].anyOne()
     }
+    
+    method armarZonasProhibidasNivelTres(){
+    	return [
+    				game.at(0,2),game.at(0,3),game.at(0,4),game.at(0,5),
+					game.at(1,9),
+					game.at(2,0),game.at(2,1),game.at(2,2),game.at(2,3),game.at(2,4),game.at(2,7),game.at(2,9),
+					game.at(3,4),game.at(3,7),game.at(3,9),game.at(3,10),game.at(3,11),game.at(3,12),
+					game.at(4,1),game.at(4,7),
+					game.at(5,1),game.at(5,2),game.at(5,3),game.at(5,4),game.at(5,5),game.at(5,6),game.at(5,7),
+					game.at(6,1),game.at(6,7),game.at(6,9),game.at(6,10),game.at(6,11),game.at(6,12),
+					game.at(7,1),game.at(7,4),game.at(7,7),game.at(7,12),
+					game.at(8,1),game.at(8,4),game.at(8,7),game.at(8,12),
+					game.at(9,1),game.at(9,2),game.at(9,3),game.at(9,4),game.at(9,7),game.at(9,8),game.at(9,9),game.at(9,12),	
+					game.at(10,12),
+					game.at(11,3),game.at(11,6),game.at(11,7),game.at(11,8),game.at(11,9),game.at(11,10),game.at(11,11),game.at(11,12),
+					game.at(12,0),game.at(12,3)
+    		   ]
+    }
+    
+    method showBlocksInProhibitedAreas(){
+    	catalogo.forEach{
+    		nivel => nivel.presentarZonasProhibidas()
+    	}    	
+    }
+    
+    method puedeMoverSiguientePosicion(pos) = 
+            pos.x() >= 0 and pos.x() < omniverse.ancho()-1 and pos.y() >= 0 and pos.y() < omniverse.alto()-1 and not self.esZonaProhibida(pos)
+    
+    method esZonaProhibida(pos){
+    	return self.catalogo().get(omniverse.current()).zonasProhibidas().contains(game.at(pos.x(), pos.y()))
+    }
 }
 
 class Nivel{
 	const fondo 
 	const property objetos = []
-	const property siguienteNivel // Refac: obsoleto?
 
-        method presentarFondo() { 
-            game.addVisual(fondo) 
-        }
+	const property zonasProhibidas = []
+	
+    method presentarFondo() { 
+    	game.addVisual(fondo) 
+    }
 
 	method show(){
-            objetos.forEach{v => game.addVisual(v)}
-        }
+		objetos.forEach{v => game.addVisual(v)}
+    }
+    
+    method presentarZonasProhibidas(){
+    	zonasProhibidas.forEach{
+            // aca no use addVisualIn, use addVisual
+    		zona => game.addVisual(new Bloque(multiverse = 3, mposition = zona))
+                								//position = zona), 
+                                                //zona)
+    	}
+    }   
+    
 }

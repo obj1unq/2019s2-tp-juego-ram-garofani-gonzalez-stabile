@@ -24,9 +24,9 @@ object omniverse{
 class OmniObjeto{
 	var property mposition = game.origin() 
 
-        var multiverse 
+	var multiverse 
 
-        method multiverse(value) { multiverse = value }
+    method multiverse(value) { multiverse = value }
 
 	method position() = omniverse.position(mposition, multiverse)
 }
@@ -53,20 +53,18 @@ object rick{ // Wubba lubba dub dub
 	method image() =  direction.imageRick()
 	
     method multiverse(value) { 
-            multiverse = value 
-            grabed.multiverse(multiverse)
-        }
-        
+        grabed.multiverse(multiverse)
+    }
+    
 	method position() = omniverse.position(position, multiverse)
 
 	method position(_position) { 
-        if (not self.estaFueraDeLosLimites(_position)){
+        if (niveles.puedeMoverSiguientePosicion(rick.position())){
             position = _position
             grabed.position(position)
         }
-	}
+    }
 
-    method estaFueraDeLosLimites(pos) = pos.x() < 0 or pos.x() > omniverse.ancho()-1 or pos.y() < 0 or pos.y() > omniverse.alto()-1
 
     method direction(_direction) { direction = _direction }
 
@@ -225,27 +223,48 @@ class Portal{
 }
 
 class Fondo inherits OmniObjeto{ 
-        var property image = "assets/ram-fondo3.png"
+   	var property image = "assets/ram-fondo3.png"
 
 	method mover(){}
+	
+	method colisionasteCon(alguien){}
 }
 
 class Enemigo inherits OmniObjeto{
 	var property numeroEnemigo
 	var property direction = down
 
-        method direction(_direction) { direction = _direction } 
+    method direction(_direction) { direction = _direction } 
 
-        method direction() = direction
+    method direction() = direction
 
 	method mover(){ 
-            direction.newMposition(self)
-        }
+        direction.newMposition(self)
+    }
 	
 	method image() = direction.imageEnemy(numeroEnemigo)
 
 	method colisionasteCon(alguien){
             alguien.catched()
 	}
+}
+
+class Bloque inherits OmniObjeto{
+	var property image = "assets/blockOculto.jpg"
+	
+    //saco esto. debe ser mposition y esta en OmniObjeto
+	//var property position
+	method colisionasteCon(alguien){}
+	method mover(){}
+}
+
+object nightVisionGoggles{
+	var property image = "assets/nightVisionGoggles.png"
+	var property position = game.at(0,0)
+	var multiverse = 3
+	method multiverse(value) { multiverse = value }        
+	method position() = omniverse.position(position, multiverse)
+	method colisionasteCon(alguien){}
+	method mover(){}
 }
 
