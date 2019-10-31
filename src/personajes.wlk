@@ -3,204 +3,273 @@ import niveles.*
 import directions.*
 import movimientos.*
 
-object omniverse{
-    var property current = 1
+object omniverse {
 
-    method position(pos, multiverse) = game.at(self.xfor(pos, multiverse), self.yfor(pos, multiverse) )
+	var property current = 1
 
-    method xfor(pos, multiverse) = self.origenXde(multiverse) + pos.x()
+	method position(pos, multiverse) = game.at(self.xfor(pos, multiverse), self.yfor(pos, multiverse))
 
-    method yfor(pos, multiverse) = self.origenYde(multiverse) + pos.y()
+	method xfor(pos, multiverse) = ( self.origenXde(multiverse) + pos.x() )
 
-    method ancho() = game.width()
+	method yfor(pos, multiverse) = ( self.origenYde(multiverse) + pos.y() )
 
-    method alto() = game.height() - 1
+	method ancho() = game.width()
 
-    method origenXde(multiverse) = self.ancho() * (multiverse - current)
+	method alto() = ( game.height() - 1 )
 
-    method origenYde(multiverse) = self.alto() * (multiverse - current)
+	method origenXde(multiverse) = ( self.ancho() * (multiverse - current) )
+
+	method origenYde(multiverse) = ( self.alto() * (multiverse - current)
+)
+
 }
 
-class OmniObjeto{
-	var property mposition = game.origin() 
+class OmniObjeto {
 
-        var multiverse 
+	var property mposition = game.origin()
+	var multiverse
 
-        method multiverse(value) { multiverse = value }
+	method multiverse(value) {
+		multiverse = value
+	}
 
 	method position() = omniverse.position(mposition, multiverse)
+
 }
 
-object rick{ // Wubba lubba dub dub
-	var position = game.at(1,1)
-        var multiverse = 1
-	var grabed = nada 
+object barra{
+    const contenidos = []
+    const property image = "assets/barra.png"
+    const property mposition = game.at(0, 13)
+
+	method position() = omniverse.position(mposition, omniverse.current())
+
+    method agregar(visual) { 
+        visual.position(game.at(mposition.x() + contenidos.size(), mposition.y() ))
+        visual.multiverse(omniverse.current())
+        contenidos.add(visual)
+    }
+    
+    method mover() {}
+}
+
+object rick { // Wubba lubba dub dub
+
+	var position = game.at(1, 1)
+	var multiverse = 1
+	var grabed = nada
 	var direction = down
-        var vidas = 3
-	
-	method image() =  direction.imageRick()
-	
-        method multiverse(value) { 
-            multiverse = value 
-            grabed.multiverse(multiverse)
-        }
-        
+	var vidas = 3
+
+	method image() = direction.imageRick()
+
+	method multiverse(value) {
+		multiverse = value
+		grabed.multiverse(multiverse)
+	}
+
 	method position() = omniverse.position(position, multiverse)
 
-	method position(_position) { 
-            if (not self.estaFueraDeLosLimites(_position)){
-		position = _position
-		grabed.position(position)
-            }
+	method position(_position) {
+		if (not self.estaFueraDeLosLimites(_position)) {
+			position = _position
+			grabed.position(position)
+		}
 	}
 
-        method estaFueraDeLosLimites(pos) = pos.x() < 0 or pos.x() > omniverse.ancho()-1 or pos.y() < 0 or pos.y() > omniverse.alto()-1
+	method estaFueraDeLosLimites(pos) = ( ( pos.x() < 0 ) or pos.x() > omniverse.ancho() - 1 ) or ( pos.y() < 0 ) or ( pos.y() > omniverse.alto() - 1 )
 
-        method direction(_direction) { direction = _direction }
+	method direction(_direction) {
+		direction = _direction
+	}
 
-	method travel() { self.verificarSiHayPortal() self.takePortal() }
+	method travel() {
+		self.verificarSiHayPortal()
+		self.takePortal()
+	}
 
-        method verificarSiHayPortal() { 
-            if (not game.colliders(self).any{ visible => visible.isPortal() }) game.say(self, "No hay por donde viajar")
-        }
+	method verificarSiHayPortal() {
+		if (not game.colliders(self).any({ visible => visible.isPortal()})) game.say(self, "No hay por donde viajar")
+	}
 
-        method takePortal() { game.colliders(self).find{ visible => visible.isPortal() }.travel(self) }
+	method takePortal() {
+		game.colliders(self).find({ visible => visible.isPortal()}).travel(self)
+	}
 
-	method trigger(destino) { grabed.trigger(destino) }
+	method trigger(destino) {
+		grabed.trigger(destino)
+	}
 
-	method grab() { 
+	method grab() {
 		grabed = game.colliders(self).head()
+        barra.agregar(grabed)
+        self.ungrab()
 	}
 
-	method ungrab() { 
+	method ungrab() {
 		grabed = nada
 	}
 
-        method mover() {}
+    method mover(direccion) {
+       direction.position(self) 
+    }
 
-        method catched() {
-            vidas -= 1
-            if ( vidas == 0) {
-		game.say(self, "Perdi!!!!!\nBye Bye!")
-                // pensar ir a pantalla con estadisticas
-		game.schedule(3000,{game.stop()})
-            } else 
-                game.say(self, "Outch!!!!!")
-        }
+	method mover() {
+	}
+
+	method catched() {
+		vidas -= 1
+		if (vidas == 0) {
+			game.say(self, "Perdi!!!!!\nBye Bye!")
+				// pensar ir a pantalla con estadisticas
+			game.schedule(3000, { game.stop()})
+		} else game.say(self, "Outch!!!!!")
+	}
 
 }
 
-object none{
-        const property image = ""
-        const property position = game.at(0,0)
-        method mover() {}
-	
+object none {
+
+	const property image = ""
+	const property position = game.at(0, 0)
+
+	method mover() {
+	}
+
 }
 
-object nada{
+object nada {
+
 	var property position = null
-	method trigger(detino){}
-	method colisionasteCon(alguien){
+
+	method trigger(detino) {
 	}
-}
 
-mixin Collectable{
-	method colisionasteCon(alguien){
-		game.say(alguien,"Hare guiso de lentejas con esto!")
+	method colisionasteCon(alguien) {
 	}
-}
-
-object raygun mixed with Collectable{
-        const property image = "assets/ray-gun.png"
-        var property mposition = game.at(10, 2)
-        var multiverse = 1
-
-        method position() = omniverse.position(mposition, multiverse)
-
-        method mover() {}
 
 }
-object portalgun mixed with Collectable{
+
+mixin Collectable {
+
+	method colisionasteCon(visual) {
+		game.say(visual, "Hare guiso de lentejas con esto!")
+	}
+
+    method isCollectable() = true
+
+}
+
+object raygun mixed with Collectable {
+
+	const property image = "assets/ray-gun.png"
+	var property position = game.at(10, 2)
+	var multiverse = 1
+
+	method position() = omniverse.position(position, multiverse)
+
+	method multiverse(value) {
+		multiverse = value
+	}
+
+	method mover() {
+	}
+
+}
+
+object portalgun mixed with Collectable {
+
 	var property image = "assets/gun.png"
-	var property position = game.at(5,5)
-        var multiverse = 1
+	var property position = game.at(5, 5)
+	var multiverse = 1
 	const property isPortal = false
 
-        method multiverse(value) { multiverse = value }
-        
+	method multiverse(value) {
+		multiverse = value
+	}
+
 	method position() = omniverse.position(position, multiverse)
 
-	method trigger(multiverseDestino){
-            self.verificarMultiversoDestinoEsDiferenteAlActual(multiverseDestino)
-            self.crearPortalA(multiverseDestino)
+	method trigger(multiverseDestino) {
+		self.verificarMultiversoDestinoEsDiferenteAlActual(multiverseDestino)
+		self.crearPortalA(multiverseDestino)
 	}
 
-        method crearPortalA(multiverseDestino){
-            const portal = new Portal(position = position, multiverse = multiverse, exit = 
-                           new Portal(position = position, multiverse = multiverseDestino, exit = null))
-            portal.exit().exit(portal)
-            game.addVisual(portal)
-            game.addVisual(portal.exit())
-        }
-
-        method verificarMultiversoDestinoEsDiferenteAlActual(multiversoDestino){
-            if (multiversoDestino == multiverse)  {
-                game.errorReporter(self)
-                self.error("Dame un multiverso destino!")
-            }
-        }
-	
-	method mover(){}
-	
-	override method colisionasteCon(alguien){
-		game.say(alguien,"Al fin, mi pistola de portales")
+	method crearPortalA(multiverseDestino) {
+		const portal = new Portal(position = position, multiverse = multiverse, exit = new Portal(position = position, multiverse = multiverseDestino, exit = null))
+		portal.exit().exit(portal)
+		game.addVisual(portal)
+		game.addVisual(portal.exit())
 	}
+
+	method verificarMultiversoDestinoEsDiferenteAlActual(multiversoDestino) {
+		if (multiversoDestino == multiverse) {
+			game.errorReporter(self)
+			self.error("Dame un multiverso destino!")
+		}
+	}
+
+	method mover() {
+	}
+
+	override method colisionasteCon(alguien) {
+		game.say(alguien, "Al fin, mi pistola de portales")
+	}
+
 }
 
+class Portal {
 
-class Portal{
-	const position 
-        const property multiverse 
+	const position
+	const property multiverse
 	const property image = "assets/portal.gif"
 	const property isPortal = true
-        var property exit
+	var property exit
 
 	method position() = omniverse.position(position, multiverse)
 
-	
-	method travel(traveler) { 
-            omniverse.current(exit.multiverse())
-            traveler.multiverse(exit.multiverse())
-            traveler.position(exit.position())
+	method travel(traveler) {
+		omniverse.current(exit.multiverse())
+		traveler.multiverse(exit.multiverse())
+		traveler.position(exit.position())
 	}
-	
-	method colisionasteCon(alguien){}
 
-	method mover(){}
+	method colisionasteCon(alguien) {
+	}
+
+	method mover() {
+	}
+
 }
 
-class Fondo inherits OmniObjeto{ 
-        var property image = "assets/ram-fondo3.png"
+class Fondo inherits OmniObjeto {
 
-	method mover(){}
+	var property image = "assets/ram-fondo3.png"
+
+	method mover() { }
+
 }
 
-class Enemigo inherits OmniObjeto{
+class Enemigo inherits OmniObjeto {
+
 	var property numeroEnemigo
 	var property direction = down
 
-        method direction(_direction) { direction = _direction } 
+	method direction(_direction) {
+		direction = _direction
+	}
 
-        method direction() = direction
+	method direction() = direction
 
-	method mover(){ 
-            direction.newMposition(self)
-        }
-	
+	method mover() {
+		direction.newMposition(self)
+	}
+
 	method image() = direction.imageEnemy(numeroEnemigo)
 
-	method colisionasteCon(alguien){
-            alguien.catched()
+	method colisionasteCon(visual) {
+		visual.catched()
 	}
+
 }
 

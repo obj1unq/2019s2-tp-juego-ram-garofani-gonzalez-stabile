@@ -1,6 +1,4 @@
 
 test "¡sep, vale hacer tests también!" {
-
 	assert.that(false)
-
 }
