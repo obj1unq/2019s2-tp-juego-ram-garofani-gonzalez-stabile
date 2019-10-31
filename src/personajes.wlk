@@ -60,10 +60,10 @@ object rick{ // Wubba lubba dub dub
 	method position() = omniverse.position(position, multiverse)
 
 	method position(_position) { 
-            if (not self.estaFueraDeLosLimites(_position)){
-		position = _position
-		grabed.position(position)
-            }
+        if (not self.estaFueraDeLosLimites(_position)){
+            position = _position
+            grabed.position(position)
+        }
 	}
 
     method estaFueraDeLosLimites(pos) = pos.x() < 0 or pos.x() > omniverse.ancho()-1 or pos.y() < 0 or pos.y() > omniverse.alto()-1
@@ -93,7 +93,7 @@ object rick{ // Wubba lubba dub dub
 
     method sacar() {
         grabed = mochila.head()
-        mochila.drop(1)
+        mochila.remove(grabed)
         grabed.position(position)
         grabed.multiverse(multiverse)
     }
