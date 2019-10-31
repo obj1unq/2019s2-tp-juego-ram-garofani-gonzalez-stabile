@@ -76,7 +76,10 @@ object rick{ // Wubba lubba dub dub
 	method travel() { self.verificarSiHayPortal() self.takePortal() }
 
     method verificarSiHayPortal() { 
-            if (not game.colliders(self).any{ visible => visible.isPortal() }) game.say(self, "No hay por donde viajar")
+            if (not game.colliders(self).any{ visible => visible.isPortal() }) {
+                game.errorReporter(self)
+                self.error("No hay por donde viajar")
+            }
         }
 
     method takePortal() { game.colliders(self).find{ visible => visible.isPortal() }.travel(self) }
