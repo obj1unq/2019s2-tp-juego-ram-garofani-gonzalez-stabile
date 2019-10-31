@@ -32,19 +32,15 @@ class OmniObjeto{
 }
 
 object barra{
-    const contenidos = []
+    // Refac
+    const contenidosDe = rick
     const property image = "assets/barra.png"
     const property mposition = game.at(0, 13)
 
 	method position() = omniverse.position(mposition, omniverse.current())
 
-    method agregar(visual) { 
-        visual.position(game.at(mposition.x() + contenidos.size(), mposition.y() ))
-        visual.multiverse(omniverse.current())
-        contenidos.add(visual)
-    }
-    
     method mover() {}
+
 }
 object rick{ // Wubba lubba dub dub
 	var position = game.at(1,1)
@@ -52,6 +48,7 @@ object rick{ // Wubba lubba dub dub
 	var grabed = nada 
 	var direction = down
     var vidas = 3
+    const mochila = []
 	
 	method image() =  direction.imageRick()
 	
@@ -86,17 +83,24 @@ object rick{ // Wubba lubba dub dub
 
 	method trigger(destino) { grabed.trigger(destino) }
 
+    // Refac
+    method guardar(visual) { 
+        visual.position(game.at(barra.mposition().x() + mochila.size(), barra.mposition().y() ))
+        visual.multiverse(omniverse.current())
+        mochila.add(visual)
+    }
+
 	method grab() { 
         self.verificarSiHayGrabbable()
 		grabed = game.colliders(self).head()
-        barra.agregar(grabed)
+        self.guardar(grabed)
         self.ungrab()
 	}
 
     method verificarSiHayGrabbable(){
         if (game.colliders(self).isEmpty()) {
-                game.errorReporter(self)
-                self.error("No hay que agarrar")
+            game.errorReporter(self)
+            self.error("No hay que agarrar")
         }
     }
 
