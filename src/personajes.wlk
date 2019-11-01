@@ -52,7 +52,8 @@ object rick{ // Wubba lubba dub dub
 	
 	method image() =  direction.imageRick()
 	
-    method multiverse(value) { 
+    method multiverse(_multiverse) { 
+        multiverse = _multiverse
         grabed.multiverse(multiverse)
     }
     
@@ -144,6 +145,7 @@ mixin Collectable{
 	method colisionasteCon(alguien){
 		game.say(alguien,"Hare guiso de lentejas con esto!")
 	}
+
 }
 
 object raygun mixed with Collectable{
@@ -228,6 +230,8 @@ class Fondo inherits OmniObjeto{
 	method mover(){}
 	
 	method colisionasteCon(alguien){}
+
+    method isPortal() = false
 }
 
 class Enemigo inherits OmniObjeto{
