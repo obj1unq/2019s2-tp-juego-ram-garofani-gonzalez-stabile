@@ -42,7 +42,7 @@ object barra{
 
 }
 
-object rick{ // Wubba lubba dub dub
+object rick{ 
 	var position = game.at(1,1)
     var multiverse = 1
 	var grabed = nada 
@@ -78,7 +78,10 @@ object rick{ // Wubba lubba dub dub
             }
         }
 
-    method takePortal() { game.colliders(self).find{ visible => visible.isPortal() }.travel(self) }
+    method takePortal() {
+        game.colliders(self).find{ visible => visible.isPortal() }.travel(self)
+        self.acomodar() //refac
+    }
 
 	method trigger(destino) { grabed.trigger(destino) }
 
@@ -99,7 +102,11 @@ object rick{ // Wubba lubba dub dub
     }
 
     method acomodar(){ 
-        mochila.fold(0, {index, visual => visual.position(game.at(barra.mposition().x() + index, barra.mposition().y())) index + 1 })
+        mochila.fold(0, {
+            index, visual => 
+            visual.position(game.at(barra.mposition().x() + index, barra.mposition().y()))
+            visual.multiverse(omniverse.current())
+            index + 1 })
     }
 
 	method grab() { 
@@ -148,8 +155,15 @@ object nada{
 
 mixin Collectable{
 	method colisionasteCon(alguien){
-		game.say(alguien,"Hare guiso de lentejas con esto!")
+		game.say(alguien,self.quote())
 	}
+
+    method quote() = [
+            "Hare guiso de lentejas con esto!",
+            "Wubba lubba dub dub",
+            "A veces la ciencia es mas arte que ciencia",
+            "No so fast!"
+        ].anyOne()
 
     method isCollectable() = true
 }
@@ -279,7 +293,6 @@ object nightVisionGoggles mixed with Collectable{
 	var multiverse = 3
 	method multiverse(value) { multiverse = value }        
 	method position() = omniverse.position(position, multiverse)
-	method colisionasteCon(alguien){}
 	method mover(){}
 }
 
