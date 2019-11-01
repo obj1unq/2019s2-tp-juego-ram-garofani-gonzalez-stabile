@@ -60,7 +60,7 @@ object rick{
 	method position() = omniverse.position(position, multiverse)
 
 	method position(_position) { 
-        if (not niveles.estaFueraDeLosLimites(_position)){
+        if (niveles.puedeMoverSiguientePosicion(_position)){ 
             position = _position
             grabed.position(position)
         }
@@ -295,4 +295,5 @@ object nightVisionGoggles mixed with Collectable{
 	method position() = omniverse.position(position, multiverse)
 	method mover(){}
 }
+
 
