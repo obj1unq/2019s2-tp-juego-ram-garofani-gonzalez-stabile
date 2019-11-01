@@ -152,7 +152,10 @@ mixin Collectable{
 	}
 
     method isCollectable() = true
+}
 
+mixin NotCollectable{
+    method isCollectable() = false
 }
 
 object raygun mixed with Collectable{
@@ -172,6 +175,7 @@ object raygun mixed with Collectable{
     method mover() {}
 
 }
+
 object portalgun mixed with Collectable{
 	var property image = "assets/gun.png"
 	var property position = game.at(5,5)
@@ -231,7 +235,7 @@ class Portal{
 	method mover(){}
 }
 
-class Fondo inherits OmniObjeto{ 
+class Fondo inherits OmniObjeto mixed with NotCollectable{ 
    	var property image = "assets/ram-fondo3.png"
 
 	method mover(){}
@@ -269,7 +273,7 @@ class Bloque inherits OmniObjeto{
 	method mover(){}
 }
 
-object nightVisionGoggles{
+object nightVisionGoggles mixed with Collectable{
 	var property image = "assets/nightVisionGoggles.png"
 	var property position = game.at(0,0)
 	var multiverse = 3
