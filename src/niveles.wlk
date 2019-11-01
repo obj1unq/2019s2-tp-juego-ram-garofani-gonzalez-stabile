@@ -19,7 +19,7 @@ object niveles{
 		  	fondo = new Fondo(multiverse = 2,image = "assets/ram-fondo2.png"),
 		  	objetos = self.getListOfEnemies(2) ),
 		 new Nivel(
-		  	fondo = new Fondo(multiverse = 3,image = "assets/ram-fondo4.jpg"),
+		  	fondo = new Fondo(multiverse = 3,image = "assets/ram-fondo4.png"),
 		  	objetos = [nightVisionGoggles],
 		  	zonasProhibidas = self.armarZonasProhibidasNivelTres() )
 		  ]
@@ -38,12 +38,10 @@ object niveles{
 
     method numberOfEnemies() = random.up(1,4)
 
-    method getListOfEnemies(multiverse) = (1..self.numberOfEnemies()).fold([], { enemies, value => enemies.add(self.createNewEnemy(value, multiverse)) return enemies })
-//    method getListOfEnemies(){ //Refac: var             
-//            var enemies = []
-//            (1..self.numberOfEnemies()).forEach { value => enemies.add(self.createNewEnemy(value)) }
-//            return enemies
-//    }
+    method getListOfEnemies(multiverse) = (1..self.numberOfEnemies()).fold([], { 
+                                                     enemies, value => enemies.add(self.createNewEnemy(value, multiverse)) 
+                                                     return enemies 
+                                          })
     
     method createNewEnemy(number, multiverse){
             return new Enemigo(
