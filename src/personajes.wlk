@@ -14,7 +14,7 @@ object omniverse{
 
     method ancho() = game.width()
 
-    method alto() = game.height() - 1
+    method alto() = game.height() - barra.altura()
 
     method origenXde(multiverse) = self.ancho() * (multiverse - current)
 
@@ -37,6 +37,8 @@ object barra{
     const property mposition = game.at(0, 13)
 
 	method position() = omniverse.position(mposition, omniverse.current())
+
+    method altura() = 1
 
     method mover() {}
 
@@ -146,11 +148,11 @@ object none{
 	
 }
 
-object nada{
+object nada {
 	var property position = null
-	method trigger(detino){}
-	method colisionasteCon(alguien){
-	}
+    var property multiverse = null
+	method trigger(destino){}
+	method colisionasteCon(alguien){ }
 }
 
 mixin Collectable{
