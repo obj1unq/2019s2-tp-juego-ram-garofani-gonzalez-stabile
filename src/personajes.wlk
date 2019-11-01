@@ -98,12 +98,12 @@ object rick{ // Wubba lubba dub dub
     }
 
 	method grab() { 
-        self.verificarSiHayGrabbable()
-		grabed = game.colliders(self).head()
+        self.verificarSiHayCollectable()
+		grabed = game.colliders(self).find{visual => visual.isCollectable()}
 	}
 
-    method verificarSiHayGrabbable(){
-        if (game.colliders(self).isEmpty()) {
+    method verificarSiHayCollectable(){
+        if (not game.colliders(self).any{visual => visual.isCollectable() }) {
             game.errorReporter(self)
             self.error("No hay que agarrar")
         }
@@ -146,6 +146,8 @@ mixin Collectable{
 		game.say(alguien,"Hare guiso de lentejas con esto!")
 	}
 
+    method isCollectable() = true
+
 }
 
 object raygun mixed with Collectable{
@@ -171,7 +173,7 @@ object portalgun mixed with Collectable{
         var multiverse = 1
 	const property isPortal = false
 
-        method multiverse(value) { multiverse = value }
+    method multiverse(value) { multiverse = value }
         
 	method position() = omniverse.position(position, multiverse)
 
@@ -180,20 +182,20 @@ object portalgun mixed with Collectable{
             self.crearPortalA(multiverseDestino)
 	}
 
-        method crearPortalA(multiverseDestino){
-            const portal = new Portal(position = position, multiverse = multiverse, exit = 
-                           new Portal(position = position, multiverse = multiverseDestino, exit = null))
-            portal.exit().exit(portal)
-            game.addVisual(portal)
-            game.addVisual(portal.exit())
-        }
+    method crearPortalA(multiverseDestino){
+        const portal = new Portal(position = position, multiverse = multiverse, exit = 
+                       new Portal(position = position, multiverse = multiverseDestino, exit = null))
+        portal.exit().exit(portal)
+        game.addVisual(portal)
+        game.addVisual(portal.exit())
+    }
 
-        method verificarMultiversoDestinoEsDiferenteAlActual(multiversoDestino){
-            if (multiversoDestino == multiverse)  {
-                game.errorReporter(self)
-                self.error("Dame un multiverso destino!")
-            }
+    method verificarMultiversoDestinoEsDiferenteAlActual(multiversoDestino){
+        if (multiversoDestino == multiverse)  {
+            game.errorReporter(self)
+            self.error("Dame un multiverso destino!")
         }
+    }
 	
 	method mover(){}
 	
@@ -205,7 +207,7 @@ object portalgun mixed with Collectable{
 
 class Portal{
 	const position 
-        const property multiverse 
+    const property multiverse 
 	const property image = "assets/portal.gif"
 	const property isPortal = true
         var property exit
