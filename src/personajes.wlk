@@ -59,7 +59,7 @@ object rick{ // Wubba lubba dub dub
 	method position() = omniverse.position(position, multiverse)
 
 	method position(_position) { 
-        if (niveles.puedeMoverSiguientePosicion(self.position())){
+        if (not niveles.estaFueraDeLosLimites(_position)){
             position = _position
             grabed.position(position)
         }
