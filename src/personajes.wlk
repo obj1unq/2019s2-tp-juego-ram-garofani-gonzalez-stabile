@@ -84,17 +84,22 @@ object rick{ // Wubba lubba dub dub
 
     // Refac
     method guardar() { 
-        grabed.position(game.at(barra.mposition().x() + mochila.size(), barra.mposition().y() ))
         grabed.multiverse(omniverse.current())
         mochila.add(grabed)
+        self.acomodar()
         self.ungrab()
     }
 
     method sacar() {
         grabed = mochila.head()
         mochila.remove(grabed)
+        self.acomodar()
         grabed.position(position)
         grabed.multiverse(multiverse)
+    }
+
+    method acomodar(){ 
+        mochila.fold(0, {index, visual => visual.position(game.at(barra.mposition().x() + index, barra.mposition().y())) index + 1 })
     }
 
 	method grab() { 
