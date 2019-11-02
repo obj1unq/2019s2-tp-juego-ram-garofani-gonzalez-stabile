@@ -16,11 +16,11 @@ object omniverse{
 
     method alto() = game.height() - barra.altura()
 
-    method origenXde(multiverse) = self.ancho() * self.distanciaACurrent()
+    method origenXde(multiverse) = self.ancho() * self.distanciaACurrent(multiverse)
 
-    method origenYde(multiverse) = self.alto() * self.distanciaACurrent()
+    method origenYde(multiverse) = self.alto() * self.distanciaACurrent(multiverse)
 
-    method distanciaACurrent() = multiverse - current
+    method distanciaACurrent(multiverse) = multiverse - current
 }
 
 class OmniObjeto{
@@ -92,7 +92,7 @@ object rick{
 
     method takePortal() {
         game.colliders(self).find{ visible => visible.isPortal() }.travel(self)
-        self.acomodar() //refac
+        barra.acomodar(mochila) // acomoda las referencias de la mochila al nuevo multiverso//refac
     }
 
 	method trigger(destino) { grabed.trigger(destino) }
@@ -102,14 +102,14 @@ object rick{
         grabed.verificarInventariable(self)
         grabed.multiverse(omniverse.current())
         mochila.add(grabed)
-        barra.acomodar()
+        barra.acomodar(mochila)
         self.ungrab()
     }
 
     method sacar() {
         grabed = mochila.head()
         mochila.remove(grabed)
-        barra.acomodar()
+        barra.acomodar(mochila)
         grabed.position(position)
         grabed.multiverse(multiverse)
     }
