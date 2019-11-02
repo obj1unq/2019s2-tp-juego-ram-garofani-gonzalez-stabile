@@ -37,6 +37,9 @@ object config{
 		keyboard.m().onPressDo({ rick.guardar() })
 		keyboard.n().onPressDo({ rick.sacar() })
         keyboard.control().onPressDo({ omniverse.current(lastMultiverso) })
+        
+        
+        keyboard.g().onPressDo({rick.ponerseLentes()})
 
                 // to Debug
        	keyboard.alt().onPressDo({ 

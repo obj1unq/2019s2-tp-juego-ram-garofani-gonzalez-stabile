@@ -109,9 +109,7 @@ class Nivel{
     method presentarZonasProhibidas(){
     	zonasProhibidas.forEach{
             // aca no use addVisualIn, use addVisual
-    		zona => game.addVisual(new Bloque(multiverse = 3, mposition = zona))
-                								//position = zona), 
-                                                //zona)
+    		zona => game.addVisual(new Bloque(multiverse = 3, mposition = zona))                								
     	}
     }   
     

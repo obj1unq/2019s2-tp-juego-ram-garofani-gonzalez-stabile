@@ -3,7 +3,7 @@ import niveles.*
 import directions.*
 import movimientos.*
 
-object omniverse{
+object omniverse mixed with NotCollectable{
     var property current = 1
 
     method position(pos, multiverse) = game.at(self.xfor(pos, multiverse), self.yfor(pos, multiverse) )
@@ -23,21 +23,24 @@ object omniverse{
     method distanciaACurrent(multiverse) = multiverse - current
 }
 
-class OmniObjeto{
+class OmniObjeto mixed with NotCollectable{
 	var property mposition = game.origin() 
-
 	var multiverse 
 
     method multiverse(value) { multiverse = value }
 
 	method position() = omniverse.position(mposition, multiverse)
+	
+	override method mover(){}
+	
+	override method esObstaculo() = false
+	
 }
 
-object barra{
+object barra mixed with NotCollectable{
     // Refac
     const property image = "assets/barra.png"
     const property mposition = game.at(0, 13)
-
 	method position() = omniverse.position(mposition, omniverse.current())
 
     method acomodar(mochila){ 
@@ -50,11 +53,9 @@ object barra{
 
     method altura() = 1
 
-    method mover() {}
-
 }
 
-object rick{ 
+object rick mixed with NotCollectable{ 
 	var position = game.at(1,1)
     var multiverse = 1
 	var grabed = nada 
@@ -131,8 +132,6 @@ object rick{
 		grabed = nada
 	}
 
-    method mover() {}
-
     method catched() {
         vidas -= 1
         if ( vidas == 0) {
@@ -144,28 +143,44 @@ object rick{
     }
 
     method isPortal() = false
+    
+    method ponerseLentes(){
+    	if(!self.tieneElObjetoEnLaMochila(nightVisionGoggles)){
+    		self.error("No tengo los lentes de vision nocturna");
+    	}
+    	
+    	game.allVisuals().forEach { 
+    		objeto => if(objeto.esObstaculo()) objeto.image("assets/blocks.png");
+    		
+    	}
+    	
+    }
+    
+    method tieneElObjetoEnLaMochila(objeto){
+    	return mochila.contains(objeto)
+    }
 
 }
 
-object none{
-        const property image = ""
-        const property position = game.at(0,0)
-        method mover() {}
-	
+object none mixed with NotCollectable{
+    const property image = ""
+    const property position = game.at(0,0)	
 }
 
-object nada {
+object nada mixed with NotCollectable {
 	var property position = null
     var property multiverse = null
 	method trigger(destino){}
 	method colisionasteCon(alguien){ }
     method verificarInventariable(owner) {
-            game.errorReporter(owner)
-            self.error("Nada que guardar!")
-        }
+        game.errorReporter(owner)
+        self.error("Nada que guardar!")
+    }
 }
 
 mixin Collectable{
+	const property esObstaculo = false
+	
 	method colisionasteCon(alguien){
 		game.say(alguien,self.quote())
 	}
@@ -179,10 +194,14 @@ mixin Collectable{
 
     method isCollectable() = true
     method verificarInventariable(owner) { }
+    
+    method mover(){}
 }
 
 mixin NotCollectable{
+	method esObstaculo() = false
     method isCollectable() = false
+    method mover(){}	
 }
 
 object raygun mixed with Collectable{
@@ -199,14 +218,12 @@ object raygun mixed with Collectable{
 		multiverse = value
 	}
 
-    method mover() {}
-
 }
 
 object portalgun mixed with Collectable{
 	var property image = "assets/gun.png"
 	var property position = game.at(5,5)
-        var multiverse = 1
+    var multiverse = 1
 	const property isPortal = false
 
     method multiverse(value) { multiverse = value }
@@ -232,16 +249,14 @@ object portalgun mixed with Collectable{
             self.error("Dame un multiverso destino!")
         }
     }
-	
-	method mover(){}
-	
+
 	override method colisionasteCon(alguien){
 		game.say(alguien,"Al fin, mi pistola de portales")
 	}
 }
 
 
-class Portal{
+class Portal mixed with NotCollectable{
 	const position 
     const property multiverse 
 	const property image = "assets/portal.gif"
@@ -259,13 +274,10 @@ class Portal{
 	
 	method colisionasteCon(alguien){}
 
-	method mover(){}
 }
 
-class Fondo inherits OmniObjeto mixed with NotCollectable{ 
+class Fondo inherits OmniObjeto{ 
    	var property image = "assets/ram-fondo3.png"
-
-	method mover(){}
 	
 	method colisionasteCon(alguien){}
 
@@ -275,29 +287,27 @@ class Fondo inherits OmniObjeto mixed with NotCollectable{
 class Enemigo inherits OmniObjeto{
 	var property numeroEnemigo
 	var property direction = down
-
+	var property image = ""
     method direction(_direction) { direction = _direction } 
 
     method direction() = direction
 
-	method mover(){ 
+	override method mover(){ 
         direction.newMposition(self)
     }
 	
 	method image() = direction.imageEnemy(numeroEnemigo)
 
 	method colisionasteCon(alguien){
-            alguien.catched()
+    	alguien.catched()
 	}
 }
 
 class Bloque inherits OmniObjeto{
 	var property image =  "assets/blockOculto.png"
-	
-    //saco esto. debe ser mposition y esta en OmniObjeto
-	//var property position
 	method colisionasteCon(alguien){}
-	method mover(){}
+	
+	override method esObstaculo() = true
 }
 
 object nightVisionGoggles mixed with Collectable{
@@ -306,7 +316,6 @@ object nightVisionGoggles mixed with Collectable{
 	var multiverse = 3
 	method multiverse(value) { multiverse = value }        
 	method position() = omniverse.position(position, multiverse)
-	method mover(){}
 }
 
 
