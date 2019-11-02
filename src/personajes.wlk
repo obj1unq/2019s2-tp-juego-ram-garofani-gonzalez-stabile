@@ -89,6 +89,7 @@ object rick{
 
     // Refac
     method guardar() { 
+        grabed.verificarInventariable(self)
         grabed.multiverse(omniverse.current())
         mochila.add(grabed)
         self.acomodar()
@@ -155,6 +156,10 @@ object nada {
     var property multiverse = null
 	method trigger(destino){}
 	method colisionasteCon(alguien){ }
+    method verificarInventariable(owner) {
+            game.errorReporter(owner)
+            self.error("Nada que guardar!")
+        }
 }
 
 mixin Collectable{
@@ -170,6 +175,7 @@ mixin Collectable{
         ].anyOne()
 
     method isCollectable() = true
+    method verificarInventariable(owner) { }
 }
 
 mixin NotCollectable{
@@ -283,7 +289,7 @@ class Enemigo inherits OmniObjeto{
 }
 
 class Bloque inherits OmniObjeto{
-	var property image = "assets/blockOculto.jpg"
+	var property image =  "assets/blockOculto.png"
 	
     //saco esto. debe ser mposition y esta en OmniObjeto
 	//var property position
