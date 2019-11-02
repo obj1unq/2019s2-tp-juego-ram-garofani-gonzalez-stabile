@@ -16,9 +16,11 @@ object omniverse{
 
     method alto() = game.height() - barra.altura()
 
-    method origenXde(multiverse) = self.ancho() * (multiverse - current)
+    method origenXde(multiverse) = self.ancho() * self.distanciaACurrent()
 
-    method origenYde(multiverse) = self.alto() * (multiverse - current)
+    method origenYde(multiverse) = self.alto() * self.distanciaACurrent()
+
+    method distanciaACurrent() = multiverse - current
 }
 
 class OmniObjeto{
