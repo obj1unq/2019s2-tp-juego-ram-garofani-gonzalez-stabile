@@ -38,6 +38,14 @@ object barra{
 
 	method position() = omniverse.position(mposition, omniverse.current())
 
+    method acomodar(mochila){ 
+        mochila.fold(0, {
+            index, visual => 
+            visual.position(game.at(mposition.x() + index, mposition.y()))
+            visual.multiverse(omniverse.current())
+            index + 1 })
+    }
+
     method altura() = 1
 
     method mover() {}
@@ -92,25 +100,18 @@ object rick{
         grabed.verificarInventariable(self)
         grabed.multiverse(omniverse.current())
         mochila.add(grabed)
-        self.acomodar()
+        barra.acomodar()
         self.ungrab()
     }
 
     method sacar() {
         grabed = mochila.head()
         mochila.remove(grabed)
-        self.acomodar()
+        barra.acomodar()
         grabed.position(position)
         grabed.multiverse(multiverse)
     }
 
-    method acomodar(){ 
-        mochila.fold(0, {
-            index, visual => 
-            visual.position(game.at(barra.mposition().x() + index, barra.mposition().y()))
-            visual.multiverse(omniverse.current())
-            index + 1 })
-    }
 
 	method grab() { 
         self.verificarSiHayCollectable()
