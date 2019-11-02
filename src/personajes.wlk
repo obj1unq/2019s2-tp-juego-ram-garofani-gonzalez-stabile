@@ -139,6 +139,8 @@ object rick{
             game.say(self, "Outch!!!!!")
     }
 
+    method isPortal() = false
+
 }
 
 object none{

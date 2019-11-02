@@ -3,68 +3,89 @@ import niveles.*
 import personajes.*
 
 describe "RaM tests (muy describe)"{
-
-test "multiverso 0,0,1 es 0,0"{
-	assert.throwsException({multiverso.at(0,0,1)})
+fixture {
+    game.width(13)
+    game.height(14)
 }
-test "multiverso 0,0,1 es 0,0 con 1 en vista"{
-	multiverso.enVista(1)
-	assert.equals(game.at(0,0), multiverso.at(0,0,1))
+test "omniverse current is 1"{
+    assert.equals(1, omniverse.current())
 }
-test "multiverso 3,7,2 es 3,7 con 2 en vista"{
-	multiverso.enVista(2)
-	assert.equals(game.at(3,7), multiverso.at(3,7,2))
+test "omniverse tiene 13 de ancho y 13 de alto"{
+    assert.equals(13, omniverse.ancho()) 
+    assert.equals(13, omniverse.alto()) 
 }
-test "multiverso 3,7,3 es 8,12 con 2 en vista"{
-	multiverso.enVista(2)
-	assert.equals(game.at(8,12), multiverso.at(3,7,3))
+test "omniverse 0,0,1 es 0,0 con multiverse 1 en current"{
+	omniverse.current(1)
+	assert.equals(game.at(0,0), omniverse.position(game.at(0,0), 1))
 }
-test "multiverso 3,7,4 es -7,-3 con 6 en vista"{
-	multiverso.enVista(6)
-	assert.equals(game.at(-7,-3), multiverso.at(3,7,4))
+test "omniverse 13,13,0 es 0,0 con multiverse 1 current"{
+    omniverse.current(1)
+    assert.equals(game.at(0,0), omniverse.position(game.at(13,13), 0))
+}
+test "omniverse 12,12,2 es 25,25 con multiverse 1 en current"{
+	omniverse.current(1)
+	assert.equals(game.at(25,25), omniverse.position(game.at(12,12), 2))
+}
+test "omniverse 3,7,2 es 3,7 con multiverse 2 en current"{
+	omniverse.current(2)
+	assert.equals(game.at(3,7), omniverse.position(game.at(3,7), 2))
+}
+test "omniverse 3,7,3 es 16,21 con multiverso 2 en current"{
+	omniverse.current(2)
+	assert.equals(game.at(16,20), omniverse.position(game.at(3,7), 3))
+}
+test "omniverse 3,7,0 es -10,-6 con multiverso 1 current"{
+	omniverse.current(1)
+	assert.equals(game.at(-10,-6), omniverse.position(game.at(3,7), 0))
+}
+test "omniverse 3,7,0 es -62,-58 con multiverso 5 current"{
+    omniverse.current(5)
+    assert.equals(game.at(-62,-58), omniverse.position(game.at(3,7), 0))
 }
 test "rick esta en el universo visible"{
-	multiverso.enVista(1)
-	rick.position(game.at(7,2), multiverso.enVista())
-	assert.equals(game.at(7,2), rick.position())
+    omniverse.current(1)
+    //rick.oposition(7,2, omniverse.current())
+    rick.position(game.at(7,2))
+    rick.multiverse(omniverse.current())
+    assert.equals(game.at(7,2), rick.position())
 }
-test "rick esta en un universo paralelo a 'izquierda' :D"{
-	game.width(10)
-	game.height(10)
-	multiverso.enVista(2)
-	assert.equals(game.at(-3, -8), multiverso.at(game.at(7, 2), 1))
-	rick.position(game.at(7,2), 1)
-	assert.equals(game.at(-3, -8), rick.position())
+test "rick esta en un universo paralelo a 'izquierda' :D "{
+    omniverse.current(2)
+    rick.position(game.at(7,2))
+    rick.multiverse(1)
+    assert.equals(game.at(-6,-11), rick.position())
 }
-test "rick esta en un universo paralelo a la 'derecha' ;P"{
-	game.width(25)
-	game.height(25)
-	multiverso.enVista(1)
-	rick.position(game.at(7,2), 1)
-	assert.equals(game.at(32, 27), rick.position())
+test "rick esta en un universo paralelo a 'derecha' ;P "{
+    omniverse.current(2)
+    rick.position(game.at(7,2))
+    rick.multiverse(3)
+    assert.equals(game.at(20,15), rick.position())
 }
-test "Se crea un portal y hay dos portales en el universo"{
-	multiverso.enVista(1)
-	gun.trigger(3)
-	assert.equals(2, game.allVisuals().size())
+
+test "Se crea un portal y hay dos portales en el omniverse"{
+    omniverse.current(5)
+    portalgun.trigger(3)
+    assert.that(game.allVisuals().all{visual => visual.isPortal()})
+    assert.equals(2, game.allVisuals().size())
 }
+
 test "Se crea un portal y rick pasa por el apareciondo en el otro universo"{
-	const nroUniversoOrigen = 1
-	const nroUniversoDestino = 17
+	const nroMultiversoOrigen = 1
+	const nroMultiversoDestino = 3
 	const position = game.at(3, 7)
 	game.clear()
-	multiverso.enVista(nroUniversoOrigen)
-	multiverso.add(rick)
-	multiverso.add(gun)
-	gun.position(multiverso.at(position, nroUniversoOrigen))
-	rick.position(multiverso.at(position, nroUniversoOrigen))
+	omniverse.current(nroMultiversoOrigen)
+	portalgun.position(omniverse.position(position, nroMultiversoOrigen))
+    game.addVisual(rick)
+    game.addVisual(portalgun)
+	rick.position(omniverse.position(position, nroMultiversoOrigen))
 	rick.grab()
-	rick.trigger(nroUniversoDestino)
-	assert.equals(multiverso.at(position, nroUniversoOrigen),  rick.position())
+	rick.trigger(nroMultiversoDestino)
+	assert.equals(omniverse.position(position, nroMultiversoOrigen),  rick.position())
 	assert.equals(2, game.allVisuals().filter{obj => obj.isPortal()}.size() )
+	assert.notEquals(omniverse.position(position, nroMultiversoDestino), rick.position())
 	rick.travel()
-	assert.notEquals(multiverso.at(position, nroUniversoDestino), rick.position())
-	assert.equals(rick.position(), gun.position())
+	assert.equals(rick.position(), portalgun.position())
 }
 test "¡sep, vale hacer tests también!" {
 
