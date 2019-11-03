@@ -40,6 +40,7 @@ object config{
         
         
         keyboard.g().onPressDo({rick.ponerseLentes()})
+        keyboard.o().onPressDo({ rick.abrirCofre() })
 
                 // to Debug
        	keyboard.alt().onPressDo({ 

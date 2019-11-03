@@ -17,7 +17,7 @@ object niveles{
 		  	objetos = self.getListOfEnemies(1) ),
          new Nivel(
 		  	fondo = new Fondo(multiverse = 2,image = "assets/ram-fondo2.png"),
-		  	objetos = self.getListOfEnemies(2) ),
+		  	objetos = [llave] + self.getListOfEnemies(2) ),
 		 new Nivel(
 		  	fondo = new Fondo(multiverse = 3,image = "assets/ram-fondo4.png"),
 		  	objetos = [nightVisionGoggles],
@@ -89,6 +89,16 @@ object niveles{
     
     method esZonaProhibida(pos){
     	return self.catalogo().get(omniverse.current()).zonasProhibidas().contains(game.at(pos.x(), pos.y()))
+    }
+    
+    method mostrarBloquesEnAreasProhibidas(){
+    	game.allVisuals().forEach { 
+    		objeto => if(objeto.esObstaculo()) objeto.image("assets/blocks.png");    		
+    	}  
+    }
+    
+    method ponerCofre(){
+    	game.addVisual(cofre) 
     }
 }
 

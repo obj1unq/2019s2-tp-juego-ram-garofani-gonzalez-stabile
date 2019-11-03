@@ -147,17 +147,28 @@ object rick mixed with NotCollectable{
     method ponerseLentes(){
     	if(!self.tieneElObjetoEnLaMochila(nightVisionGoggles)){
     		self.error("No tengo los lentes de vision nocturna");
-    	}
-    	
-    	game.allVisuals().forEach { 
-    		objeto => if(objeto.esObstaculo()) objeto.image("assets/blocks.png");
-    		
-    	}
-    	
+    	}    	
+    	niveles.mostrarBloquesEnAreasProhibidas()  	
+    	niveles.ponerCofre()
     }
     
     method tieneElObjetoEnLaMochila(objeto){
     	return mochila.contains(objeto)
+    }
+    
+    method abrirCofre(){
+    	if(!self.encontreElCofre()){
+    		self.error("Aca no hay ningun cofre");
+    	}
+    	if(!self.tieneElObjetoEnLaMochila(llave)){
+    		self.error("Necesito la llave para abrir el cofre");
+    	}
+		game.removeVisual(cofre)
+		game.say(self,"Empieza el final!")
+    }
+    
+    method encontreElCofre(){
+    	return game.colliders(self).contains(cofre)
     }
 
 }
@@ -318,4 +329,18 @@ object nightVisionGoggles mixed with Collectable{
 	method position() = omniverse.position(position, multiverse)
 }
 
+object cofre mixed with Collectable{
+	var property image = "assets/treasureChest.png"
+	var property position = game.at(7,3)
+	var multiverse = 3
+	method multiverse(value) { multiverse = value }        
+	method position() = omniverse.position(position, multiverse)
+}
 
+object llave mixed with Collectable{
+	var property image = "assets/treasureKey.png"
+	var property position = game.at(7,3)
+	var multiverse = 2
+	method multiverse(value) { multiverse = value }        
+	method position() = omniverse.position(position, multiverse)
+}
