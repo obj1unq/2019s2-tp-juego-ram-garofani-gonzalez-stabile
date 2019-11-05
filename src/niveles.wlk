@@ -11,13 +11,13 @@ object niveles{
     const property catalogo = [
 		 new Nivel(
 		 	fondo = new Fondo(multiverse = 0, image = "assets/ram-fondo3.png"),
-		  	objetos = [barra, rick, portalgun, raygun ] + self.getListOfEnemies(0) ),
+		  	objetos = [barra, rick, portalgun, raygun ] + self.listOfEnemies(0) ),
          new Nivel(
 		  	fondo = new Fondo(multiverse = 1,image = "assets/ram-fondo1.png"),
-		  	objetos = self.getListOfEnemies(1) ),
+		  	objetos = self.listOfEnemies(1) ),
          new Nivel(
 		  	fondo = new Fondo(multiverse = 2,image = "assets/ram-fondo2.png"),
-		  	objetos = [llave] + self.getListOfEnemies(2) ),
+		  	objetos = [llave] + self.listOfEnemies(2) ),
 		 new Nivel(
 		  	fondo = new Fondo(multiverse = 3,image = "assets/ram-fondo4.png"),
 		  	objetos = [nightVisionGoggles],
@@ -38,7 +38,7 @@ object niveles{
 
     method numberOfEnemies() = random.up(1,4)
 
-    method getListOfEnemies(multiverse) = (1..self.numberOfEnemies()).fold([], { 
+    method listOfEnemies(multiverse) = (1..self.numberOfEnemies()).fold([], { 
                                                      enemies, value => enemies.add(self.createNewEnemy(value, multiverse)) 
                                                      return enemies 
                                           })
