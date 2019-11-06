@@ -2,8 +2,12 @@ import personajes.*
 import wollok.game.*
 import niveles.*
 import directions.*
+import wollok.game.*
+import Fichas.*
+import Jugadores.*
 
 object config{
+	
 	method teclas(){
 		// teclas de rick
        	var numero = 0
