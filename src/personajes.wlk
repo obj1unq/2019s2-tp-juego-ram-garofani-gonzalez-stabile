@@ -24,7 +24,7 @@ object omniverse {
 }
 
 class OmniObjeto {
-	var property mposition = game.origin() 
+	var property mposition // = game.origin() 
 	var property multiverse 
 
 	method position() = omniverse.position(mposition, multiverse)
@@ -237,7 +237,25 @@ object raygun mixed with Collectable{
 
 class Ray inherits OmniObjeto{
     var alcance
-    const  image = "assets/ray.png"
+
+    method image() = "assets/v-ray-red.png"
+
+    method shot() {
+        if (alcance > 0) 
+        {
+            alcance -= 1
+            mposition = mposition.up(1)
+            new Ray( alcance = alcance, mposition = mposition.down(1), multiverse = multiverse).shot()
+            game.addVisual(self)
+            game.schedule(10, { game.removeVisual(self) })
+        }
+    }
+
+}
+/*
+class Ray inherits OmniObjeto{
+    var alcance
+    const  image = "assets/v-ray-red.png"
 
     method image() = if (multiverse == omniverse.current() ) image else ""
 
@@ -251,6 +269,7 @@ class Ray inherits OmniObjeto{
         
     }
 }
+*/
 
 object portalgun mixed with Collectable{
 	var property image = "assets/gun.png"

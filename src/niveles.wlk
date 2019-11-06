@@ -12,20 +12,20 @@ object random{
 object niveles{
     const property catalogo = [
 		 new Nivel(
-		 	fondo = new Fondo(multiverse = 0, image = "assets/ram-fondo3.png"),
+		 	fondo = new Fondo(mposition = game.origin(), multiverse = 0, image = "assets/ram-fondo3.png"),
 		  	objetos = [barra, rick, portalgun, raygun ] + self.listOfEnemies(0) ),
          new Nivel(
-		  	fondo = new Fondo(multiverse = 1,image = "assets/ram-fondo1.png"),
+		  	fondo = new Fondo(mposition = game.origin(), multiverse = 1,image = "assets/ram-fondo1.png"),
 		  	objetos = self.listOfEnemies(1) ),
          new Nivel(
-		  	fondo = new Fondo(multiverse = 2,image = "assets/ram-fondo2.png"),
+		  	fondo = new Fondo(mposition = game.origin(), multiverse = 2,image = "assets/ram-fondo2.png"),
 		  	objetos = [llave] + self.listOfEnemies(2) ),
 		 new Nivel(
-		  	fondo = new Fondo(multiverse = 3,image = "assets/ram-fondo4.png"),
+		  	fondo = new Fondo(mposition = game.origin(), multiverse = 3,image = "assets/ram-fondo4.png"),
 		  	objetos = [nightVisionGoggles],
 		  	zonasProhibidas = self.armarZonasProhibidasNivelTres() ),
          new Nivel(
-		  	fondo = new Fondo(multiverse = 4,image = "assets/ram-fondo2.png"),
+		  	fondo = new Fondo(mposition = game.origin(), multiverse = 4,image = "assets/ram-fondo2.png"),
 		  	objetos = [new PilaDeFichasDeRick(mposition = game.at(0,12), multiverse = 4)] )
 		  ]
 		  	
