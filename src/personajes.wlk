@@ -3,7 +3,7 @@ import niveles.*
 import directions.*
 import movimientos.*
 
-object omniverse mixed with NotCollectable{
+object omniverse {
     var property current = 1
 
     method position(pos, multiverse) = game.at(self.xfor(pos, multiverse), self.yfor(pos, multiverse) )
@@ -23,7 +23,7 @@ object omniverse mixed with NotCollectable{
     method distanciaACurrent(multiverse) = multiverse - current
 }
 
-class OmniObjeto mixed with NotCollectable{
+class OmniObjeto {
 	var property mposition = game.origin() 
 	var multiverse 
 
@@ -31,9 +31,10 @@ class OmniObjeto mixed with NotCollectable{
 
 	method position() = omniverse.position(mposition, multiverse)
 	
-	override method mover(){}
+	//override method mover(){}
+	method mover(){}
 	
-	override method esObstaculo() = false
+	//override method esObstaculo() = false
 	
 }
 
@@ -96,7 +97,7 @@ object rick mixed with NotCollectable{
         barra.acomodar(mochila) // acomoda las referencias de la mochila al nuevo multiverso//refac
     }
 
-	method trigger(destino) { grabed.trigger(destino) }
+	method trigger(destino) { grabed.trigger(destino, direction) }
 
     // Refac
     method guardar() { 
@@ -181,7 +182,7 @@ object none mixed with NotCollectable{
 object nada mixed with NotCollectable {
 	var property position = null
     var property multiverse = null
-	method trigger(destino){}
+	method trigger(destino, direction){}
 	method colisionasteCon(alguien){ }
     method verificarInventariable(owner) {
         game.errorReporter(owner)
@@ -204,6 +205,7 @@ mixin Collectable{
         ].anyOne()
 
     method isCollectable() = true
+
     method verificarInventariable(owner) { }
     
     method mover(){}
@@ -219,7 +221,7 @@ object raygun mixed with Collectable{
 
     const property image = "assets/ray-gun.png"
     var property mposition = game.at(10, 2)
-    var multiverse = 1
+    var property multiverse = 1 // refac hardcoded bad?
 
     method position() = omniverse.position(mposition, multiverse)
 
@@ -228,6 +230,19 @@ object raygun mixed with Collectable{
 	method multiverse(value) {
 		multiverse = value
 	}
+
+    method trigger(destino, direction) {
+        game.addVisual(new Ray(parent = self, direction = direction, numeroEnemigo = 0, multiverse = multiverse))
+    }
+
+}
+
+class Ray inherits Enemigo{
+    const parent
+    
+    override method image() = "ray.png"
+
+    override method position() = omniverse.position(parent.mposition(), parent.multiverse())
 
 }
 
@@ -241,12 +256,12 @@ object portalgun mixed with Collectable{
         
 	method position() = omniverse.position(position, multiverse)
 
-	method trigger(multiverseDestino){
+	method trigger(multiverseDestino, direction){
             self.verificarMultiversoDestinoEsDiferenteAlActual(multiverseDestino)
-            self.crearPortalA(multiverseDestino)
+            self.crearPortalA(multiverseDestino, direction)
 	}
 
-    method crearPortalA(multiverseDestino){
+    method crearPortalA(multiverseDestino, direction){ // refac crear portal en esta direccion
         const portal = new Portal(position = position, multiverse = multiverse, exit = 
                        new Portal(position = position, multiverse = multiverseDestino, exit = null))
         portal.exit().exit(portal)
@@ -265,6 +280,7 @@ object portalgun mixed with Collectable{
 		game.say(alguien,"Al fin, mi pistola de portales")
 	}
 }
+
 
 
 class Portal mixed with NotCollectable{
@@ -303,7 +319,7 @@ class Enemigo inherits OmniObjeto{
 
     method direction() = direction
 
-	override method mover(){ 
+	method mover(){ 
         direction.newMposition(self)
     }
 	
@@ -314,11 +330,12 @@ class Enemigo inherits OmniObjeto{
 	}
 }
 
+
 class Bloque inherits OmniObjeto{
 	var property image =  "assets/blockOculto.png"
 	method colisionasteCon(alguien){}
 	
-	override method esObstaculo() = true
+	method esObstaculo() = true
 }
 
 object nightVisionGoggles mixed with Collectable{
