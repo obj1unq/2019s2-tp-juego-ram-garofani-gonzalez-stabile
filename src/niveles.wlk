@@ -2,6 +2,7 @@ import personajes.*
 import wollok.game.*
 import directions.*
 import movimientos.*
+import cuatro.*
 
 object random{
     method up(n1,n2) = (n1-1).randomUpTo(n2).roundUp(0)
@@ -21,7 +22,10 @@ object niveles{
 		 new Nivel(
 		  	fondo = new Fondo(multiverse = 3,image = "assets/ram-fondo4.png"),
 		  	objetos = [nightVisionGoggles],
-		  	zonasProhibidas = self.armarZonasProhibidasNivelTres() )
+		  	zonasProhibidas = self.armarZonasProhibidasNivelTres() ),
+         new Nivel(
+		  	fondo = new Fondo(multiverse = 4,image = "assets/ram-fondo2.png"),
+		  	objetos = [] )
 		  ]
 		  	
     var property actual = catalogo.first() 
