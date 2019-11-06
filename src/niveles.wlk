@@ -3,6 +3,7 @@ import wollok.game.*
 import directions.*
 import movimientos.*
 import cuatro.*
+import Jugadores.*
 
 object random{
     method up(n1,n2) = (n1-1).randomUpTo(n2).roundUp(0)
@@ -25,7 +26,7 @@ object niveles{
 		  	zonasProhibidas = self.armarZonasProhibidasNivelTres() ),
          new Nivel(
 		  	fondo = new Fondo(multiverse = 4,image = "assets/ram-fondo2.png"),
-		  	objetos = [] )
+		  	objetos = [new PilaDeFichasDeRick(mposition = game.at(0,12), multiverse = 4)] )
 		  ]
 		  	
     var property actual = catalogo.first() 

@@ -248,7 +248,7 @@ class Ray inherits Enemigo{
 
 object portalgun mixed with Collectable{
 	var property image = "assets/gun.png"
-	var property position = game.at(5,5)
+	var property position = game.at(2,2)
     var multiverse = 1
 	const property isPortal = false
 
