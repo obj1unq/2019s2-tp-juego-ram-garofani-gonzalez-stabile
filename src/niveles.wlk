@@ -45,20 +45,21 @@ object niveles{
 
     method listOfEnemies(multiverse) = (1..self.numberOfEnemies()).fold([], { 
                                                      enemies, value => enemies.add(self.createNewEnemy(value, multiverse)) 
+                                                     enemies.last().mover() //arrancar monstruo
                                                      return enemies 
                                           })
     
     method createNewEnemy(number, multiverse){
             return new Enemigo(
-                direction = self.getRandomMovementType(),
+                direction = self.randomMovement(),
                 numeroEnemigo = number,
                 multiverse = multiverse, 
-                mposition = game.at(new Range(start = 1, end = 10).anyOne(),new Range(start = 1, end = 10).anyOne())
-                //mposition = game.at(random.up(0,12), random.up(0,12))
+                //mposition = game.at(new Range(start = 1, end = 10).anyOne(),new Range(start = 1, end = 10).anyOne())
+                mposition = game.at(random.up(0,12), random.up(0,12))
             )
     }
     
-    method getRandomMovementType(){
+    method randomMovement(){
             //return (new Movimientos()).disponibles().anyOne()
             return [up, down, left, right].anyOne()
     }
@@ -117,14 +118,14 @@ class Nivel{
     	game.addVisual(fondo) 
     }
 
-	method show(){
+	method show(){ // refac con presentarFondo()
 		objetos.forEach{v => game.addVisual(v)}
     }
     
     method presentarZonasProhibidas(){
     	zonasProhibidas.forEach{
             // aca no use addVisualIn, use addVisual
-    		zona => game.addVisual(new Bloque(multiverse = 3, mposition = zona))                								
+    		zona => game.addVisual(new Bloque(multiverse = 3, mposition = zona))  //refac hardcoded multiverse              								
     	}
     }   
     

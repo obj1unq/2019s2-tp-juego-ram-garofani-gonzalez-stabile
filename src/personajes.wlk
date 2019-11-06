@@ -25,9 +25,7 @@ object omniverse {
 
 class OmniObjeto {
 	var property mposition = game.origin() 
-	var multiverse 
-
-    method multiverse(value) { multiverse = value }
+	var property multiverse 
 
 	method position() = omniverse.position(mposition, multiverse)
 	
@@ -220,7 +218,7 @@ mixin NotCollectable{
 object raygun mixed with Collectable{
 
     const property image = "assets/ray-gun.png"
-    var property mposition = game.at(10, 2)
+    var property mposition = game.at(1, 2)
     var property multiverse = 1 // refac hardcoded bad?
 
     method position() = omniverse.position(mposition, multiverse)
@@ -232,18 +230,26 @@ object raygun mixed with Collectable{
 	}
 
     method trigger(destino, direction) {
-        game.addVisual(new Ray(parent = self, direction = direction, numeroEnemigo = 0, multiverse = multiverse))
+        new Ray( alcance = 7, mposition = mposition, multiverse = multiverse).shot()
     }
 
 }
 
-class Ray inherits Enemigo{
-    const parent
-    
-    override method image() = "ray.png"
+class Ray inherits OmniObjeto{
+    var alcance
+    const  image = "assets/ray.png"
 
-    override method position() = omniverse.position(parent.mposition(), parent.multiverse())
+    method image() = if (multiverse == omniverse.current() ) image else ""
 
+    method shot() {
+        if (alcance > 0) {
+            mposition = mposition.up(1)
+            game.addVisual(self)
+            new Ray( alcance = alcance - 1, mposition = mposition, multiverse = multiverse).shot()
+            game.schedule(100, {game.removeVisual(self)})
+        }
+        
+    }
 }
 
 object portalgun mixed with Collectable{
@@ -255,6 +261,8 @@ object portalgun mixed with Collectable{
     method multiverse(value) { multiverse = value }
         
 	method position() = omniverse.position(position, multiverse)
+
+    method image() = if (multiverse == omniverse.current() ) image else ""
 
 	method trigger(multiverseDestino, direction){
             self.verificarMultiversoDestinoEsDiferenteAlActual(multiverseDestino)
@@ -292,6 +300,7 @@ class Portal mixed with NotCollectable{
 
 	method position() = omniverse.position(position, multiverse)
 
+    method image() = if (multiverse == omniverse.current() ) image else ""
 	
 	method travel(traveler) { 
             omniverse.current(exit.multiverse())
@@ -304,7 +313,9 @@ class Portal mixed with NotCollectable{
 }
 
 class Fondo inherits OmniObjeto{ 
-   	var property image = "assets/ram-fondo3.png"
+   	const image = "assets/ram-fondo3.png"
+
+    method image() = if (multiverse == omniverse.current() ) image else ""
 	
 	method colisionasteCon(alguien){}
 
@@ -314,16 +325,19 @@ class Fondo inherits OmniObjeto{
 class Enemigo inherits OmniObjeto{
 	var property numeroEnemigo
 	var property direction = down
-	var property image = ""
+
+    method image() = if (multiverse == omniverse.current() ) 
+                            direction.imageEnemy(numeroEnemigo) 
+                     else ""
+
     method direction(_direction) { direction = _direction } 
 
     method direction() = direction
 
-	method mover(){ 
+	override method mover(){ 
         direction.newMposition(self)
+        game.schedule(500, { self.mover() })
     }
-	
-	method image() = direction.imageEnemy(numeroEnemigo)
 
 	method colisionasteCon(alguien){
     	alguien.catched()
@@ -333,6 +347,9 @@ class Enemigo inherits OmniObjeto{
 
 class Bloque inherits OmniObjeto{
 	var property image =  "assets/blockOculto.png"
+
+    method image() = if (multiverse == omniverse.current() ) image else ""
+
 	method colisionasteCon(alguien){}
 	
 	method esObstaculo() = true

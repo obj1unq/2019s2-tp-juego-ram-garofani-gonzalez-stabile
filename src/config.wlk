@@ -60,7 +60,7 @@ object config{
 	}
 	
 	method ticks(){
-		game.onTick(500, "", { self.moverObjetos() })		
+		//game.onTick(1500, "", { self.moverObjetos() })		
 	}
 	
 	method moverObjetos(){
