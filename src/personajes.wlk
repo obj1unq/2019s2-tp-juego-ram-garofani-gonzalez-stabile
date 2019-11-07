@@ -230,7 +230,7 @@ object raygun mixed with Collectable{
 	}
 
     method trigger(destino, direction) {
-        new Ray( alcance = 7, mposition = mposition, multiverse = multiverse).shot()
+        new Ray( alcance = 7, mposition = mposition.up(1), multiverse = multiverse).shot()
     }
 
 }
@@ -243,13 +243,20 @@ class Ray inherits OmniObjeto{
     method shot() {
         if (alcance > 0) 
         {
+            self.next()
             alcance -= 1
-            mposition = mposition.up(1)
-            new Ray( alcance = alcance, mposition = mposition.down(1), multiverse = multiverse).shot()
-            game.addVisual(self)
-            game.schedule(10, { game.removeVisual(self) })
         }
     }
+
+    method next(){
+        game.addVisual(self)
+        game.schedule(10, {
+            mposition = mposition.up(1)
+            game.removeVisual(self)
+            self.shot()
+            } )
+    }
+
 
 }
 /*
