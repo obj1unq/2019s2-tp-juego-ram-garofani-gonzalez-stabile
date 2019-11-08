@@ -12,6 +12,8 @@ object up{
         else 
             objeto.mposition(objeto.mposition().up(1))
     }
+    
+    method nextPosition(position) = game.at(position.x(), (position.y() + 1).min(game.height()))
 }
 object down{
     method imageRick() = "assets/RickFront.png"
@@ -24,6 +26,8 @@ object down{
         else 
             objeto.mposition(objeto.mposition().down(1))
     }
+    
+    method nextPosition(position) = game.at(position.x(), (position.y() - 1).max(0))
 }
 object left{
     method imageRick() = "assets/RickLeft.png"
@@ -36,6 +40,8 @@ object left{
         else 
             objeto.mposition(objeto.mposition().left(1))
     }
+    
+    method nextPosition(position) = game.at((position.x() - 1).max(0), position.y())
 }
 object right{
     method imageRick() = "assets/RickRight.png"
@@ -48,4 +54,6 @@ object right{
         else 
             objeto.mposition(objeto.mposition().right(1))
     }
+    
+    method nextPosition(position) = game.at((position.x() + 1).min(game.width()), position.y())
 }

@@ -64,7 +64,7 @@ test "rick esta en un universo paralelo a 'derecha' ;P "{
 
 test "Se crea un portal y hay dos portales en el omniverse"{
     omniverse.current(5)
-    portalgun.trigger(3)
+   // portalgun.trigger(3)
     assert.that(game.allVisuals().all{visual => visual.isPortal()})
     assert.equals(2, game.allVisuals().size())
 }
