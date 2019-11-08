@@ -34,17 +34,17 @@ object config{
 				rick.direction(left)			
 		})
 		//
-		keyboard.z().onPressDo({ rick.grab() })
-		keyboard.x().onPressDo({ rick.ungrab() })
+		
+		
+		//Agarra el objeto y lo guarda en la mochila
+		keyboard.z().onPressDo({ rick.manipularObjetos() })		
+		//Tira el objeto que tiene en la mano
+		keyboard.x().onPressDo({ rick.ungrab() })		
+		//Ejecuta el elemento que tenga en la mano
 		keyboard.space().onPressDo({ rick.trigger(numero) })
-		keyboard.p().onPressDo({ rick.travel() })
-		keyboard.m().onPressDo({ rick.guardar() })
-		keyboard.n().onPressDo({ rick.sacar() })
+		//Ver otros multiversos		
         keyboard.control().onPressDo({ omniverse.current(lastMultiverso) })
         
-        
-        keyboard.g().onPressDo({rick.ponerseLentes()})
-        keyboard.o().onPressDo({ rick.abrirCofre() })
 
                 // to Debug
        	keyboard.alt().onPressDo({ 

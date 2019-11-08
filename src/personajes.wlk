@@ -26,6 +26,13 @@ object omniverse {
 class OmniObjeto {
 	var property mposition // = game.origin() 
 	var property multiverse 
+//=======
+//class OmniObjeto mixed with NotCollectable{
+//	var property mposition = game.origin() 
+//	var multiverse 
+//
+//    method multiverse(value) { multiverse = value }
+//>>>>>>> laberinto_v3
 
 	method position() = omniverse.position(mposition, multiverse)
 	
@@ -58,7 +65,7 @@ object rick mixed with NotCollectable{
 	var position = game.at(1,1)
     var multiverse = 1
 	var grabed = nada 
-	var direction = down
+	var property direction = down
     var vidas = 3
     const mochila = []
 	
@@ -97,16 +104,16 @@ object rick mixed with NotCollectable{
 
 	method trigger(destino) { grabed.trigger(destino, direction) }
 
-    // Refac
-    method guardar() { 
-        grabed.verificarInventariable(self)
-        grabed.multiverse(omniverse.current())
-        mochila.add(grabed)
-        barra.acomodar(mochila)
-        self.ungrab()
-    }
-
+	method manipularObjetos(){
+		//self.verificarSiHayCollectable()
+		if(self.hayObjetoParaAgarrar())
+			self.grab()
+		else
+			self.sacar()		
+	}
+	
     method sacar() {
+    	self.puedoSacarObjetosDeLaMochila()
         grabed = mochila.head()
         mochila.remove(grabed)
         barra.acomodar(mochila)
@@ -114,17 +121,27 @@ object rick mixed with NotCollectable{
         grabed.multiverse(multiverse)
     }
 
-
 	method grab() { 
-        self.verificarSiHayCollectable()
 		grabed = game.colliders(self).find{visual => visual.isCollectable()}
+		grabed.multiverse(omniverse.current())
+        mochila.add(grabed)
+        barra.acomodar(mochila)
+        self.ungrab()
 	}
+	
+	method hayObjetoParaAgarrar() = game.colliders(self).any{visual => visual.isCollectable() }
 
     method verificarSiHayCollectable(){
-        if (not game.colliders(self).any{visual => visual.isCollectable() }) {
+        if (not self.hayObjetoParaAgarrar()) {
             game.errorReporter(self)
             self.error("No hay que agarrar")
         }
+    }
+    
+    method puedoSacarObjetosDeLaMochila() {
+	    if(mochila.size() <= 0)
+	    	self.error("No hay nada en la mochila")
+    	
     }
 
 	method ungrab() { 
@@ -144,9 +161,9 @@ object rick mixed with NotCollectable{
     method isPortal() = false
     
     method ponerseLentes(){
-    	if(!self.tieneElObjetoEnLaMochila(nightVisionGoggles)){
+    	/*if(!self.tieneElObjetoEnLaMochila(nightVisionGoggles)){
     		self.error("No tengo los lentes de vision nocturna");
-    	}    	
+    	}   */ 	
     	niveles.mostrarBloquesEnAreasProhibidas()  	
     	niveles.ponerCofre()
     }
@@ -159,9 +176,9 @@ object rick mixed with NotCollectable{
     	if(!self.encontreElCofre()){
     		self.error("Aca no hay ningun cofre");
     	}
-    	if(!self.tieneElObjetoEnLaMochila(llave)){
+    	/*if(!self.tieneElObjetoEnLaMochila(llave)){
     		self.error("Necesito la llave para abrir el cofre");
-    	}
+    	}*/
 		game.removeVisual(cofre)
 		game.say(self,"Empieza el final!")
     }
@@ -296,8 +313,10 @@ object portalgun mixed with Collectable{
 	}
 
     method crearPortalA(multiverseDestino, direction){ // refac crear portal en esta direccion
-        const portal = new Portal(position = position, multiverse = multiverse, exit = 
-                       new Portal(position = position, multiverse = multiverseDestino, exit = null))
+    
+    
+        const portal = new Portal(position = rick.direction().nextPosition(position), multiverse = multiverse, exit = 
+                       new Portal(position = rick.direction().nextPosition(position), multiverse = multiverseDestino, exit = null))
         portal.exit().exit(portal)
         game.addVisual(portal)
         game.addVisual(portal.exit())
@@ -334,7 +353,9 @@ class Portal mixed with NotCollectable{
             traveler.position(exit.position())
 	}
 	
-	method colisionasteCon(alguien){}
+	method colisionasteCon(alguien){
+		alguien.travel()
+	}
 
 }
 
@@ -387,6 +408,10 @@ object nightVisionGoggles mixed with Collectable{
 	var multiverse = 3
 	method multiverse(value) { multiverse = value }        
 	method position() = omniverse.position(position, multiverse)
+	
+	method trigger(destino, direction) {
+        rick.ponerseLentes()
+    }
 }
 
 object cofre mixed with Collectable{
@@ -395,6 +420,8 @@ object cofre mixed with Collectable{
 	var multiverse = 3
 	method multiverse(value) { multiverse = value }        
 	method position() = omniverse.position(position, multiverse)
+	
+	
 }
 
 object llave mixed with Collectable{
@@ -403,4 +430,6 @@ object llave mixed with Collectable{
 	var multiverse = 2
 	method multiverse(value) { multiverse = value }        
 	method position() = omniverse.position(position, multiverse)
+	
+	method trigger(destino, direction) { rick.abrirCofre() }
 }
