@@ -1,12 +1,13 @@
 import wollok.game.*
 
+//Super refac MUCHO codigo repetido
 
 object up{
     method imageRick() = "assets/RickBack.png"
 	
     method imageEnemy(numeroEnemigo) = "assets/Enemy_"+numeroEnemigo+"_Back.png"
 
-    method newMposition(objeto) { 
+    method newMposition(objeto) { //refac delegate in objeto o en super clase de objeto (OmniObjeto) 
         if (objeto.mposition().y() == game.height()-2) 
             objeto.direction(down)
         else 
@@ -19,7 +20,7 @@ object down{
     method imageEnemy(numeroEnemigo) = "assets/Enemy_"+numeroEnemigo+"_Front.png"
     
     method newMposition(objeto) { 
-        if (objeto.mposition().y() == 0 ) 
+        if (objeto.mposition().y() == 0 )
             objeto.direction(up)
         else 
             objeto.mposition(objeto.mposition().down(1))
