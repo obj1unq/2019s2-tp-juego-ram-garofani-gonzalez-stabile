@@ -14,20 +14,24 @@ object config{
 		}) }
 		
 		keyboard.up().onPressDo({ 			
-				rick.position(rick.position().up(1)) 
-				rick.direction(up)
+				//rick.position(rick.position().up(1)) 
+				//rick.direction(up)
+				rick.moveRickInDireccion_(up)
 		})
 		keyboard.right().onPressDo({ 
-				rick.position(rick.position().right(1)) 
-				rick.direction(right)			
+				//rick.position(rick.position().right(1)) 
+				//rick.direction(right)		
+				rick.moveRickInDireccion_(right)	
 		})
 		keyboard.down().onPressDo({ 
-				rick.position(rick.position().down(1))  
-				rick.direction(down)			
+				//rick.position(rick.position().down(1))  
+				//rick.direction(down)		
+				rick.moveRickInDireccion_(down)	
 		})
 		keyboard.left().onPressDo({ 
-				rick.position(rick.position().left(1))  
-				rick.direction(left)			
+				//rick.position(rick.position().left(1))  
+				//rick.direction(left)	
+				rick.moveRickInDireccion_(left)			
 		})
 		//
 		
