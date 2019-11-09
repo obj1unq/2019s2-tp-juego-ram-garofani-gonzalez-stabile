@@ -13,29 +13,12 @@ object config{
 			console.println("numero = " + numero )
 		}) }
 		
-		keyboard.up().onPressDo({ 			
-				//rick.position(rick.position().up(1)) 
-				//rick.direction(up)
-				rick.moveRickInDireccion_(up)
-		})
-		keyboard.right().onPressDo({ 
-				//rick.position(rick.position().right(1)) 
-				//rick.direction(right)		
-				rick.moveRickInDireccion_(right)	
-		})
-		keyboard.down().onPressDo({ 
-				//rick.position(rick.position().down(1))  
-				//rick.direction(down)		
-				rick.moveRickInDireccion_(down)	
-		})
-		keyboard.left().onPressDo({ 
-				//rick.position(rick.position().left(1))  
-				//rick.direction(left)	
-				rick.moveRickInDireccion_(left)			
-		})
-		//
+		keyboard.up().onPressDo({ rick.moveRickInDireccion_(up) })
+		keyboard.right().onPressDo({ rick.moveRickInDireccion_(right) })
+		keyboard.down().onPressDo({ rick.moveRickInDireccion_(down) })
+		keyboard.left().onPressDo({ rick.moveRickInDireccion_(left) })
 		
-		
+
 		//Agarra el objeto y lo guarda en la mochila
 		keyboard.z().onPressDo({ rick.manipularObjetos() })		
 		//Tira el objeto que tiene en la mano
@@ -46,7 +29,7 @@ object config{
         keyboard.control().onPressDo({ omniverse.current(lastMultiverso) })
         
 
-                // to Debug
+        // to Debug
        	keyboard.alt().onPressDo({ 
        		lastMultiverso = omniverse.current() 
        		omniverse.current(numero)
