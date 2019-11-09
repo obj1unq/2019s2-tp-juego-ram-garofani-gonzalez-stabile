@@ -1,4 +1,5 @@
 import wollok.game.*
+import niveles.*
 
 //Super refac MUCHO codigo repetido
 
@@ -14,7 +15,14 @@ object up{
             objeto.mposition(objeto.mposition().up(1))
     }
     
-    method nextPosition(position) = game.at(position.x(), (position.y() + 1).min(game.height()))
+    //method nextPosition(position) = game.at(position.x(), (position.y() + 1).min(game.height()))
+    method nextPosition(_position) {
+    	const nextPosition = game.at(_position.x(), (_position.y() + 1).min(game.height()))
+    	 if(niveles.puedeMoverSiguientePosicion(nextPosition))
+    	 	return nextPosition     	 	
+    	 else
+    	 	return _position  	
+	}
 }
 object down{
     method imageRick() = "assets/RickFront.png"
@@ -28,7 +36,13 @@ object down{
             objeto.mposition(objeto.mposition().down(1))
     }
     
-    method nextPosition(position) = game.at(position.x(), (position.y() - 1).max(0))
+    method nextPosition(_position) {
+    	const nextPosition = game.at(_position.x(), (_position.y() - 1).max(0))
+    	 if(niveles.puedeMoverSiguientePosicion(nextPosition))
+    	 	return nextPosition     	 	
+    	 else
+    	 	return _position  	
+	}
 }
 object left{
     method imageRick() = "assets/RickLeft.png"
@@ -42,7 +56,15 @@ object left{
             objeto.mposition(objeto.mposition().left(1))
     }
     
-    method nextPosition(position) = game.at((position.x() - 1).max(0), position.y())
+    //method nextPosition(position) = game.at((position.x() - 1).max(0), position.y())
+    
+    method nextPosition(_position) {
+    	const nextPosition = game.at((_position.x() - 1).max(0), _position.y())
+    	 if(niveles.puedeMoverSiguientePosicion(nextPosition))
+    	 	return nextPosition     	 	
+    	 else
+    	 	return _position  	
+	}
 }
 object right{
     method imageRick() = "assets/RickRight.png"
@@ -56,5 +78,13 @@ object right{
             objeto.mposition(objeto.mposition().right(1))
     }
     
-    method nextPosition(position) = game.at((position.x() + 1).min(game.width()), position.y())
+    //method nextPosition(position) = game.at((position.x() + 1).min(game.width()), position.y())
+    
+    method nextPosition(_position) {
+    	const nextPosition = game.at((_position.x() + 1).min(game.width()), _position.y())
+    	 if(niveles.puedeMoverSiguientePosicion(nextPosition))
+    	 	return nextPosition     	 	
+    	 else
+    	 	return _position  	
+	}
 }

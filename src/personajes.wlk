@@ -79,10 +79,8 @@ object rick mixed with NotCollectable{
 	method position() = omniverse.position(position, multiverse)
 
 	method position(_position) { 
-        if (niveles.puedeMoverSiguientePosicion(_position)){ 
-            position = _position
-            grabed.position(position)
-        }
+        position = _position
+        grabed.position(position)
     }
 
 
@@ -160,10 +158,7 @@ object rick mixed with NotCollectable{
 
     method isPortal() = false
     
-    method ponerseLentes(){
-    	/*if(!self.tieneElObjetoEnLaMochila(nightVisionGoggles)){
-    		self.error("No tengo los lentes de vision nocturna");
-    	}   */ 	
+    method ponerseLentes(){    		
     	niveles.mostrarBloquesEnAreasProhibidas()  	
     	niveles.ponerCofre()
     }
@@ -176,9 +171,7 @@ object rick mixed with NotCollectable{
     	if(!self.encontreElCofre()){
     		self.error("Aca no hay ningun cofre");
     	}
-    	/*if(!self.tieneElObjetoEnLaMochila(llave)){
-    		self.error("Necesito la llave para abrir el cofre");
-    	}*/
+    	
 		game.removeVisual(cofre)
 		game.say(self,"Empieza el final!")
     }
@@ -186,7 +179,13 @@ object rick mixed with NotCollectable{
     method encontreElCofre(){
     	return game.colliders(self).contains(cofre)
     }
-
+    
+    method moveRickInDireccion_(_direction){
+    	if(_direction == direction ){
+    		self.position(direction.nextPosition(self.position()))
+    	}
+    	self.direction(_direction)
+    }
 }
 
 object none mixed with NotCollectable{
