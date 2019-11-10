@@ -4,7 +4,7 @@ import directions.*
 import movimientos.*
 import cuatro.*
 import Jugadores.*
-import zonasProhibidas.*
+import areasProhibidas.*
 
 object random{
     method up(n1,n2) = (n1-1).randomUpTo(n2).roundUp(0)
@@ -24,7 +24,7 @@ object niveles{
 		 new Nivel(
 		  	fondo = new Fondo(mposition = game.origin(), multiverse = 3,image = "assets/ram-fondo4.png"),
 		  	objetos = [nightVisionGoggles],
-		  	zonasProhibidas = zonasProhibidas.levelTres()),
+		  	zonasProhibidas = areasProhibidas.levelTres()),
          new Nivel(
 		  	fondo = new Fondo(mposition = game.origin(), multiverse = 4,image = "assets/ram-fondo2.png"),
 		  	objetos = [new PilaDeFichasDeRick(mposition = game.at(0,12), multiverse = 4)] )

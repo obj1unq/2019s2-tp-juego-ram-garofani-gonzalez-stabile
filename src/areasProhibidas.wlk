@@ -1,5 +1,6 @@
 import wollok.game.*
-object zonasProhibidas {
+
+object areasProhibidas {
 	method levelTres() = [
 		    				game.at(0,2),game.at(0,3),game.at(0,4),game.at(0,5),
 							game.at(1,9),
