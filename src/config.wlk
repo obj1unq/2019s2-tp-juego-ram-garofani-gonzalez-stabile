@@ -34,7 +34,7 @@ object config{
         
 
         // to Debug
-       	keyboard.alt().onPressDo({ 
+       	keyboard.del().onPressDo({ // del is backspace (Cuaq!)
        		lastMultiverso = omniverse.current() 
        		omniverse.current(numero)
        	})
