@@ -307,8 +307,8 @@ object portalgun mixed with Collectable{
     method image() = if (multiverse == omniverse.current() ) image else ""
 
 	method trigger(multiverseDestino, direction){
-            self.verificarMultiversoDestinoEsDiferenteAlActual(multiverseDestino)
-            self.crearPortalA(multiverseDestino, direction)
+        self.verificarMultiversoDestinoEsDiferenteAlActual(multiverseDestino)
+        self.crearPortalA(multiverseDestino, direction)
 	}
 
     method crearPortalA(multiverseDestino, direction){ // refac crear portal en esta direccion
