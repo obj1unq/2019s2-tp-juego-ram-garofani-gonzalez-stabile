@@ -8,10 +8,6 @@ class PilaDeFichasDeRick inherits OmniObjeto mixed with Collectable{
 
     method position(_position) { mposition = _position }
 
-	method multiverse(value) {
-		multiverse = value
-	}
-
     method trigger(destino, direction){
         console.println("Hola Grabriel!")
     }
@@ -26,7 +22,5 @@ class PilaDeFichasDeRick inherits OmniObjeto mixed with Collectable{
 		return column.size()
 	}	
 
-    method mover() {}
-	
 }
 
