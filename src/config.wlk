@@ -17,37 +17,24 @@ object config{
 			console.println("numero = " + numero )
 		}) }
 		
-		keyboard.up().onPressDo({ 			
-				rick.position(rick.position().up(1)) 
-				rick.direction(up)
-		})
-		keyboard.right().onPressDo({ 
-				rick.position(rick.position().right(1)) 
-				rick.direction(right)			
-		})
-		keyboard.down().onPressDo({ 
-				rick.position(rick.position().down(1))  
-				rick.direction(down)			
-		})
-		keyboard.left().onPressDo({ 
-				rick.position(rick.position().left(1))  
-				rick.direction(left)			
-		})
-		//
-		keyboard.z().onPressDo({ rick.grab() })
-		keyboard.x().onPressDo({ rick.ungrab() })
+		keyboard.up().onPressDo({ rick.moveRickInDireccion_(up) })
+		keyboard.right().onPressDo({ rick.moveRickInDireccion_(right) })
+		keyboard.down().onPressDo({ rick.moveRickInDireccion_(down) })
+		keyboard.left().onPressDo({ rick.moveRickInDireccion_(left) })
+		
+
+		//Agarra el objeto y lo guarda en la mochila
+		keyboard.z().onPressDo({ rick.manipularObjetos() })		
+		//Tira el objeto que tiene en la mano
+		keyboard.x().onPressDo({ rick.ungrab() })		
+		//Ejecuta el elemento que tenga en la mano
 		keyboard.space().onPressDo({ rick.trigger(numero) })
-		keyboard.p().onPressDo({ rick.travel() })
-		keyboard.m().onPressDo({ rick.guardar() })
-		keyboard.n().onPressDo({ rick.sacar() })
+		//Ver otros multiversos		
         keyboard.control().onPressDo({ omniverse.current(lastMultiverso) })
         
-        
-        keyboard.g().onPressDo({rick.ponerseLentes()})
-        keyboard.o().onPressDo({ rick.abrirCofre() })
 
-                // to Debug
-       	keyboard.alt().onPressDo({ 
+        // to Debug
+       	keyboard.del().onPressDo({ // del is backspace (Cuaq!)
        		lastMultiverso = omniverse.current() 
        		omniverse.current(numero)
        	})
@@ -60,7 +47,7 @@ object config{
 	}
 	
 	method ticks(){
-		game.onTick(500, "", { self.moverObjetos() })		
+		//game.onTick(1500, "", { self.moverObjetos() })		
 	}
 	
 	method moverObjetos(){
