@@ -13,11 +13,11 @@ class PilaDeFichasDeRick inherits OmniObjeto mixed with Collectable{
 	}
 
     method trigger(destino, direction){
-        console.println("Hola Grabriel!")
+        self.ponerFicha()
     }
 
 	method ponerFicha(){
-		game.addVisual(new Ficha( player = self , position = game.at(self.position().x() , self.puedePonerFicha() ), image = "assets/FichaAmarilla.png" ))
+		game.addVisual(new Ficha( player = self , position = game.at(self.position().x() , self.puedePonerFicha().min(13) ), image = "assets/ficha-morty-a.png" ))
 	}
 	
 	method puedePonerFicha() {
@@ -26,7 +26,7 @@ class PilaDeFichasDeRick inherits OmniObjeto mixed with Collectable{
 		return column.size()
 	}	
 
-    method mover() {}
+//    method mover() {}
 	
 }
 

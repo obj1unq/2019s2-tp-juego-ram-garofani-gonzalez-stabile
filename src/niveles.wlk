@@ -25,7 +25,7 @@ object niveles{
 		  	objetos = [nightVisionGoggles],
 		  	zonasProhibidas = self.armarZonasProhibidasNivelTres() ),
          new Nivel(
-		  	fondo = new Fondo(multiverse = 4,image = "assets/ram-fondo2.png"),
+		  	fondo = new Fondo(multiverse = 4,image = "assets/ram-fondo4EnLinea.png"),
 		  	objetos = [new PilaDeFichasDeRick(mposition = game.at(0,12), multiverse = 4)] )
 		  ]
 		  	
