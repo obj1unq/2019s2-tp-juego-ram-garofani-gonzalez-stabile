@@ -289,7 +289,7 @@ class Ray inherits OmniObjeto{
     var alcance
     const  image = "assets/v-ray-red.png"
 
-    method image() = if (multiverse == omniverse.current() ) image else ""
+    method image() = if (multiverse == omniverse.current() ) image else "assets/nada.png""
 
     method shot() {
         if (alcance > 0) {
@@ -313,7 +313,7 @@ object portalgun mixed with Collectable{
 
 	method position() = omniverse.position(position, multiverse)
 
-    method image() = if (multiverse == omniverse.current() ) image else ""
+    method image() = if (multiverse == omniverse.current() ) image else "assets/nada.png"
 
 	method trigger(multiverseDestino, direction){
         self.verificarMultiversoDestinoEsDiferenteAlActual(multiverseDestino)
@@ -353,7 +353,7 @@ class Portal mixed with NotCollectable{
 
 	method position() = omniverse.position(position, multiverse)
 
-    method image() = if (multiverse == omniverse.current() ) image else ""
+    method image() = if (multiverse == omniverse.current() ) image else "assets/nada.png"
 
 	method travel(traveler) {
             omniverse.current(exit.multiverse())
@@ -370,14 +370,18 @@ class Portal mixed with NotCollectable{
 class Fondo inherits OmniObjeto{
    	const image = "assets/ram-fondo3.png"
 
-    method image() = if (multiverse == omniverse.current() ) image else ""
+    method image() = if (multiverse == omniverse.current() ) image else "assets/nada.png"
 
 	method colisionasteCon(alguien){}
 
     method isPortal() = false
+
+    method isCollectable() = false
+
+    method esObstaculo() = false
 }
 
-class Enemigo inherits OmniObjeto{
+class Enemigo inherits OmniObjeto mixed with NotCollectable {
 	var property numeroEnemigo
 	var property direction = down
 
@@ -399,7 +403,7 @@ class Enemigo inherits OmniObjeto{
 	}
 }
 
-class Monstruo inherits Enemigo{
+class Monstruo inherits Enemigo mixed with NotCollectable{
     method alcanzado(visual){
         game.removeVisual(self)
     }
@@ -408,12 +412,13 @@ class Monstruo inherits Enemigo{
         direction.newMposition(self)
         game.schedule(1000, { self.mover() })
     }
+
 }
 
 class Bloque inherits OmniObjeto{
 	var property image =  "assets/blockOculto.png"
 
-    method image() = if (multiverse == omniverse.current() ) image else ""
+    method image() = if (multiverse == omniverse.current() ) image else "assets/nada.png"
 
 	method colisionasteCon(alguien){}
 	
