@@ -387,7 +387,7 @@ class Enemigo inherits OmniObjeto mixed with NotCollectable {
 
     method image() = if (multiverse == omniverse.current() )
                             direction.imageEnemy(numeroEnemigo) 
-                     else ""
+                     else "assets/nada.png"
 
     method direction(_direction) { direction = _direction }
 
