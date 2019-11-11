@@ -10,14 +10,21 @@ object random{
     method up(n1,n2) = (n1-1).randomUpTo(n2).roundUp(0)
 }
 
+
 object niveles{
+    const monstruos = (1..2).fold([], { 
+                                     enemies, value => enemies.add(
+                                         new Monstruo(numeroEnemigo = 4, mposition = game.at(random.up(1,11),12), multiverse = 1))
+                                     enemies.last().mover() //arrancar monstruo
+                                     return enemies 
+                              })
     const property catalogo = [
 		 new Nivel(
 		 	fondo = new Fondo(mposition = game.origin(), multiverse = 0, image = "assets/ram-fondo3.png"),
-		  	objetos = [barra, rick, portalgun, raygun ] + self.listOfEnemies(0) ),
+		  	objetos = [] ) ,
          new Nivel(
 		  	fondo = new Fondo(mposition = game.origin(), multiverse = 1,image = "assets/ram-fondo1.png"),
-		  	objetos = self.listOfEnemies(1) ),
+		  	objetos = [barra, rick, portalgun, raygun] + monstruos ),
          new Nivel(
 		  	fondo = new Fondo(mposition = game.origin(), multiverse = 2,image = "assets/ram-fondo2.png"),
 		  	objetos = [llave] + self.listOfEnemies(2) ),
@@ -60,10 +67,7 @@ object niveles{
             )
     }
     
-    method randomMovement(){
-            //return (new Movimientos()).disponibles().anyOne()
-            return [up, down, left, right].anyOne()
-    }
+    method randomMovement() = [up, down, left, right].anyOne()
     
     method showBlocksInProhibitedAreas(){
     	catalogo.forEach{
