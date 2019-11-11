@@ -319,7 +319,7 @@ class Enemigo inherits OmniObjeto{
 
     method direction() = direction
 
-	method mover(){ 
+	override method mover(){ 
         direction.newMposition(self)
     }
 	
