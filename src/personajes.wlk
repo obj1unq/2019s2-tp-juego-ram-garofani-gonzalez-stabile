@@ -389,7 +389,7 @@ class Enemigo inherits OmniObjeto{
 
     method direction() = direction
 
-	override method mover(){
+	override method mover(){ 
         direction.newMposition(self)
         game.schedule(500, { self.mover() })
     }

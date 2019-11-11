@@ -1,5 +1,7 @@
 class Ficha{
 	const property player	
 	const property position
-    const property image
+	const property image 
+
+    method mover() {}
 }
