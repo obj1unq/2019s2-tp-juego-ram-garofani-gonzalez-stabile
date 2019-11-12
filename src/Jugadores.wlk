@@ -18,25 +18,26 @@ class PilaDeFichasDeRick inherits OmniObjeto mixed with Collectable{
 									image = "assets/ficha-morty-a.png"
 		))
 		pc.ponerFicha()
-		
+		//validar jugada individual
+				
 	}
 	
 	method posicionLibreEnColumna() {
 		var column = game.allVisuals().filter{ 
             visual => visual.position().x() == self.position().x() 
-            and visual.position().y().between(0, self.position().y() - 1)}
+            and visual.position().y().between(0, self.position().y() + 3)}
 		return game.at(self.position().x(), column.size())
 	}		
 }
 
 object pc {
-	const random = {0.randomUpTo(13)}
-	var property position = game.at(random, random)
+	const random = {3.randomUpTo(7).roundUp()}
+	var property position = game.at(random.apply(), random.apply())
 	
 	method ponerFicha(){
 		
 		 game.addVisual(new Ficha( player = self , 
-		 					position = game.at(self.position().x(), self.posicionLibreEnColumna().y()), 
+		 					position = game.at(random.apply(), self.posicionLibreEnColumna().y()), 
 		 					image = "assets/ficha-jerry-a.png"
 		 ))
 	}
@@ -44,7 +45,7 @@ object pc {
 	method posicionLibreEnColumna() {
 		var column = game.allVisuals().filter{ 
             visual => visual.position().x() == self.position().x() 
-            and visual.position().y().between(0, self.position().y() - 1)}
+            and visual.position().y().between(0, self.position().y() + 3)}
 		return game.at(self.position().x(), column.size())
 	}
 }
