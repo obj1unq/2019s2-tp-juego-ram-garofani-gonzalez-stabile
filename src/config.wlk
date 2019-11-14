@@ -34,6 +34,7 @@ object config{
         
 
         // to Debug
+        keyboard.r().onPressDo({ rick.multiverse(numero) omniverse.current(numero) })
        	keyboard.del().onPressDo({ // del is backspace (Cuaq!)
        		lastMultiverso = omniverse.current() 
        		omniverse.current(numero)
