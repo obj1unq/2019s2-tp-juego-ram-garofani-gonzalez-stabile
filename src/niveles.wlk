@@ -1,5 +1,5 @@
-import personajes.*
 import wollok.game.*
+import personajes.*
 import directions.*
 import movimientos.*
 import cuatro.*
@@ -33,10 +33,8 @@ object niveles{
 		  	objetos = [nightVisionGoggles],
 		  	zonasProhibidas = areasProhibidas.levelTres()),
          new Nivel(
-
-		  	fondo = new Fondo(mposition = game.origin(), multiverse = 4,image = "assets/FondoCuatro.png"),
-
-		  	objetos = [new PilaDeFichasDeRick(mposition = game.at(0,12), multiverse = 4)] )
+           	fondo = new Fondo(mposition = game.origin(), multiverse = 4,image = "assets/FondoCuatro.png"),
+			objetos = [new PilaDeFichasDeRick(mposition = game.at(0,12), multiverse = 4)] )
 		  ]
 		  	
     var property actual = catalogo.first() 
@@ -55,7 +53,7 @@ object niveles{
 
     method listOfEnemies(multiverse) = (1..self.numberOfEnemies()).fold([], { 
                                                      enemies, value => enemies.add(self.createNewEnemy(value, multiverse)) 
-                                                     enemies.last().mover() //arrancar monstruo
+                                                     //enemies.last().mover() //arrancar monstruo
                                                      return enemies 
                                           })
     
@@ -83,7 +81,14 @@ object niveles{
             not self.estaFueraDeLosLimites(pos) and not self.esZonaProhibida(pos)
     
     method esZonaProhibida(pos){
-    	return self.catalogo().get(omniverse.current()).zonasProhibidas().contains(game.at(pos.x(), pos.y()))
+    	return catalogo.get(omniverse.current()).zonasProhibidas().contains(pos)
+    	
+    	/*
+    	 * Juan entiendo que es aca donde pincha, fijate que si retornas como el comentario
+    	 * de abajo, todo pareciera funcionar bien
+    	 */
+    	 
+    	 //return false
     }
     
     method mostrarBloquesEnAreasProhibidas(){

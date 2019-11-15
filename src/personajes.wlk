@@ -65,7 +65,7 @@ object rick mixed with NotCollectable{
 	var position = game.at(1,1)
     var multiverse = 1
 	var grabed = nada 
-	var property direction = down
+	var property direction = new Directions(typeDirection = down)
     var vidas = 3
     const mochila = []
 	
@@ -82,8 +82,7 @@ object rick mixed with NotCollectable{
         position = _position
         grabed.position(position)
     }
-
-
+    
     method direction(_direction) { direction = _direction }
 
 	method travel() { self.verificarSiHayPortal() self.takePortal() }
@@ -181,10 +180,10 @@ object rick mixed with NotCollectable{
     }
     
     method moveRickInDireccion_(_direction){
-    	if(_direction == direction ){
+    	if(_direction == direction.typeDirection() ){
     		self.position(direction.nextPosition(self.position()))
     	}
-    	self.direction(_direction)
+    	self.direction(new Directions(typeDirection = _direction))
     }
 }
 
@@ -383,13 +382,13 @@ class Fondo inherits OmniObjeto{
 
 class Enemigo inherits OmniObjeto mixed with NotCollectable {
 	var property numeroEnemigo
-	var property direction = down
+	var property direction = new Directions(typeDirection = down)
 
     method image() = if (multiverse == omniverse.current() )
                             direction.imageEnemy(numeroEnemigo) 
                      else "assets/nada.png"
 
-    method direction(_direction) { direction = _direction }
+    method direction(_direction) { direction = new Directions(typeDirection = _direction) }
 
     method direction() = direction
 
