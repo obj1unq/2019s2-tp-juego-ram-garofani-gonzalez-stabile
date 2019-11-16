@@ -13,29 +13,29 @@ object random{
 
 object niveles{
     const property catalogo = [
-		 new Nivel(
-		 	fondo = new Fondo(mposition = game.origin(), multiverse = 0, image = "assets/ram-fondo3.png"),
-		  	objetos = [] ) ,
          new Nivel(
-		  	fondo = new Fondo(mposition = game.origin(), multiverse = 1,image = "assets/ram-fondo1.png"),
-		  	objetos = [barra, rick, portalgun, raygun] + self.listOfMonstruos(1) ),
+            fondo = new Fondo(mposition = game.origin(), multiverse = 0, image = "assets/ram-fondo3.png"),
+            objetos = [] ) ,
          new Nivel(
-		  	fondo = new Fondo(mposition = game.origin(), multiverse = 2,image = "assets/ram-fondo2.png"),
-		  	objetos = [llave] + self.listOfEnemies(2) ),
-		 new Nivel(
-		  	fondo = new Fondo(mposition = game.origin(), multiverse = 3,image = "assets/ram-fondo4.png"),
-		  	objetos = [nightVisionGoggles],
-		  	zonasProhibidas = areasProhibidas.levelTres()),
+            fondo = new Fondo(mposition = game.origin(), multiverse = 1,image = "assets/ram-fondo1.png"),
+            objetos = [barra, rick, portalgun, raygun] + self.listOfMonstruos(1) ),
+         new Nivel(
+            fondo = new Fondo(mposition = game.origin(), multiverse = 2,image = "assets/ram-fondo2.png"),
+            objetos = [llave] + self.listOfEnemies(2) ),
+         new Nivel(
+            fondo = new Fondo(mposition = game.origin(), multiverse = 3,image = "assets/ram-fondo4.png"),
+            objetos = [nightVisionGoggles],
+            zonasProhibidas = areasProhibidas.levelTres()),
          new Nivel(
 
-		  	fondo = new Fondo(mposition = game.origin(), multiverse = 4,image = "assets/FondoCuatro.png"),
+            fondo = new Fondo(mposition = game.origin(), multiverse = 4,image = "assets/FondoCuatro.png"),
 
-		  	objetos = [new PilaDeFichasDeRick(mposition = game.at(0,12), multiverse = 4)] )
-		  ]
-		  	
-    var property actual = catalogo.first() 
-    
-    method presentar() { 
+            objetos = [new PilaDeFichasDeRick(mposition = game.at(0,12), multiverse = 4)] )
+          ]
+
+    var property actual = catalogo.first()
+
+    method presentar() {
         self.presenteFondo()
         self.showAll()
         self.showBlocksInProhibitedAreas()
@@ -47,79 +47,79 @@ object niveles{
 
     method numberOfEnemies() = random.up(1,4)
 
-    method listOfEnemies(multiverse) = (1..self.numberOfEnemies()).fold([], { 
-                                                     enemies, value => enemies.add(self.createNewEnemy(value, multiverse)) 
-                                                     return enemies 
+    method listOfEnemies(multiverse) = (1..self.numberOfEnemies()).fold([], {
+                                                     enemies, value => enemies.add(self.createNewEnemy(value, multiverse))
+                                                     return enemies
                                           })
 
-    method listOfMonstruos(multiverse) = (1..2).fold([], { 
+    method listOfMonstruos(multiverse) = (1..2).fold([], {
                                      enemies, value => enemies.add( self.createNewMonstruo(4, 1))
-                                     return enemies 
+                                     return enemies
                               })
-    
+
     method createNewEnemy(number, multiverse){
             return new Enemigo(
                 direction = self.randomMovement(),
                 numeroEnemigo = number,
-                multiverse = multiverse, 
+                multiverse = multiverse,
                 mposition = game.at(random.up(0,12), random.up(0,12))
             )
     }
-    
+
     method createNewMonstruo(number, multiverse){
             return new Monstruo(numeroEnemigo = number, mposition = game.at(random.up(1,11),12), multiverse = multiverse)
     }
-    
+
     method randomMovement() = [up, down, left, right].anyOne()
-    
+
     method showBlocksInProhibitedAreas(){
-    	catalogo.forEach{
-    		nivel => nivel.presentarZonasProhibidas()
-    	}    	
+        catalogo.forEach{
+            nivel => nivel.presentarZonasProhibidas()
+        }
     }
 
     method estaFueraDeLosLimites(pos) = pos.x() < 0 or pos.x() > omniverse.ancho()-1 or pos.y() < 0 or pos.y() > omniverse.alto()-1
 
-    method puedeMoverSiguientePosicion(pos) = 
+    method puedeMoverSiguientePosicion(pos) =
             not self.estaFueraDeLosLimites(pos) and not self.esZonaProhibida(pos)
-    
+
     method esZonaProhibida(pos){
-    	return self.catalogo().get(omniverse.current()).zonasProhibidas().contains(game.at(pos.x(), pos.y()))
+        return self.catalogo().get(omniverse.current()).zonasProhibidas().contains(game.at(pos.x(), pos.y()))
     }
-    
+
     method mostrarBloquesEnAreasProhibidas(){
-    	game.allVisuals().forEach { 
-    		objeto => if(objeto.esObstaculo()) objeto.image("assets/blocks.png");    		
-    	}  
+        game.allVisuals().forEach {
+            objeto => if(objeto.esObstaculo()) objeto.image("assets/blocks.png");
+        }
     }
-    
+
     method ponerCofre(){
-    	game.addVisual(cofre) 
+        game.addVisual(cofre)
     }
 }
 
 class Nivel{
-	const fondo 
-	const property objetos = []
+    const fondo
+    const property objetos = []
 
-	const property zonasProhibidas = []
-	
-    method presentarFondo() { 
-    	game.addVisual(fondo) 
+    const property zonasProhibidas = []
+
+    method presentarFondo() {
+        game.addVisual(fondo)
     }
 
-	method show(){ // refac con presentarFondo()
-		objetos.forEach{
+    method show(){ // refac con presentarFondo()
+        objetos.forEach{
             visual => game.addVisual(visual)
             visual.mover() //arrancar movil
         }
     }
-    
+
     method presentarZonasProhibidas(){
-    	zonasProhibidas.forEach{
+        zonasProhibidas.forEach{
             // aca no use addVisualIn, use addVisual
-    		zona => game.addVisual(new Bloque(multiverse = 3, mposition = zona))  //refac hardcoded multiverse              								
-    	}
-    }   
-    
+            zona => game.addVisual(new Bloque(multiverse = 3, mposition = zona))  //refac hardcoded multiverse
+        }
+    }
+
 }

@@ -24,24 +24,24 @@ object omniverse {
 }
 
 class OmniObjeto {
-	var property mposition // = game.origin() 
-	var property multiverse 
+    var property mposition // = game.origin()
+    var property multiverse
 
-	method position() = omniverse.position(mposition, multiverse)
-	
-	method mover(){}
-	
+    method position() = omniverse.position(mposition, multiverse)
+
+    method mover(){}
+
 }
 
 object barra mixed with NotCollectable{
     // Refac
     const property image = "assets/barra.png"
     const property mposition = game.at(0, 13)
-	method position() = omniverse.position(mposition, omniverse.current())
+    method position() = omniverse.position(mposition, omniverse.current())
 
-    method acomodar(mochila){ 
+    method acomodar(mochila){
         mochila.fold(0, {
-            index, visual => 
+            index, visual =>
             visual.position(game.at(mposition.x() + index, mposition.y()))
             visual.multiverse(omniverse.current())
             index + 1 })
@@ -51,24 +51,24 @@ object barra mixed with NotCollectable{
 
 }
 
-object rick mixed with NotCollectable{ 
-	var position = game.at(1,1)
+object rick mixed with NotCollectable{
+    var position = game.at(1,1)
     var multiverse = 1
-	var grabed = nada 
-	var property direction = down
+    var grabed = nada
+    var property direction = down
     var vidas = 3
     const mochila = []
-	
-	method image() =  direction.imageRick()
-	
-    method multiverse(_multiverse) { 
+
+    method image() =  direction.imageRick()
+
+    method multiverse(_multiverse) {
         multiverse = _multiverse
         grabed.multiverse(multiverse)
     }
-    
-	method position() = omniverse.position(position, multiverse)
 
-	method position(_position) { 
+    method position() = omniverse.position(position, multiverse)
+
+    method position(_position) {
         position = _position
         grabed.position(position)
     }
@@ -76,9 +76,9 @@ object rick mixed with NotCollectable{
 
     method direction(_direction) { direction = _direction }
 
-	method travel() { self.verificarSiHayPortal() self.takePortal() }
+    method travel() { self.verificarSiHayPortal() self.takePortal() }
 
-    method verificarSiHayPortal() { 
+    method verificarSiHayPortal() {
             if (not game.colliders(self).any{ visible => visible.isPortal() }) {
                 game.errorReporter(self)
                 self.error("No hay por donde viajar")
@@ -90,18 +90,18 @@ object rick mixed with NotCollectable{
         barra.acomodar(mochila) // acomoda las referencias de la mochila al nuevo multiverso//refac
     }
 
-	method trigger(destino) { grabed.trigger(destino, direction) }
+    method trigger(destino) { grabed.trigger(destino, direction) }
 
-	method manipularObjetos(){
-		//self.verificarSiHayCollectable()
-		if(self.hayObjetoParaAgarrar())
-			self.grab()
-		else
-			self.sacar()		
-	}
-	
+    method manipularObjetos(){
+        //self.verificarSiHayCollectable()
+        if(self.hayObjetoParaAgarrar())
+            self.grab()
+        else
+            self.sacar()
+    }
+
     method sacar() {
-    	self.puedoSacarObjetosDeLaMochila()
+        self.puedoSacarObjetosDeLaMochila()
         grabed = mochila.head()
         mochila.remove(grabed)
         barra.acomodar(mochila)
@@ -109,15 +109,15 @@ object rick mixed with NotCollectable{
         //grabed.multiverse(multiverse)
     }
 
-	method grab() { 
-		grabed = game.colliders(self).find{visual => visual.isCollectable()}
-		//grabed.multiverse(omniverse.current())
+    method grab() {
+        grabed = game.colliders(self).find{visual => visual.isCollectable()}
+        //grabed.multiverse(omniverse.current())
         mochila.add(grabed)
         barra.acomodar(mochila)
         self.ungrab()
-	}
-	
-	method hayObjetoParaAgarrar() = game.colliders(self).any{visual => visual.isCollectable() }
+    }
+
+    method hayObjetoParaAgarrar() = game.colliders(self).any{visual => visual.isCollectable() }
 
     method verificarSiHayCollectable(){
         if (not self.hayObjetoParaAgarrar()) {
@@ -125,16 +125,16 @@ object rick mixed with NotCollectable{
             self.error("No hay que agarrar")
         }
     }
-    
+
     method puedoSacarObjetosDeLaMochila() {
-	    if(mochila.size() <= 0)
-	    	self.error("No hay nada en la mochila")
-    	
+        if(mochila.size() <= 0)
+            self.error("No hay nada en la mochila")
+
     }
 
-	method ungrab() { 
-		grabed = nada
-	}
+    method ungrab() {
+        grabed = nada
+    }
 
     method catched() {
         vidas -= 1
@@ -142,55 +142,60 @@ object rick mixed with NotCollectable{
             game.say(self, "Perdi!!!!!\nBye Bye!")
             // pensar ir a pantalla con estadisticas
             game.schedule(3000,{game.stop()})
-        } else 
+        } else
             game.say(self, "Outch!!!!!")
     }
 
     method isPortal() = false
-    
-    method ponerseLentes(){    		
-    	niveles.mostrarBloquesEnAreasProhibidas()  	
-    	niveles.ponerCofre()
+
+    method ponerseLentes(){
+        niveles.mostrarBloquesEnAreasProhibidas()
+        niveles.ponerCofre()
     }
-    
+
     method tieneElObjetoEnLaMochila(objeto){
-    	return mochila.contains(objeto)
+        return mochila.contains(objeto)
     }
-    
+
     method abrirCofre(){
-    	if(!self.encontreElCofre()){
-    		self.error("Aca no hay ningun cofre");
-    	}
-    	
-		game.removeVisual(cofre)
-		game.say(self,"Empieza el final!")
+        if(!self.encontreElCofre()){
+            self.error("Aca no hay ningun cofre");
+        }
+
+        game.removeVisual(cofre)
+        game.say(self,"Empieza el final!")
     }
-    
+
     method encontreElCofre(){
-    	return game.colliders(self).contains(cofre)
+        return game.colliders(self).contains(cofre)
     }
 
-    method moveRickInDireccion_(_direction){
-    	if(_direction == direction ){
-    		self.position(direction.nextPosition(self.position()))
-    	}
-    	self.direction(_direction)
-    }
 
-    method moveTo(_direction) { self.position(_direction.nextPosition(self.position())) }
+    // se mueve si mira en direccion, si no, solo rota en el lugar,
+    //method moveRickInDireccion_(_direction){
+    //  if(_direction == direction ){
+    //      self.position(direction.nextPosition(self.position()))
+    //  }
+    //  self.direction(_direction)
+    //}
+
+    method moveTo(_direction) { // se mueve sin condicion
+        self.position(_direction.nextPosition(self.position()))
+        self.direction(_direction)
+    }
 
 }
 
 object none mixed with NotCollectable{
     const property image = ""
-    const property position = game.at(0,0)	
+    const property position = game.at(0,0)
 }
 
 object nada mixed with NotCollectable {
-	var property position = null
+    var property position = null
     var property multiverse = null
-	method trigger(destino, direction){}
-	method colisionasteCon(alguien){ }
+    method trigger(destino, direction){}
+    method colisionasteCon(alguien){ }
     method verificarInventariable(owner) {
         game.errorReporter(owner)
         self.error("Nada que guardar!")
@@ -198,11 +203,11 @@ object nada mixed with NotCollectable {
 }
 
 mixin Collectable{
-	const property esObstaculo = false
+    const property esObstaculo = false
 
-	method colisionasteCon(alguien){
-		game.say(alguien,self.quote())
-	}
+    method colisionasteCon(alguien){
+        game.say(alguien,self.quote())
+    }
 
     method quote() = [
             "Hare guiso de lentejas con esto!",
@@ -219,7 +224,7 @@ mixin Collectable{
 }
 
 mixin NotCollectable{
-	method esObstaculo() = false
+    method esObstaculo() = false
     method isCollectable() = false
     method mover(){}
 }
@@ -234,9 +239,9 @@ object raygun mixed with Collectable{
 
     method position(_position) { mposition = _position }
 
-	method multiverse(value) {
-		multiverse = value
-	}
+    method multiverse(value) {
+        multiverse = value
+    }
 
     method trigger(destino, direction) {
         new Ray( alcance = 7, mposition = mposition, multiverse = multiverse).shot()
@@ -275,7 +280,6 @@ class Ray inherits OmniObjeto{
 
     method alcanzado(visual){}
 
-
 }
 /*
 class Ray inherits OmniObjeto{
@@ -297,21 +301,21 @@ class Ray inherits OmniObjeto{
 */
 
 object portalgun mixed with Collectable{
-	var property image = "assets/gun.png"
-	var property position = game.at(2,2)
+    var property image = "assets/gun.png"
+    var property position = game.at(2,2)
     var multiverse = 1
-	const property isPortal = false
+    const property isPortal = false
 
     method multiverse(value) { multiverse = value }
 
-	method position() = omniverse.position(position, multiverse)
+    method position() = omniverse.position(position, multiverse)
 
     method image() = if (multiverse == omniverse.current() ) image else "assets/nada.png"
 
-	method trigger(multiverseDestino, direction){
+    method trigger(multiverseDestino, direction){
         self.verificarMultiversoDestinoEsDiferenteAlActual(multiverseDestino)
         self.crearPortalA(multiverseDestino, direction)
-	}
+    }
 
     method crearPortalA(multiverseDestino, direction){ // refac crear portal en esta direccion
 
@@ -330,42 +334,42 @@ object portalgun mixed with Collectable{
         }
     }
 
-	override method colisionasteCon(alguien){
-		game.say(alguien,"Al fin, mi pistola de portales")
-	}
+    override method colisionasteCon(alguien){
+        game.say(alguien,"Al fin, mi pistola de portales")
+    }
 }
 
 
 
 class Portal mixed with NotCollectable{
-	const position
+    const position
     const property multiverse
-	const property image = "assets/portal.gif"
-	const property isPortal = true
+    const property image = "assets/portal.gif"
+    const property isPortal = true
         var property exit
 
-	method position() = omniverse.position(position, multiverse)
+    method position() = omniverse.position(position, multiverse)
 
     method image() = if (multiverse == omniverse.current() ) image else "assets/nada.png"
 
-	method travel(traveler) {
+    method travel(traveler) {
             omniverse.current(exit.multiverse())
             traveler.multiverse(exit.multiverse())
             traveler.position(exit.position())
-	}
+    }
 
-	method colisionasteCon(alguien){
-		alguien.travel()
-	}
+    method colisionasteCon(alguien){
+        alguien.travel()
+    }
 
 }
 
 class Fondo inherits OmniObjeto{
-   	const image = "assets/ram-fondo3.png"
+    const image = "assets/ram-fondo3.png"
 
     method image() = if (multiverse == omniverse.current() ) image else "assets/nada.png"
 
-	method colisionasteCon(alguien){}
+    method colisionasteCon(alguien){}
 
     method isPortal() = false
 
@@ -375,11 +379,11 @@ class Fondo inherits OmniObjeto{
 }
 
 class Enemigo inherits OmniObjeto mixed with NotCollectable {
-	var property numeroEnemigo
-	var property direction = down
+    var property numeroEnemigo
+    var property direction = down
 
     method image() = if (multiverse == omniverse.current() )
-                            direction.imageEnemy(numeroEnemigo) 
+                            direction.imageEnemy(numeroEnemigo)
                      else "assets/nada.png"
 
     method direction(_direction) { direction = _direction }
@@ -388,14 +392,14 @@ class Enemigo inherits OmniObjeto mixed with NotCollectable {
 
     method moveTo(_direction) { self.mposition(_direction.nextPosition(self.mposition())) }
 
-	override method mover(){ 
+    override method mover(){
         direction.newMposition(self)
         game.schedule(500, { self.mover() })
     }
 
-	method colisionasteCon(alguien){
-    	alguien.catched()
-	}
+    method colisionasteCon(alguien){
+        alguien.catched()
+    }
 }
 
 class Monstruo inherits Enemigo mixed with NotCollectable{
@@ -411,43 +415,43 @@ class Monstruo inherits Enemigo mixed with NotCollectable{
 }
 
 class Bloque inherits OmniObjeto{
-	var property image =  "assets/blockOculto.png"
+    var property image =  "assets/blockOculto.png"
 
     method image() = if (multiverse == omniverse.current() ) image else "assets/nada.png"
 
-	method colisionasteCon(alguien){}
-	
-	method esObstaculo() = true
+    method colisionasteCon(alguien){}
+
+    method esObstaculo() = true
 }
 
 object nightVisionGoggles mixed with Collectable{
-	var property image = "assets/nightVisionGoggles.png"
-	var property position = game.at(0,0)
-	var multiverse = 3
-	method multiverse(value) { multiverse = value }        
-	method position() = omniverse.position(position, multiverse)
-	
-	method trigger(destino, direction) {
+    var property image = "assets/nightVisionGoggles.png"
+    var property position = game.at(0,0)
+    var multiverse = 3
+    method multiverse(value) { multiverse = value }
+    method position() = omniverse.position(position, multiverse)
+
+    method trigger(destino, direction) {
         rick.ponerseLentes()
     }
 }
 
 object cofre mixed with Collectable{
-	var property image = "assets/treasureChest.png"
-	var property position = game.at(7,3)
-	var multiverse = 3
-	method multiverse(value) { multiverse = value }        
-	method position() = omniverse.position(position, multiverse)
-	
-	
+    var property image = "assets/treasureChest.png"
+    var property position = game.at(7,3)
+    var multiverse = 3
+    method multiverse(value) { multiverse = value }
+    method position() = omniverse.position(position, multiverse)
+
+
 }
 
 object llave mixed with Collectable{
-	var property image = "assets/treasureKey.png"
-	var property position = game.at(7,3)
-	var multiverse = 2
-	method multiverse(value) { multiverse = value }        
-	method position() = omniverse.position(position, multiverse)
-	
-	method trigger(destino, direction) { rick.abrirCofre() }
+    var property image = "assets/treasureKey.png"
+    var property position = game.at(7,3)
+    var multiverse = 2
+    method multiverse(value) { multiverse = value }
+    method position() = omniverse.position(position, multiverse)
+
+    method trigger(destino, direction) { rick.abrirCofre() }
 }
