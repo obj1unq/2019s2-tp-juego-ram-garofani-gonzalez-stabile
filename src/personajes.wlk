@@ -101,23 +101,22 @@ object rick mixed with NotCollectable{
 
 	method trigger(destino) { grabed.trigger(destino, direction) }
 
-	method manipularObjetos(){
+	method manipularObjetos(extremo){
 		//self.verificarSiHayCollectable()
 		if(self.hayObjetoParaAgarrar())
 			self.grab()
 		else
-			self.sacar()		
+			self.sacar(extremo)
 	}
 	
-    method sacar() {
+    method sacar(extremo) {
     	self.puedoSacarObjetosDeLaMochila()
-        grabed = mochila.head()
-        mochila.remove(grabed)
+    	grabed = self.getObjectFromBag(extremo)
+        
         barra.acomodar(mochila)
         grabed.position(position)
         //grabed.multiverse(multiverse)
-    }
-
+    }	
 	method grab() { 
 		grabed = game.colliders(self).find{visual => visual.isCollectable()}
 		//grabed.multiverse(omniverse.current())
@@ -180,11 +179,36 @@ object rick mixed with NotCollectable{
     }
     
     method moveRickInDireccion_(_direction){
-    	if(_direction == direction.typeDirection() ){
-    		self.position(direction.nextPosition(self.position()))
+    	if(direction.typeDirection() != direction){
+    		self.direction(new Directions(typeDirection = _direction))    		
     	}
-    	self.direction(new Directions(typeDirection = _direction))
+    	self.position(direction.nextPosition(self.position()))
     }
+    
+    method rotarSentidoHorario(){
+    	self.direction(new Directions(typeDirection = direction.siguiente()))
+    }
+    method rotarSentidoAntiHorario(){
+    	self.direction(new Directions(typeDirection = direction.anterior()))
+    }
+    
+    method getObjectFromBag(extremo){
+		const obj = extremo.getObject(mochila)
+        mochila.remove(obj)
+        return obj
+	}
+}
+
+//No se me ocurrio como hacer esto de una manera mas prolija...
+object inicio{
+	method getObject(list){
+		return list.head()
+	}
+}
+object fin{
+	method getObject(list){
+		return list.last()
+	}
 }
 
 object none mixed with NotCollectable{

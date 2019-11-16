@@ -26,6 +26,9 @@ class Directions{
     	 else
     	 	return _position  	
 	}
+	
+	method anterior() = typeDirection.anterior()
+	method siguiente() = typeDirection.siguiente()
 }
 
 
@@ -39,6 +42,10 @@ object up{
     method nextPosition(_position) = game.at(_position.x(), (_position.y() + 1).min(game.height()))  		
 	
 	method opuesto() = down
+	
+	method siguiente() = right
+	
+	method anterior() = left
 }
 object down{
     method imageRick() = "assets/RickFront.png"
@@ -50,6 +57,10 @@ object down{
 	method nextPosition(_position) = game.at(_position.x(), (_position.y() - 1).max(0))
 	
 	method opuesto() = up
+	
+	method siguiente() = left
+	
+	method anterior() = right
 }
 object left{
     method imageRick() = "assets/RickLeft.png"
@@ -61,6 +72,10 @@ object left{
 	method nextPosition(_position) = game.at((_position.x() - 1).max(0), _position.y())  
 	
 	method opuesto() = right 
+	
+	method siguiente() = up
+	
+	method anterior() = down
   
 }
 object right{
@@ -73,4 +88,8 @@ object right{
     method nextPosition(_position) = game.at((_position.x() + 1).min(game.width()), _position.y()) 
     
     method opuesto() = left
+    
+    method siguiente() = down
+    
+    method anterior() = up
 }
