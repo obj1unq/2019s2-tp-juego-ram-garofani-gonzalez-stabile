@@ -203,7 +203,6 @@ object nada mixed with NotCollectable {
 }
 
 mixin Collectable{
-    const property esObstaculo = false
 
     method colisionasteCon(alguien){
         game.say(alguien,self.quote())
@@ -216,7 +215,11 @@ mixin Collectable{
             "No so fast!"
         ].anyOne()
 
+    method esObstaculo() = false
+
     method isCollectable() = true
+
+    method isPortal() = false
 
     method verificarInventariable(owner) { }
 
@@ -224,10 +227,16 @@ mixin Collectable{
 }
 
 mixin NotCollectable{
+
     method esObstaculo() = false
+
     method isCollectable() = false
+
+    method isPortal() = false
+
     method mover(){}
 }
+
 
 object raygun mixed with Collectable{
 
