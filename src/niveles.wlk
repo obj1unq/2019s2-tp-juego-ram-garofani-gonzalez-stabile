@@ -78,10 +78,10 @@ object niveles{
         }
     }
 
-    method estaFueraDeLosLimites(pos) = pos.x() < 0 or pos.x() > omniverse.ancho()-1 or pos.y() < 0 or pos.y() > omniverse.alto()-1
+    //method estaFueraDeLosLimites(pos) = pos.x() < 0 or pos.x() > omniverse.ancho()-1 or pos.y() < 0 or pos.y() > omniverse.alto()-1
 
-    method puedeMoverSiguientePosicion(pos) =
-            not self.estaFueraDeLosLimites(pos) and not self.esZonaProhibida(pos)
+    method puedeMover(pos) = not self.esZonaProhibida(pos)
+            //not self.estaFueraDeLosLimites(pos) and not self.esZonaProhibida(pos)
 
     method esZonaProhibida(pos){
         return self.catalogo().get(omniverse.current()).zonasProhibidas().contains(game.at(pos.x(), pos.y()))

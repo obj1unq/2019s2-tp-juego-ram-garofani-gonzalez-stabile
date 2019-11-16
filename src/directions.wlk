@@ -1,7 +1,6 @@
 import wollok.game.*
 import niveles.*
 
-//Super refac MUCHO codigo repetido
 
 mixin Common{
 
@@ -15,7 +14,7 @@ mixin Common{
 
     method next(position)
 
-    method nextPosition(position) = if (niveles.puedeMoverSiguientePosicion(self.next(position))) self.next(position) else position
+    method nextPosition(position) = if (niveles.puedeMover(self.next(position))) self.next(position) else position
 
 }
 
