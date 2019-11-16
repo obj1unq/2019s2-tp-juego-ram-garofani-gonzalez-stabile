@@ -12,19 +12,13 @@ object random{
 
 
 object niveles{
-    const monstruos = (1..2).fold([], { 
-                                     enemies, value => enemies.add(
-                                         new Monstruo(numeroEnemigo = 4, mposition = game.at(random.up(1,11),12), multiverse = 1))
-                                     enemies.last().mover() //arrancar monstruo
-                                     return enemies 
-                              })
     const property catalogo = [
 		 new Nivel(
 		 	fondo = new Fondo(mposition = game.origin(), multiverse = 0, image = "assets/ram-fondo3.png"),
 		  	objetos = [] ) ,
          new Nivel(
 		  	fondo = new Fondo(mposition = game.origin(), multiverse = 1,image = "assets/ram-fondo1.png"),
-		  	objetos = [barra, rick, portalgun, raygun] + monstruos ),
+		  	objetos = [barra, rick, portalgun, raygun] + self.listOfMonstruos(1) ),
          new Nivel(
 		  	fondo = new Fondo(mposition = game.origin(), multiverse = 2,image = "assets/ram-fondo2.png"),
 		  	objetos = [llave] + self.listOfEnemies(2) ),
@@ -55,18 +49,25 @@ object niveles{
 
     method listOfEnemies(multiverse) = (1..self.numberOfEnemies()).fold([], { 
                                                      enemies, value => enemies.add(self.createNewEnemy(value, multiverse)) 
-                                                     enemies.last().mover() //arrancar monstruo
                                                      return enemies 
                                           })
+
+    method listOfMonstruos(multiverse) = (1..2).fold([], { 
+                                     enemies, value => enemies.add( self.createNewMonstruo(4, 1))
+                                     return enemies 
+                              })
     
     method createNewEnemy(number, multiverse){
             return new Enemigo(
                 direction = self.randomMovement(),
                 numeroEnemigo = number,
                 multiverse = multiverse, 
-                //mposition = game.at(new Range(start = 1, end = 10).anyOne(),new Range(start = 1, end = 10).anyOne())
                 mposition = game.at(random.up(0,12), random.up(0,12))
             )
+    }
+    
+    method createNewMonstruo(number, multiverse){
+            return new Monstruo(numeroEnemigo = number, mposition = game.at(random.up(1,11),12), multiverse = multiverse)
     }
     
     method randomMovement() = [up, down, left, right].anyOne()
@@ -108,7 +109,10 @@ class Nivel{
     }
 
 	method show(){ // refac con presentarFondo()
-		objetos.forEach{v => game.addVisual(v)}
+		objetos.forEach{
+            visual => game.addVisual(visual)
+            visual.mover() //arrancar movil
+        }
     }
     
     method presentarZonasProhibidas(){

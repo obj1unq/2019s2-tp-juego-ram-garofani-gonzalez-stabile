@@ -26,20 +26,10 @@ object omniverse {
 class OmniObjeto {
 	var property mposition // = game.origin() 
 	var property multiverse 
-//=======
-//class OmniObjeto mixed with NotCollectable{
-//	var property mposition = game.origin() 
-//	var multiverse 
-//
-//    method multiverse(value) { multiverse = value }
-//>>>>>>> laberinto_v3
 
 	method position() = omniverse.position(mposition, multiverse)
 	
-	//override method mover(){}
 	method mover(){}
-	
-	//override method esObstaculo() = false
 	
 }
 
@@ -179,13 +169,16 @@ object rick mixed with NotCollectable{
     method encontreElCofre(){
     	return game.colliders(self).contains(cofre)
     }
-    
+
     method moveRickInDireccion_(_direction){
     	if(_direction == direction ){
     		self.position(direction.nextPosition(self.position()))
     	}
     	self.direction(_direction)
     }
+
+    method moveTo(_direction) { self.position(_direction.nextPosition(self.position())) }
+
 }
 
 object none mixed with NotCollectable{
@@ -392,6 +385,8 @@ class Enemigo inherits OmniObjeto mixed with NotCollectable {
     method direction(_direction) { direction = _direction }
 
     method direction() = direction
+
+    method moveTo(_direction) { self.mposition(_direction.nextPosition(self.mposition())) }
 
 	override method mover(){ 
         direction.newMposition(self)
