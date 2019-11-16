@@ -393,7 +393,7 @@ class Enemigo inherits OmniObjeto mixed with NotCollectable {
     method moveTo(_direction) { self.mposition(_direction.nextPosition(self.mposition())) }
 
     override method mover(){
-        direction.newMposition(self)
+        direction.toNewMposition(self)
         game.schedule(500, { self.mover() })
     }
 
@@ -408,7 +408,7 @@ class Monstruo inherits Enemigo mixed with NotCollectable{
     }
 
     override method mover(){
-        direction.newMposition(self)
+        direction.toNewMposition(self)
         game.schedule(1000, { self.mover() })
     }
 

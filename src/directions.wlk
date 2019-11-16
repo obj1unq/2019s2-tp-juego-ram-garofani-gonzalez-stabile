@@ -12,9 +12,7 @@ mixin Common{
     method reverse(objeto) { objeto.direction(self.oposite()) }
 
     method oposite()
-    
-    //refac delegate in objeto o en super clase de objeto (OmniObjeto)
-    method newMposition(objeto) { self.toNewMposition(objeto) }
+
 }
 
 object up mixed with Common{
@@ -38,7 +36,7 @@ object up mixed with Common{
 }
 object down mixed with Common{
 
-    override method inEdge(objeto) = objeto.mposition().y() == 0 
+    override method inEdge(objeto) = objeto.mposition().y() == 0
 
     override method oposite() = up
 
@@ -57,7 +55,7 @@ object down mixed with Common{
 object left mixed with Common{
 
     override method inEdge(objeto) = objeto.mposition().x() == 0
-    
+
     override method oposite() = right
 
     method imageRick() = "assets/RickLeft.png"
