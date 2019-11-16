@@ -4,19 +4,16 @@ import wollok.game.*
 import niveles.*
 
 program RaM {
-	
-	game.title("RaM")
-	game.height(14)
-	game.width(13)
-	//laucher.lauchGame()
-        console.println("presentado niveles")
-        niveles.presentar()
-        console.println("niveles presentados")
-	game.showAttributes(rick) //Debug 	 
+
+    game.title("RaM")
+    game.height(14)
+    game.width(13)
+    niveles.presentar()
+    //game.showAttributes(rick) //Debug
 
 
     config.teclas()
-	config.ticks()
-	config.configurarColisiones()
-	game.start()
+    config.ticks()
+    config.configurarColisiones()
+    game.start()
 }
