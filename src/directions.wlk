@@ -3,18 +3,6 @@ import niveles.*
 
 //Super refac MUCHO codigo repetido
 
-mixin Horizontal{
-
-    method inEdge(objeto) = objeto.mposition().x() == 0 or objeto.mposition().x() == game.width()-1
-
-}
-
-mixin Vertical{ 
-
-    method inEdge(objeto) = objeto.mposition().y() == 0 or objeto.mposition().y() == game.height()-2
-
-}
-
 mixin Common{
 
     method inEdge(objeto)
@@ -29,7 +17,9 @@ mixin Common{
     method newMposition(objeto) { self.toNewMposition(objeto) }
 }
 
-object up mixed with Common, Vertical{
+object up mixed with Common{
+
+    override method inEdge(objeto) = objeto.mposition().y() == game.height()-2
 
     override method oposite() = down
 
@@ -47,7 +37,9 @@ object up mixed with Common, Vertical{
     }
 
 }
-object down mixed with Common, Vertical{
+object down mixed with Common{
+
+    override method inEdge(objeto) = objeto.mposition().y() == 0 
 
     override method oposite() = up
 
@@ -70,8 +62,10 @@ object down mixed with Common, Vertical{
             return _position
     }
 }
-object left mixed with Common, Horizontal{
+object left mixed with Common{
 
+    override method inEdge(objeto) = objeto.mposition().x() == 0
+    
     override method oposite() = right
 
     method imageRick() = "assets/RickLeft.png"
@@ -95,7 +89,9 @@ object left mixed with Common, Horizontal{
             return _position
     }
 }
-object right mixed with Common, Horizontal{
+object right mixed with Common{
+
+    override method inEdge(objeto) = objeto.mposition().x() == game.width()-1
 
     override method oposite() = left
 
