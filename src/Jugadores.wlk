@@ -6,9 +6,10 @@ class PilaDeFichas inherits OmniObjeto mixed with Collectable{
     const property image = "assets/ficha-morty-a.png"
 	var listaFichas = []
 	
-	var gano = false
+	
 	
 	method jugadaGanadora(){
+		var gano = false
 		listaFichas.forEach{ ficha => 	if(	self.ganoHorizontal(ficha) or
 											self.ganoVertical(ficha) or
 											self.ganoDiagonalArriba(ficha) or
@@ -16,6 +17,11 @@ class PilaDeFichas inherits OmniObjeto mixed with Collectable{
 												gano = true
 										}
 							}
+							
+		if(gano){ 
+			game.say(rick,"GANE!!!!!!")
+			game.schedule(3000,{game.stop()})
+		}
 	}
     method position(_position) { mposition = _position }
 
@@ -47,38 +53,38 @@ class PilaDeFichas inherits OmniObjeto mixed with Collectable{
 	}
 
 	method ganoHorizontal(ficha) {
-		const xPosition = ficha.position().x()
-		const yPosition = ficha.position().y()
-		return 	listaFichas.contains(xPosition, yPosition) and 
-				listaFichas.contains(xPosition + 1, yPosition) and
-				listaFichas.contains(xPosition + 2, yPosition) and
-				listaFichas.contains(xPosition + 3, yPosition)   
+		const xPosition = ficha.x()
+		const yPosition = ficha.y()
+		return 	listaFichas.contains(game.at(xPosition, yPosition)) and 
+				listaFichas.contains(game.at(xPosition + 1, yPosition)) and
+				listaFichas.contains(game.at(xPosition + 2, yPosition)) and
+				listaFichas.contains(game.at(xPosition + 3, yPosition))   
 	}
 
 
 	method ganoVertical(ficha) {
-		const xPosition = ficha.position().x()
-		const yPosition = ficha.position().y()
-		return 	listaFichas.contains(xPosition, yPosition) and 
-				listaFichas.contains(xPosition, yPosition + 1) and
-				listaFichas.contains(xPosition, yPosition + 2) and
-				listaFichas.contains(xPosition, yPosition + 3)  
+		const xPosition = ficha.x()
+		const yPosition = ficha.y()
+		return 	listaFichas.contains(game.at(xPosition, yPosition)) and 
+				listaFichas.contains(game.at(xPosition, yPosition + 1)) and
+				listaFichas.contains(game.at(xPosition, yPosition + 2)) and
+				listaFichas.contains(game.at(xPosition, yPosition + 3))  
 	}
 	method ganoDiagonalArriba(ficha) {
-		const xPosition = ficha.position().x()
-		const yPosition = ficha.position().y()
-		return 	listaFichas.contains(xPosition, yPosition) and 
-				listaFichas.contains(xPosition + 1 , yPosition + 1) and
-				listaFichas.contains(xPosition + 2 , yPosition + 2) and
-				listaFichas.contains(xPosition + 3 , yPosition + 3)  
+		const xPosition = ficha.x()
+		const yPosition = ficha.y()
+		return 	listaFichas.contains(game.at(xPosition, yPosition)) and 
+				listaFichas.contains(game.at(xPosition + 1 , yPosition + 1)) and
+				listaFichas.contains(game.at(xPosition + 2 , yPosition + 2)) and
+				listaFichas.contains(game.at(xPosition + 3 , yPosition + 3))  
 	}
 	method ganoDiagonalAbajo(ficha) {
-		const xPosition = ficha.position().x()
-		const yPosition = ficha.position().y()
-		return 	listaFichas.contains(xPosition,yPosition) and 
-				listaFichas.contains(xPosition + 1 ,yPosition - 1) and
-				listaFichas.contains(xPosition + 2 ,yPosition - 2) and
-				listaFichas.contains(xPosition + 3 ,yPosition - 3)  
+		const xPosition = ficha.x()
+		const yPosition = ficha.y()
+		return 	listaFichas.contains(game.at(xPosition,yPosition)) and 
+				listaFichas.contains(game.at(xPosition + 1 ,yPosition - 1)) and
+				listaFichas.contains(game.at(xPosition + 2 ,yPosition - 2)) and
+				listaFichas.contains(game.at(xPosition + 3 ,yPosition - 3))
 	}	
 	
 }
