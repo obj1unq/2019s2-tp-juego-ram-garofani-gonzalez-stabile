@@ -4,17 +4,34 @@ import wollok.game.*
 
 class PilaDeFichas inherits OmniObjeto mixed with Collectable{
     const property image = "assets/ficha-morty-a.png"
-
+	var listaFichas = []
+	
+	var gano = false
+	
+	method jugadaGanadora(){
+		listaFichas.forEach{ ficha => 	if(	self.ganoHorizontal(ficha) or
+											self.ganoVertical(ficha) or
+											self.ganoDiagonalArriba(ficha) or
+											self.ganoDiagonalAbajo(ficha)){
+												gano = true
+										}
+							}
+	}
     method position(_position) { mposition = _position }
 
 
     method trigger(destino, direction){
+    	
+    	// poner fichas solo si esta entre x (algo) y x (algo2) 
+    	// si tengo mas de 6 visuals (fichas ) en columna Y (algo) 
         self.ponerFicha()
+        self.jugadaGanadora()
     }
 
 	method ponerFicha(){
+		listaFichas.add(game.at(self.position().x() , self.posicionLibreEnColumna().y() ))
 		game.addVisual(new Ficha( 	player = self , 
-									position = game.at(self.position().x() , self.posicionLibreEnColumna().y() ), 
+									position = listaFichas.last(), 
 									image = "assets/ficha-morty-a.png"
 		))
 //		pc.ponerFicha()
@@ -27,7 +44,43 @@ class PilaDeFichas inherits OmniObjeto mixed with Collectable{
             visual => visual.position().x() == self.position().x() 
             and visual.position().y().between(0, self.position().y() + 3)}
 		return game.at(self.position().x(), column.size())
-	}		
+	}
+
+	method ganoHorizontal(ficha) {
+		const xPosition = ficha.position().x()
+		const yPosition = ficha.position().y()
+		return 	listaFichas.contains(xPosition, yPosition) and 
+				listaFichas.contains(xPosition + 1, yPosition) and
+				listaFichas.contains(xPosition + 2, yPosition) and
+				listaFichas.contains(xPosition + 3, yPosition)   
+	}
+
+
+	method ganoVertical(ficha) {
+		const xPosition = ficha.position().x()
+		const yPosition = ficha.position().y()
+		return 	listaFichas.contains(xPosition, yPosition) and 
+				listaFichas.contains(xPosition, yPosition + 1) and
+				listaFichas.contains(xPosition, yPosition + 2) and
+				listaFichas.contains(xPosition, yPosition + 3)  
+	}
+	method ganoDiagonalArriba(ficha) {
+		const xPosition = ficha.position().x()
+		const yPosition = ficha.position().y()
+		return 	listaFichas.contains(xPosition, yPosition) and 
+				listaFichas.contains(xPosition + 1 , yPosition + 1) and
+				listaFichas.contains(xPosition + 2 , yPosition + 2) and
+				listaFichas.contains(xPosition + 3 , yPosition + 3)  
+	}
+	method ganoDiagonalAbajo(ficha) {
+		const xPosition = ficha.position().x()
+		const yPosition = ficha.position().y()
+		return 	listaFichas.contains(xPosition,yPosition) and 
+				listaFichas.contains(xPosition + 1 ,yPosition - 1) and
+				listaFichas.contains(xPosition + 2 ,yPosition - 2) and
+				listaFichas.contains(xPosition + 3 ,yPosition - 3)  
+	}	
+	
 }
 
 
