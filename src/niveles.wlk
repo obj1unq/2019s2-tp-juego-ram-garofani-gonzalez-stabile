@@ -2,9 +2,8 @@ import personajes.*
 import wollok.game.*
 import directions.*
 import movimientos.*
-import cuatro.*
-import Jugadores.*
 import areasProhibidas.*
+import Fichas.*
 
 object random{
     method up(n1,n2) = (n1-1).randomUpTo(n2).roundUp(0)
@@ -36,7 +35,7 @@ object niveles{
 
 		  	fondo = new Fondo(mposition = game.origin(), multiverse = 4,image = "assets/FondoCuatro.png"),
 
-		  	objetos = [new PilaDeFichasDeRick(mposition = game.at(0,12), multiverse = 4)] )
+		  	objetos = [fichasDeRick] )
 		  ]
 		  	
     var property actual = catalogo.first() 

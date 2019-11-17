@@ -4,7 +4,7 @@ import niveles.*
 import directions.*
 import wollok.game.*
 import Fichas.*
-import Jugadores.*
+
 
 object config{
 	

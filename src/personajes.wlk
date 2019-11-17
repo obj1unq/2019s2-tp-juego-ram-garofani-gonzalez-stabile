@@ -2,6 +2,7 @@ import wollok.game.*
 import niveles.*
 import directions.*
 import movimientos.*
+import Fichas.*
 
 object omniverse {
     var property current = 1
@@ -302,6 +303,8 @@ class Ray inherits OmniObjeto{
     }
 }
 */
+
+const fichasDeRick = new PilaDeFichas(mposition = game.at(0,12), multiverse = 4)
 
 object portalgun mixed with Collectable{
 	var property image = "assets/gun.png"
