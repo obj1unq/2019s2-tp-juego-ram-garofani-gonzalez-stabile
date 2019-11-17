@@ -23,7 +23,7 @@ object omniverse {
     method distanciaACurrent(multiverse) = multiverse - current
 }
 
-class OmniObjeto {
+class OmniObjeto mixed with NotCollectable {
     var property mposition // = game.origin()
     var property multiverse
 
@@ -48,7 +48,6 @@ object barra mixed with NotCollectable{
     }
 
     method altura() = 1
-
 }
 
 object rick mixed with NotCollectable{
@@ -96,7 +95,7 @@ object rick mixed with NotCollectable{
         self.puedoSacarObjetosDeLaMochila()
         grabed = self.getObjectFromBag(extremo)        
         barra.acomodar(mochila)
-        grabed.position(position)
+        grabed.position(position)	
         //grabed.multiverse(multiverse)
     }
 
@@ -196,18 +195,6 @@ object rick mixed with NotCollectable{
         const obj = extremo.getObject(mochila)
         mochila.remove(obj)
         return obj
-    }
-}
-
-//No se me ocurrio como hacer esto de una manera mas prolija...
-object inicio{
-    method getObject(list){
-        return list.head()
-    }
-}
-object fin{
-    method getObject(list){
-        return list.last()
     }
 }
 
@@ -392,6 +379,8 @@ class Portal mixed with NotCollectable{
             omniverse.current(exit.multiverse())
             traveler.multiverse(exit.multiverse())
             traveler.position(exit.position())
+            game.removeVisual(self)
+            game.removeVisual(exit)
     }
 
     method colisionasteCon(alguien){
@@ -414,7 +403,7 @@ class Fondo inherits OmniObjeto{
     method esObstaculo() = false
 }
 
-class Enemigo inherits OmniObjeto mixed with NotCollectable {
+class Enemigo inherits OmniObjeto {
     var property numeroEnemigo
     var property direction// = down
 
@@ -434,7 +423,7 @@ class Enemigo inherits OmniObjeto mixed with NotCollectable {
     }
 }
 
-class Monstruo inherits Enemigo mixed with NotCollectable{
+class Monstruo inherits Enemigo{
     method alcanzado(visual){
         game.removeVisual(self)
     }
@@ -486,4 +475,12 @@ object llave mixed with Collectable{
     method position() = omniverse.position(position, multiverse)
 
     method trigger(destino, direction) { rick.abrirCofre() }
+}
+
+object inicio{
+	method getObject(mochila) = mochila.head()
+}
+
+object fin{
+	method getObject(mochila) = mochila.last()
 }

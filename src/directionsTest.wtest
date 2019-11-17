@@ -10,69 +10,69 @@ describe "Test de directions"{
 		const enemigo = new Enemigo(mposition = game.at(5,12),
 									numeroEnemigo = 1,
 									multiverse = 1,
-									direction = new Directions(typeDirection = down))
+									direction = down)
 									
-		assert.that(up.estaEnElBorde(enemigo))							
+		assert.that(up.inEdge(enemigo))							
 
 	}
 	test "Up - Esta en el borde - False"{
 		const enemigo = new Enemigo(mposition = game.at(7,3),
 									numeroEnemigo = 1,
 									multiverse = 1,
-									direction = new Directions(typeDirection = down))
+									direction = down)
 									
-		assert.notThat(up.estaEnElBorde(enemigo))
+		assert.notThat(up.inEdge(enemigo))
 	}
 	
 	test "Down - Esta en el borde - True"{
 		const enemigo = new Enemigo(mposition = game.at(5,0),
 									numeroEnemigo = 1,
 									multiverse = 1,
-									direction = new Directions(typeDirection = down))
+									direction = down)
 									
-		assert.that(down.estaEnElBorde(enemigo))
+		assert.that(down.inEdge(enemigo))
 	}	
 	test "Down - Esta en el borde - False"{
 		const enemigo = new Enemigo(mposition = game.at(3,3),
 									numeroEnemigo = 1,
 									multiverse = 1,
-									direction = new Directions(typeDirection = down))
+									direction = down)
 									
-		assert.notThat(down.estaEnElBorde(enemigo))
+		assert.notThat(down.inEdge(enemigo))
 	}
 	
 	test "Left - Esta en el borde - True"{
 		const enemigo = new Enemigo(mposition = game.at(0,3),
 									numeroEnemigo = 1,
 									multiverse = 1,
-									direction = new Directions(typeDirection = down))
+									direction = down)
 									
-		assert.that(left.estaEnElBorde(enemigo))
+		assert.that(left.inEdge(enemigo))
 	}	
 	test "Left - Esta en el borde - False"{
 		const enemigo = new Enemigo(mposition = game.at(7,3),
 									numeroEnemigo = 1,
 									multiverse = 1,
-									direction = new Directions(typeDirection = down))
+									direction = down)
 									
-		assert.notThat(left.estaEnElBorde(enemigo))
+		assert.notThat(left.inEdge(enemigo))
 	}
 	
 	test "Right - Esta en el borde - True"{
 		const enemigo = new Enemigo(mposition = game.at(12,3),
 									numeroEnemigo = 1,
 									multiverse = 1,
-									direction = new Directions(typeDirection = down))
+									direction = down)
 									
-		assert.that(right.estaEnElBorde(enemigo))
+		assert.that(right.inEdge(enemigo))
 	}	
 	test "Right - Esta en el borde - False"{
 		const enemigo = new Enemigo(mposition = game.at(7,3),
 									numeroEnemigo = 1,
 									multiverse = 1,
-									direction = new Directions(typeDirection = down))
+									direction = down)
 									
-		assert.notThat(right.estaEnElBorde(enemigo))
+		assert.notThat(right.inEdge(enemigo))
 	}
 	
 	test "Up - nextPosition"{}
