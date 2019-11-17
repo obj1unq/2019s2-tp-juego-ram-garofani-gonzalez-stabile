@@ -73,21 +73,14 @@ object rick mixed with NotCollectable{
         grabed.position(position)
     }
 
-    method direction(_direction) { direction = _direction }
-
-    method travel() { /* self.verificarSiHayPortal() */ self.takePortal() }
-
-    method verificarSiHayPortal() {
-            if (not game.colliders(self).any{ visible => visible.isPortal() }) {
-                game.errorReporter(self)
-                self.error("No hay por donde viajar")
-            }
-        }
+    method travel() { self.takePortal() }
 
     method takePortal() {
         game.colliders(self).find{ visible => visible.isPortal() }.travel(self)
         barra.acomodar(mochila) // acomoda las referencias de la mochila al nuevo multiverso//refac
     }
+
+    method alcanzado() {}
 
     method trigger(destino) { grabed.trigger(destino, direction) }
 
@@ -285,18 +278,19 @@ object raygun mixed with Collectable{
     }
 
     method trigger(destino, direction) {
-        new Ray( alcance = 7, mposition = mposition, multiverse = multiverse).shot()
+        new Ray( direction = direction, alcance = 7, mposition = mposition, multiverse = multiverse).shot()
     }
 
 }
 
 class Ray inherits OmniObjeto{
     var alcance
+    const direction
 
-    method image() = "assets/v-ray-red.png"
+    method image() = direction.imageRay()
 
     method shot() {
-        mposition = mposition.up(1)
+        mposition = direction.nextPosition(mposition)
         game.addVisual(self)
         game.onCollideDo(self, {visual => visual.alcanzado(self)})
         self.start()
@@ -316,7 +310,7 @@ class Ray inherits OmniObjeto{
     }
 
     method next(){
-        game.schedule(50, { mposition = mposition.up(1) self.start() } )
+        game.schedule(150, { mposition = direction.nextPosition(mposition) self.start() } )
     }
 
     method alcanzado(visual){}

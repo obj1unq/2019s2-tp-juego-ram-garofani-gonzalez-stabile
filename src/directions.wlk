@@ -32,6 +32,8 @@ object up mixed with Common{
 
     method imageEnemy(numeroEnemigo) = "assets/Enemy_"+numeroEnemigo+"_Back.png"
 
+    method imageRay() = "assets/v-ray-red.png"
+
     override method next(position) = game.at(position.x(), (position.y() + 1).min(game.height()))
 
 }
@@ -44,6 +46,8 @@ object down mixed with Common{
     method imageRick() = "assets/RickFront.png"
 
     method imageEnemy(numeroEnemigo) = "assets/Enemy_"+numeroEnemigo+"_Front.png"
+
+    method imageRay() = "assets/v-ray-red.png"
 
     override method next(position) = game.at(position.x(), (position.y() - 1).max(0))
 
@@ -61,6 +65,8 @@ object left mixed with Common{
 
     method imageEnemy(numeroEnemigo) = "assets/Enemy_"+numeroEnemigo+"_Left.png"
 
+    method imageRay() = "assets/h-ray-red.png"
+
     override method next(position) = game.at((position.x() - 1).max(0), position.y())
 
 	method siguiente() = up
@@ -76,6 +82,8 @@ object right mixed with Common{
     method imageRick() = "assets/RickRight.png"
 
     method imageEnemy(numeroEnemigo) = "assets/Enemy_"+numeroEnemigo+"_Rigth.png"
+
+    method imageRay() = "assets/h-ray-red.png"
 
     override method next(position) =  game.at((position.x() + 1).min(game.width()), position.y())
     
