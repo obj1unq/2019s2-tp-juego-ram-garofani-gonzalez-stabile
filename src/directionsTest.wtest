@@ -1,82 +1,82 @@
-import wollok.game.*
-import personajes.*
-import directions.*
-describe "Test de directions"{
-	fixture{
-		game.height(14)
-		game.width(13)
-	}
-	test "Up - Esta en el borde - True"{		
-		const enemigo = new Enemigo(mposition = game.at(5,12),
-									numeroEnemigo = 1,
-									multiverse = 1,
-									direction = new Directions(typeDirection = down))
-									
-		assert.that(up.estaEnElBorde(enemigo))							
-
-	}
-	test "Up - Esta en el borde - False"{
-		const enemigo = new Enemigo(mposition = game.at(7,3),
-									numeroEnemigo = 1,
-									multiverse = 1,
-									direction = new Directions(typeDirection = down))
-									
-		assert.notThat(up.estaEnElBorde(enemigo))
-	}
-	
-	test "Down - Esta en el borde - True"{
-		const enemigo = new Enemigo(mposition = game.at(5,0),
-									numeroEnemigo = 1,
-									multiverse = 1,
-									direction = new Directions(typeDirection = down))
-									
-		assert.that(down.estaEnElBorde(enemigo))
-	}	
-	test "Down - Esta en el borde - False"{
-		const enemigo = new Enemigo(mposition = game.at(3,3),
-									numeroEnemigo = 1,
-									multiverse = 1,
-									direction = new Directions(typeDirection = down))
-									
-		assert.notThat(down.estaEnElBorde(enemigo))
-	}
-	
-	test "Left - Esta en el borde - True"{
-		const enemigo = new Enemigo(mposition = game.at(0,3),
-									numeroEnemigo = 1,
-									multiverse = 1,
-									direction = new Directions(typeDirection = down))
-									
-		assert.that(left.estaEnElBorde(enemigo))
-	}	
-	test "Left - Esta en el borde - False"{
-		const enemigo = new Enemigo(mposition = game.at(7,3),
-									numeroEnemigo = 1,
-									multiverse = 1,
-									direction = new Directions(typeDirection = down))
-									
-		assert.notThat(left.estaEnElBorde(enemigo))
-	}
-	
-	test "Right - Esta en el borde - True"{
-		const enemigo = new Enemigo(mposition = game.at(12,3),
-									numeroEnemigo = 1,
-									multiverse = 1,
-									direction = new Directions(typeDirection = down))
-									
-		assert.that(right.estaEnElBorde(enemigo))
-	}	
-	test "Right - Esta en el borde - False"{
-		const enemigo = new Enemigo(mposition = game.at(7,3),
-									numeroEnemigo = 1,
-									multiverse = 1,
-									direction = new Directions(typeDirection = down))
-									
-		assert.notThat(right.estaEnElBorde(enemigo))
-	}
-	
-	test "Up - nextPosition"{}
-	test "Down - nextPosition"{}
-	test "Left - nextPosition"{}
-	test "Right - nextPosition"{}
-}
+//import wollok.game.*
+//import personajes.*
+//import directions.*
+//describe "Test de directions"{
+//	fixture{
+//		game.height(14)
+//		game.width(13)
+//	}
+//	test "Up - Esta en el borde - True"{		
+//		const enemigo = new Enemigo(mposition = game.at(5,12),
+//									numeroEnemigo = 1,
+//									multiverse = 1,
+//									direction = new Directions(typeDirection = down))
+//									
+//		assert.that(up.estaEnElBorde(enemigo))							
+//
+//	}
+//	test "Up - Esta en el borde - False"{
+//		const enemigo = new Enemigo(mposition = game.at(7,3),
+//									numeroEnemigo = 1,
+//									multiverse = 1,
+//									direction = new Directions(typeDirection = down))
+//									
+//		assert.notThat(up.estaEnElBorde(enemigo))
+//	}
+//	
+//	test "Down - Esta en el borde - True"{
+//		const enemigo = new Enemigo(mposition = game.at(5,0),
+//									numeroEnemigo = 1,
+//									multiverse = 1,
+//									direction = new Directions(typeDirection = down))
+//									
+//		assert.that(down.estaEnElBorde(enemigo))
+//	}	
+//	test "Down - Esta en el borde - False"{
+//		const enemigo = new Enemigo(mposition = game.at(3,3),
+//									numeroEnemigo = 1,
+//									multiverse = 1,
+//									direction = new Directions(typeDirection = down))
+//									
+//		assert.notThat(down.estaEnElBorde(enemigo))
+//	}
+//	
+//	test "Left - Esta en el borde - True"{
+//		const enemigo = new Enemigo(mposition = game.at(0,3),
+//									numeroEnemigo = 1,
+//									multiverse = 1,
+//									direction = new Directions(typeDirection = down))
+//									
+//		assert.that(left.estaEnElBorde(enemigo))
+//	}	
+//	test "Left - Esta en el borde - False"{
+//		const enemigo = new Enemigo(mposition = game.at(7,3),
+//									numeroEnemigo = 1,
+//									multiverse = 1,
+//									direction = new Directions(typeDirection = down))
+//									
+//		assert.notThat(left.estaEnElBorde(enemigo))
+//	}
+//	
+//	test "Right - Esta en el borde - True"{
+//		const enemigo = new Enemigo(mposition = game.at(12,3),
+//									numeroEnemigo = 1,
+//									multiverse = 1,
+//									direction = new Directions(typeDirection = down))
+//									
+//		assert.that(right.estaEnElBorde(enemigo))
+//	}	
+//	test "Right - Esta en el borde - False"{
+//		const enemigo = new Enemigo(mposition = game.at(7,3),
+//									numeroEnemigo = 1,
+//									multiverse = 1,
+//									direction = new Directions(typeDirection = down))
+//									
+//		assert.notThat(right.estaEnElBorde(enemigo))
+//	}
+//	
+//	test "Up - nextPosition"{}
+//	test "Down - nextPosition"{}
+//	test "Left - nextPosition"{}
+//	test "Right - nextPosition"{}
+//}

@@ -152,6 +152,10 @@ object rick mixed with NotCollectable{
 
         game.removeVisual(cofre)
         game.say(self,"Empieza el final!")
+        multiverse = 4
+        omniverse.current(multiverse)
+        barra.acomodar(mochila)
+        
     }
 
     method encontreElCofre(){
