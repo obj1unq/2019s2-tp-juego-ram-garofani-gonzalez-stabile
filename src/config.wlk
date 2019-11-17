@@ -23,13 +23,17 @@ object config{
         keyboard.left().onPressDo({ rick.moveTo(left) })
 
 
-        //Agarra el objeto y lo guarda en la mochila
-        keyboard.z().onPressDo({ rick.manipularObjetos() })
-        //Tira el objeto que tiene en la mano
-        keyboard.x().onPressDo({ rick.ungrab() })
-        //Ejecuta el elemento que tenga en la mano
-        keyboard.space().onPressDo({ rick.trigger(numero) })
-        //Ver otros multiversos
+		keyboard.a().onPressDo({rick.rotarSentidoAntiHorario()})
+		keyboard.d().onPressDo({rick.rotarSentidoHorario()})
+		
+		//Agarra el objeto y lo guarda en la mochila
+		keyboard.z().onPressDo({ rick.manipularObjetos(inicio) })
+		keyboard.x().onPressDo({ rick.manipularObjetos(fin) })		
+		//Tira el objeto que tiene en la mano
+		keyboard.c().onPressDo({ rick.ungrab() })		
+		//Ejecuta el elemento que tenga en la mano
+		keyboard.space().onPressDo({ rick.trigger(numero) })
+		//Ver otros multiversos		
         keyboard.control().onPressDo({ omniverse.current(lastMultiverso) })
 
 

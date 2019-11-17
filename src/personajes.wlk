@@ -73,10 +73,9 @@ object rick mixed with NotCollectable{
         grabed.position(position)
     }
 
-
     method direction(_direction) { direction = _direction }
 
-    method travel() { self.verificarSiHayPortal() self.takePortal() }
+    method travel() { /* self.verificarSiHayPortal() */ self.takePortal() }
 
     method verificarSiHayPortal() {
             if (not game.colliders(self).any{ visible => visible.isPortal() }) {
@@ -92,18 +91,17 @@ object rick mixed with NotCollectable{
 
     method trigger(destino) { grabed.trigger(destino, direction) }
 
-    method manipularObjetos(){
+    method manipularObjetos(extremo){
         //self.verificarSiHayCollectable()
         if(self.hayObjetoParaAgarrar())
             self.grab()
         else
-            self.sacar()
+            self.sacar(extremo)
     }
-
-    method sacar() {
+    
+    method sacar(extremo) {
         self.puedoSacarObjetosDeLaMochila()
-        grabed = mochila.head()
-        mochila.remove(grabed)
+        grabed = self.getObjectFromBag(extremo)        
         barra.acomodar(mochila)
         grabed.position(position)
         //grabed.multiverse(multiverse)
@@ -111,7 +109,6 @@ object rick mixed with NotCollectable{
 
     method grab() {
         grabed = game.colliders(self).find{visual => visual.isCollectable()}
-        //grabed.multiverse(omniverse.current())
         mochila.add(grabed)
         barra.acomodar(mochila)
         self.ungrab()
@@ -145,8 +142,6 @@ object rick mixed with NotCollectable{
         } else
             game.say(self, "Outch!!!!!")
     }
-
-    method isPortal() = false
 
     method ponerseLentes(){
         niveles.mostrarBloquesEnAreasProhibidas()
@@ -184,6 +179,43 @@ object rick mixed with NotCollectable{
         self.direction(_direction)
     }
 
+    //method moveRickInDireccion_(_direction){
+    //  /*if(direction.typeDirection() != direction){
+    //      self.direction(new Directions(typeDirection = _direction))          
+    //  }
+    //  self.position(direction.nextPosition(self.position()))*/
+    //  
+    //  if(_direction == direction.typeDirection() ){
+    //        self.position(direction.nextPosition(self.position()))
+    //    }
+    //    self.direction(new Directions(typeDirection = _direction))
+    //}
+
+    method rotarSentidoHorario(){
+        self.direction(direction.siguiente())
+    }
+    
+    method rotarSentidoAntiHorario(){
+        self.direction(direction.anterior())
+    }
+    
+    method getObjectFromBag(extremo){ //refac
+        const obj = extremo.getObject(mochila)
+        mochila.remove(obj)
+        return obj
+    }
+}
+
+//No se me ocurrio como hacer esto de una manera mas prolija...
+object inicio{
+    method getObject(list){
+        return list.head()
+    }
+}
+object fin{
+    method getObject(list){
+        return list.last()
+    }
 }
 
 object none mixed with NotCollectable{
@@ -354,12 +386,13 @@ class Portal mixed with NotCollectable{
     const position
     const property multiverse
     const property image = "assets/portal.gif"
-    const property isPortal = true
-        var property exit
+    var property exit
 
     method position() = omniverse.position(position, multiverse)
 
     method image() = if (multiverse == omniverse.current() ) image else "assets/nada.png"
+
+    override method isPortal() = true
 
     method travel(traveler) {
             omniverse.current(exit.multiverse())
@@ -389,15 +422,11 @@ class Fondo inherits OmniObjeto{
 
 class Enemigo inherits OmniObjeto mixed with NotCollectable {
     var property numeroEnemigo
-    var property direction = down
+    var property direction// = down
 
     method image() = if (multiverse == omniverse.current() )
                             direction.imageEnemy(numeroEnemigo)
                      else "assets/nada.png"
-
-    method direction(_direction) { direction = _direction }
-
-    method direction() = direction
 
     method moveTo(_direction) { self.mposition(_direction.nextPosition(self.mposition())) }
 

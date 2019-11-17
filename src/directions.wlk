@@ -23,6 +23,10 @@ object up mixed with Common{
     override method inEdge(objeto) = objeto.mposition().y() == game.height()-2
 
     override method oposite() = down
+	
+	method siguiente() = right
+	
+	method anterior() = left
 
     method imageRick() = "assets/RickBack.png"
 
@@ -43,6 +47,9 @@ object down mixed with Common{
 
     override method next(position) = game.at(position.x(), (position.y() - 1).max(0))
 
+	method siguiente() = left
+	
+	method anterior() = right
 }
 object left mixed with Common{
 
@@ -56,6 +63,9 @@ object left mixed with Common{
 
     override method next(position) = game.at((position.x() - 1).max(0), position.y())
 
+	method siguiente() = up
+	
+	method anterior() = down
 }
 object right mixed with Common{
 
@@ -68,4 +78,8 @@ object right mixed with Common{
     method imageEnemy(numeroEnemigo) = "assets/Enemy_"+numeroEnemigo+"_Rigth.png"
 
     override method next(position) =  game.at((position.x() + 1).min(game.width()), position.y())
+    
+    method siguiente() = down
+    
+    method anterior() = up
 }

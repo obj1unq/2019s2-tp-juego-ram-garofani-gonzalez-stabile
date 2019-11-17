@@ -1,5 +1,5 @@
-import personajes.*
 import wollok.game.*
+import personajes.*
 import directions.*
 import movimientos.*
 import cuatro.*
@@ -27,15 +27,14 @@ object niveles{
             objetos = [nightVisionGoggles],
             zonasProhibidas = areasProhibidas.levelTres()),
          new Nivel(
-
             fondo = new Fondo(mposition = game.origin(), multiverse = 4,image = "assets/FondoCuatro.png"),
-
             objetos = [new PilaDeFichasDeRick(mposition = game.at(0,12), multiverse = 4)] )
           ]
 
     var property actual = catalogo.first()
 
     method presentar() {
+        console.println("niveles.presentar")
         self.presenteFondo()
         self.showAll()
         self.showBlocksInProhibitedAreas()
@@ -43,7 +42,9 @@ object niveles{
 
     method presenteFondo() { catalogo.forEach{nivel => nivel.presentarFondo()} }
 
-    method showAll() { catalogo.forEach{nivel => nivel.show()} }
+    method showAll() {
+        catalogo.forEach{nivel => nivel.show()}
+    }
 
     method numberOfEnemies() = random.up(1,4)
 
@@ -53,8 +54,8 @@ object niveles{
                                           })
 
     method listOfMonstruos(multiverse) = (1..2).fold([], {
-                                     enemies, value => enemies.add( self.createNewMonstruo(4, 1))
-                                     return enemies
+                                             enemies, value => enemies.add( self.createNewMonstruo(4, 1)) //refac numero numero
+                                             return enemies
                               })
 
     method createNewEnemy(number, multiverse){
@@ -67,7 +68,7 @@ object niveles{
     }
 
     method createNewMonstruo(number, multiverse){
-            return new Monstruo(numeroEnemigo = number, mposition = game.at(random.up(1,11),12), multiverse = multiverse)
+            return new Monstruo(direction = down, numeroEnemigo = number, mposition = game.at(random.up(1,11),12), multiverse = multiverse)
     }
 
     method randomMovement() = [up, down, left, right].anyOne()
@@ -78,10 +79,10 @@ object niveles{
         }
     }
 
-    //method estaFueraDeLosLimites(pos) = pos.x() < 0 or pos.x() > omniverse.ancho()-1 or pos.y() < 0 or pos.y() > omniverse.alto()-1
+    method estaFueraDeLosLimites(pos) = pos.x() < 0 or pos.x() > omniverse.ancho()-1 or pos.y() < 0 or pos.y() > omniverse.alto()-1
 
-    method puedeMover(pos) = not self.esZonaProhibida(pos)
-            //not self.estaFueraDeLosLimites(pos) and not self.esZonaProhibida(pos)
+    method puedeMover(pos) = // not self.esZonaProhibida(pos)
+            not self.estaFueraDeLosLimites(pos) and not self.esZonaProhibida(pos)
 
     method esZonaProhibida(pos){
         return self.catalogo().get(omniverse.current()).zonasProhibidas().contains(game.at(pos.x(), pos.y()))
@@ -89,7 +90,7 @@ object niveles{
 
     method mostrarBloquesEnAreasProhibidas(){
         game.allVisuals().forEach {
-            objeto => if(objeto.esObstaculo()) objeto.image("assets/blocks.png");
+            objeto => if(objeto.esObstaculo()) objeto.image("assets/blocks.png");   //refac este if puede volar con polimorfismo
         }
     }
 
