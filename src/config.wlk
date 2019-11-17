@@ -1,4 +1,7 @@
-import personajes.*
+import objetos.players.*
+import objetos.universe.*
+import objetos.misc.*
+import objetos.objects.*
 import wollok.game.*
 import niveles.*
 import directions.*
@@ -49,10 +52,6 @@ object config{
         keyboard.w().onPressDo({ console.println(rick) console.println(rick.image())})
         keyboard.e().onPressDo({ game.allVisuals().forEach{v=> console.println(v) }})
         keyboard.r().onPressDo({ game.allVisuals().forEach{visual => visual.mover()}})
-    }
-
-    method ticks(){
-        //game.onTick(1500, "", { self.moverObjetos() })
     }
 
     method moverObjetos(){

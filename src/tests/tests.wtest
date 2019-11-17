@@ -1,6 +1,9 @@
 import wollok.game.*
 import niveles.*
-import personajes.*
+import objetos.npcs.*
+import objetos.universe.*
+import objetos.players.*
+import objetos.objects.*
 import directions.*
 describe "RaM tests (muy describe)"{
 	fixture {
@@ -83,10 +86,13 @@ describe "RaM tests (muy describe)"{
 	    game.addVisual(rick)
 	    game.addVisual(portalgun)
 		rick.position(omniverse.position(position, nroMultiversoOrigen))
-		rick.grab()
+		assert.equals(rick.position(),portalgun.position())
+		rick.grabed(portalgun)		
+		assert.equals(game.colliders(rick).find{visual => visual.isCollectable()},portalgun)
 		rick.trigger(nroMultiversoDestino)
 		assert.equals(omniverse.position(position, nroMultiversoOrigen),  rick.position())
 		assert.equals(2, game.allVisuals().filter{obj => obj.isPortal()}.size() )
+		rick.moveTo(rick.direction())
 		assert.notEquals(omniverse.position(position, nroMultiversoDestino), rick.position())
 		rick.travel()
 		assert.equals(rick.position(), portalgun.position())

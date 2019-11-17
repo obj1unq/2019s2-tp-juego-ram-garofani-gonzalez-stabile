@@ -1,5 +1,7 @@
 import Fichas.*
-import personajes.*
+import objetos.players.*
+import objetos.universe.*
+import objetos.mixins.*
 import wollok.game.*
 
 class PilaDeFichasDeRick inherits OmniObjeto mixed with Collectable{

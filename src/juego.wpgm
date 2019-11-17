@@ -1,4 +1,4 @@
-import personajes.*
+import objetos.players.*
 import config.*
 import wollok.game.*
 import niveles.*
@@ -9,11 +9,7 @@ program RaM {
     game.height(14)
     game.width(13)
     niveles.presentar()
-    //game.showAttributes(rick) //Debug
-
-
     config.teclas()
-    config.ticks()
     config.configurarColisiones()
     game.start()
 }
