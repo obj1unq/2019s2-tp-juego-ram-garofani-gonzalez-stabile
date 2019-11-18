@@ -27,5 +27,5 @@ class OmniObjeto mixed with NotCollectable {
 
     method position() = omniverse.position(mposition, multiverse)
 
-    method mover(){}
+    override method mover(){}
 }
