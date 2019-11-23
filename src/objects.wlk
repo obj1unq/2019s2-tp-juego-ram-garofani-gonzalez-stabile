@@ -7,14 +7,12 @@ object indicador mixed with NotCollectable{
     var property numero = 0
 
     method image() = "assets/"+ numero.toString() + ".png"
-    //method image() = "assets/X.png"
 
     method position() = game.at(12,13)
 
 }
 
 object barra mixed with NotCollectable{
-    // Refac
     const property image = "assets/barra.png"
     const property mposition = game.at(0, 13)
 
@@ -31,19 +29,11 @@ object barra mixed with NotCollectable{
     method altura() = 1
 }
 
-object raygun mixed with Collectable{
+object raygun inherits OmniObjeto(mposition = game.at(1,2), multiverse = 1) mixed with Collectable{
 
-    const property image = "assets/ray-gun.png"
-    var property mposition = game.at(1, 2)
-    var property multiverse = 1 // refac hardcoded bad?
-
-    method position() = omniverse.position(mposition, multiverse)
+    const property imagen = "assets/ray-gun.png"
 
     method position(_position) { mposition = _position }
-
-    method multiverse(value) {
-        multiverse = value
-    }
 
     method trigger(destino, direction) {
         new Ray( direction = direction, alcance = 7, mposition = mposition, multiverse = multiverse).shot()
@@ -125,7 +115,6 @@ object portalgun mixed with Collectable{
         game.say(alguien,"Al fin, mi pistola de portales")
     }
 }
-
 
 
 class Portal inherits OmniObjeto mixed with NotCollectable{
