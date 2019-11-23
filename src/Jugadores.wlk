@@ -9,7 +9,7 @@ import monstruos.*
 
 class PilaDeFichas inherits OmniObjeto mixed with Collectable{
     const property imagen = "assets/ficha-morty-a.png"
-    
+    const owner
     var property imagenFicha = ""
 	var listaFichas = []
 	
@@ -26,7 +26,7 @@ class PilaDeFichas inherits OmniObjeto mixed with Collectable{
 				}
 			}			
 		if(gano){ 
-			game.say(rick,"GANE!!!!!!")
+			game.say(owner,"GANE!!!!!!")
 			game.schedule(3000,{game.stop()})
 		}
 	}
@@ -42,6 +42,9 @@ class PilaDeFichas inherits OmniObjeto mixed with Collectable{
     }
 
 	method ponerFicha(){
+		if(self.position().x() < 3 or self.position().x() > 9){
+			self.error("Las fichas van dentro del tablero.")
+		}
 		listaFichas.add(game.at(self.position().x() , self.posicionLibreEnColumna().y() ))
 		game.addVisual(new Ficha(player = self , 
 							     position = listaFichas.last(), 
@@ -104,8 +107,8 @@ class PilaDeFichas inherits OmniObjeto mixed with Collectable{
 
 
 object pedo mixed with NotCollectable{
-	var grabed = new PilaDeFichas(mposition = game.at(3,8), multiverse = 4,imagenFicha = "assets/ficha-jerry-a.png")
-	const property image = "assets/Enemy_6_Rigth.png"
+	var grabed = new PilaDeFichas(owner = self,mposition = game.at(3,8), multiverse = 4,imagenFicha = "assets/ficha-jerry-a.png")
+	const property image = "assets/fart.png"
 	var multiverse = 4
 	var position =  game.at(3,8)
     method multiverse(value) { multiverse = value }
