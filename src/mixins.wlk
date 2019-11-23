@@ -1,7 +1,7 @@
 import wollok.game.*
 
 mixin Collectable{
-
+	
     method colisionasteCon(alguien){
         game.say(alguien,self.quote())
     }
@@ -22,6 +22,8 @@ mixin Collectable{
     method verificarInventariable(owner) { }
 
     method mover(){}
+    
+    method esPilaDeFichas() = false
 }
 
 mixin NotCollectable{

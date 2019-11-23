@@ -5,6 +5,7 @@ import misc.*
 import omniverse.*
 import directions.*
 import niveles.*
+import jugadores.*
 
 object rick inherits OmniObjeto(mposition = game.at(1,1), multiverse = 1) mixed with NotCollectable{
     //var mposition = game.at(1,1)
@@ -37,7 +38,12 @@ object rick inherits OmniObjeto(mposition = game.at(1,1), multiverse = 1) mixed 
 
     method alcanzado() {}
 
-    method trigger(destino) { grabed.trigger(destino, direction) }
+    method trigger(destino) { 
+    	grabed.trigger(destino, direction)
+    	if (grabed.esPilaDeFichas()) {
+    		pedo.jugar()
+    	}
+    }
 
     method manipularObjetos(extremo){
         //self.verificarSiHayCollectable()
