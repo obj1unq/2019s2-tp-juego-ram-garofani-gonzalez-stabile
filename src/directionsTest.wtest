@@ -1,6 +1,7 @@
 import wollok.game.*
 import npcs.*
 import directions.*
+
 describe "Test de directions"{
 	fixture{
 		game.height(14)

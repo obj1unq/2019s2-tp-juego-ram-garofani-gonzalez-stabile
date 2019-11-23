@@ -1,6 +1,6 @@
 import Fichas.*
 import players.*
-import universe.*
+import omniverse.*
 import mixins.*
 import wollok.game.*
 

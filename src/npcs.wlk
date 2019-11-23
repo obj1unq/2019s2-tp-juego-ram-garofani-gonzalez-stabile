@@ -1,5 +1,5 @@
 import wollok.game.*
-import universe.*
+import omniverse.*
 
 class Enemigo inherits OmniObjeto {
     var property numeroEnemigo

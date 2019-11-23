@@ -1,5 +1,5 @@
 import players.*
-import universe.*
+import omniverse.*
 import misc.*
 import objects.*
 import wollok.game.*

@@ -1,6 +1,6 @@
 import wollok.game.*
 import players.*
-import universe.*
+import omniverse.*
 import objects.*
 import npcs.*
 import directions.*

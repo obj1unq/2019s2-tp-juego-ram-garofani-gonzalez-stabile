@@ -2,7 +2,7 @@ import wollok.game.*
 import objects.*
 import mixins.*
 import misc.*
-import universe.*
+import omniverse.*
 import directions.*
 import niveles.*
 
