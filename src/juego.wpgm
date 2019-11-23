@@ -1,4 +1,4 @@
-import objetos.players.*
+import players.*
 import config.*
 import wollok.game.*
 import niveles.*

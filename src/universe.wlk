@@ -1,6 +1,7 @@
 import wollok.game.*
-import objetos.mixins.*
-import objetos.objects.*
+import mixins.*
+import objects.*
+
 object omniverse {
     var property current = 1
 

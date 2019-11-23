@@ -1,4 +1,5 @@
 import wollok.game.*
+
 mixin Collectable{
 
     method colisionasteCon(alguien){

@@ -1,8 +1,8 @@
 import wollok.game.*
-import objetos.objects.*
-import objetos.mixins.*
-import objetos.misc.*
-import objetos.universe.*
+import objects.*
+import mixins.*
+import misc.*
+import universe.*
 import directions.*
 import niveles.*
 

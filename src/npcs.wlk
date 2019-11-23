@@ -1,5 +1,6 @@
 import wollok.game.*
-import objetos.universe.*
+import universe.*
+
 class Enemigo inherits OmniObjeto {
     var property numeroEnemigo
     var property direction// = down

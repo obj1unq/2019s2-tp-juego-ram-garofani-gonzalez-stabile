@@ -1,9 +1,9 @@
 import wollok.game.*
 import niveles.*
-import objetos.npcs.*
-import objetos.universe.*
-import objetos.players.*
-import objetos.objects.*
+import npcs.*
+import universe.*
+import players.*
+import objects.*
 import directions.*
 describe "RaM tests (muy describe)"{
 	fixture {

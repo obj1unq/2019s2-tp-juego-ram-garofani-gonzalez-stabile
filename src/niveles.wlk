@@ -1,8 +1,8 @@
 import wollok.game.*
-import objetos.players.*
-import objetos.universe.*
-import objetos.objects.*
-import objetos.npcs.*
+import players.*
+import universe.*
+import objects.*
+import npcs.*
 import directions.*
 import movimientos.*
 import cuatro.*

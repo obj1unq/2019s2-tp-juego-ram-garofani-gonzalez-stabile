@@ -1,7 +1,7 @@
-import objetos.players.*
-import objetos.universe.*
-import objetos.misc.*
-import objetos.objects.*
+import players.*
+import universe.*
+import misc.*
+import objects.*
 import wollok.game.*
 import niveles.*
 import directions.*

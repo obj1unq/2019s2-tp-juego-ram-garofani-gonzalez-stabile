@@ -1,7 +1,8 @@
 import wollok.game.*
-import objetos.universe.*
-import objetos.mixins.*
-import objetos.players.*
+import universe.*
+import mixins.*
+import players.*
+
 object barra mixed with NotCollectable{
     // Refac
     const property image = "assets/barra.png"
