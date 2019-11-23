@@ -34,7 +34,6 @@ class PilaDeFichas inherits OmniObjeto mixed with Collectable{
     
     method trigger(destino, direction){
     	
-    	// poner fichas solo si esta entre x (algo) y x (algo2) 
     	// si tengo mas de 6 visuals (fichas ) en columna Y (algo) 
         self.ponerFicha()
         self.jugadaGanadora()
@@ -44,6 +43,9 @@ class PilaDeFichas inherits OmniObjeto mixed with Collectable{
 	method ponerFicha(){
 		if(self.position().x() < 3 or self.position().x() > 9){
 			self.error("Las fichas van dentro del tablero.")
+		}
+		if(self.getVisualsColumnaActual(self.position().x()).size() == 6){
+			self.error("Aca no entran mas fichas.")
 		}
 		listaFichas.add(game.at(self.position().x() , self.posicionLibreEnColumna().y() ))
 		game.addVisual(new Ficha(player = self , 
