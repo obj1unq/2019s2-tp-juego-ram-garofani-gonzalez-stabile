@@ -1,7 +1,7 @@
 import wollok.game.*
 import omniverse.*
 import mixins.*
-import players.*
+import rick.*
 
 object barra mixed with NotCollectable{
     // Refac

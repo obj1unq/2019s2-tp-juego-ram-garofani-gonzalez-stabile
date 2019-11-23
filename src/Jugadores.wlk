@@ -1,5 +1,5 @@
 import Fichas.*
-import players.*
+import rick.*
 import omniverse.*
 import mixins.*
 import wollok.game.*

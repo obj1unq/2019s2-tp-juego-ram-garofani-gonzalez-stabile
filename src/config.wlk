@@ -1,4 +1,4 @@
-import players.*
+import rick.*
 import omniverse.*
 import misc.*
 import objects.*

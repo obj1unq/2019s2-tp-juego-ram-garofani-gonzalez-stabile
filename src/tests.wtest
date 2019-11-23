@@ -2,9 +2,10 @@ import wollok.game.*
 import niveles.*
 import npcs.*
 import omniverse.*
-import players.*
+import rick.*
 import objects.*
 import directions.*
+
 describe "RaM tests (muy describe)"{
 	fixture {
 	    game.width(13)

@@ -1,5 +1,5 @@
 import wollok.game.*
-import players.*
+import rick.*
 import omniverse.*
 import objects.*
 import npcs.*

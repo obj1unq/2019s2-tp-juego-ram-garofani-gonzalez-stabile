@@ -1,4 +1,4 @@
-import players.*
+import rick.*
 import config.*
 import wollok.game.*
 import niveles.*
