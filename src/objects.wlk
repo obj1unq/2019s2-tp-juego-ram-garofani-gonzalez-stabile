@@ -3,7 +3,20 @@ import omniverse.*
 import mixins.*
 import rick.*
 
-object indicador mixed with NotCollectable{
+object indicadorDeVida mixed with NotCollectable{
+    var property cantidad = 10
+
+    method cambiar(delta) { cantidad = (cantidad + delta).max(0).min(10) }
+
+    method esCero() = cantidad == 0
+
+    method image() = "assets/indicador"+ cantidad.toString() + ".png"
+
+    method position() = game.at(12,13)
+
+}
+
+object indicadorDeMDestino mixed with NotCollectable{
     var property numero = 0
 
     method image() = "assets/"+ numero.toString() + ".png"
@@ -127,6 +140,7 @@ class Portal inherits OmniObjeto mixed with NotCollectable{
             omniverse.current(exit.multiverse())
             traveler.multiverse(exit.multiverse())
             traveler.position(exit.position())
+            //add time out to fade out
             game.removeVisual(self)
             game.removeVisual(exit)
     }
@@ -138,7 +152,7 @@ class Portal inherits OmniObjeto mixed with NotCollectable{
 }
 
 class Fondo inherits OmniObjeto{
-    const property imagen = "assets/ram-fondo3.png"
+    const property imagen // = "assets/ram-fondo3.png"
 
     method colisionasteCon(alguien){}
 

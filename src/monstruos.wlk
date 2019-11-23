@@ -3,11 +3,9 @@ import omniverse.*
 
 class Enemigo inherits OmniObjeto {
     var property numeroEnemigo
-    var property direction// = down
+    var property direction
 
     override method imagen() = direction.imageEnemy(numeroEnemigo)
-
-    // method image() = if (multiverse == omniverse.current() ) direction.imageEnemy(numeroEnemigo) else "assets/nada.png"
 
     method moveTo(_direction) { self.mposition(_direction.nextPosition(self.mposition())) }
 
@@ -16,12 +14,15 @@ class Enemigo inherits OmniObjeto {
         game.schedule(500, { self.mover() })
     }
 
+    method damage() = -2
+
     method colisionasteCon(alguien){
-        alguien.catched()
+        alguien.modificarVida(self.damage())
     }
 }
 
 class Monstruo inherits Enemigo{
+
     method alcanzado(visual){
         game.removeVisual(self)
     }
@@ -32,3 +33,5 @@ class Monstruo inherits Enemigo{
     }
 
 }
+
+

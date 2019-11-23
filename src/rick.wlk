@@ -7,11 +7,9 @@ import directions.*
 import niveles.*
 
 object rick inherits OmniObjeto(mposition = game.at(1,1), multiverse = 1) mixed with NotCollectable{
-    //var mposition = game.at(1,1)
-    //var multiverse = 1
     var property grabed = nada
     var property direction = down
-    var vidas = 3
+    const indicador = indicadorDeVida
     const mochila = []
 
     override method imagen() =  direction.imageRick()
@@ -20,8 +18,6 @@ object rick inherits OmniObjeto(mposition = game.at(1,1), multiverse = 1) mixed 
         multiverse = _multiverse
         grabed.multiverse(multiverse)
     }
-
-    // method position() = omniverse.position(mposition, multiverse)
 
     method position(_mposition) {
         mposition = _mposition
@@ -81,14 +77,16 @@ object rick inherits OmniObjeto(mposition = game.at(1,1), multiverse = 1) mixed 
         grabed = nada
     }
 
-    method catched() {
-        vidas -= 1
-        if ( vidas == 0) {
+    method modificarVida(deltaDeVida) {
+        indicador.cambiar(deltaDeVida)
+        
+        if (indicador.esCero()) {
             game.say(self, "Perdi!!!!!\nBye Bye!")
             // pensar ir a pantalla con estadisticas
             game.schedule(3000,{game.stop()})
         } else
             game.say(self, "Outch!!!!!")
+            // aca feedback visual
     }
 
     method ponerseLentes(){
@@ -131,6 +129,7 @@ object rick inherits OmniObjeto(mposition = game.at(1,1), multiverse = 1) mixed 
         return obj
     }
 }
+
 
 object nada mixed with NotCollectable {
     var property position = null
