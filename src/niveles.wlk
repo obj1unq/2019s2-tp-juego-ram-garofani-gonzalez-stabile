@@ -4,7 +4,6 @@ import omniverse.*
 import objects.*
 import npcs.*
 import directions.*
-import movimientos.*
 import cuatro.*
 import Jugadores.*
 import areasProhibidas.*
