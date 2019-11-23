@@ -107,6 +107,9 @@ object rick inherits OmniObjeto(mposition = game.at(1,1), multiverse = 1) mixed 
 
         game.removeVisual(cofre)
         game.say(self,"Empieza el final!")
+        multiverse = 4
+        omniverse.current(multiverse)
+        barra.acomodar(mochila)
     }
 
     method encontreElCofre(){
