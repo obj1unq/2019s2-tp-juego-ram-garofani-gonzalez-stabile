@@ -5,7 +5,7 @@ import misc.*
 import omniverse.*
 import directions.*
 import niveles.*
-import jugadores.*
+import Jugadores.*
 
 object rick inherits OmniObjeto(mposition = game.at(1,1), multiverse = 1) mixed with NotCollectable{
     //var mposition = game.at(1,1)

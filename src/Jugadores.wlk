@@ -43,18 +43,16 @@ class PilaDeFichas inherits OmniObjeto mixed with Collectable{
 
 	method ponerFicha(){
 		listaFichas.add(game.at(self.position().x() , self.posicionLibreEnColumna().y() ))
-		game.addVisual(new Ficha( 	player = self , 
-									position = listaFichas.last(), 
-									image = imagenFicha//"assets/ficha-morty-a.png"
+		game.addVisual(new Ficha(player = self , 
+							     position = listaFichas.last(), 
+								 image = imagenFicha
 		))
 				
 	}
 	
 	method posicionLibreEnColumna() {
-		var column = game.allVisuals().filter{ 
-            visual => visual.position().x() == self.position().x() 
-            and visual.position().y().between(0, self.position().y() + 3)}
-		return game.at(self.position().x(), column.size())
+		var column = self.getVisualsColumnaActual(self.position().x())
+		return game.at(self.position().x(), column.size() + 2)
 	}
 
 	method ganoHorizontal(ficha) {
@@ -90,13 +88,23 @@ class PilaDeFichas inherits OmniObjeto mixed with Collectable{
 				listaFichas.contains(game.at(xPosition + 3 ,yPosition - 3))
 	}	
 	
-	
+	method getVisualsColumnaActual(col){
+		return game.allVisuals().filter{ 
+	            visual => visual.position().x() == col 
+	            and visual.position().y().between(0, self.position().y() + 3)
+	            and visual.esFicha()}
+	}
+	method esColumnaLibre(col){
+ 		var column = self.getVisualsColumnaActual(col)
+		return column.size() < 6
+ 	} 
+
 	
 }
 
 
 object pedo mixed with NotCollectable{
-	var grabed = new PilaDeFichas(mposition = game.at(8,3), multiverse = 4,imagenFicha = "assets/ficha-jerry-a.png")
+	var grabed = new PilaDeFichas(mposition = game.at(3,8), multiverse = 4,imagenFicha = "assets/ficha-jerry-a.png")
 	const property image = "assets/Enemy_6_Rigth.png"
 	var multiverse = 4
 	var position =  game.at(3,8)
@@ -108,17 +116,17 @@ object pedo mixed with NotCollectable{
     	grabed.trigger(position,up)
     }
     
-    method irPosicionJugada(){    	
-    	(3..9).forEach{n =>
-    		if(!self.esColumnaLibre(n)){
-	    		position = game.at(n + 1, position.y())
-	    	}
-    	}   	
+    method irPosicionJugada(){   
+    	var random = (3).randomUpTo(9).roundUp(0)    	
+    	if(grabed.esColumnaLibre(random)){
+    		position = game.at(random, position.y())
+    		grabed.mposition(game.at(random, position.y()))    		
+    	}else{
+    		self.irPosicionJugada()
+    	}
     }
- 	method esColumnaLibre(col){
- 		var column = game.allVisuals().filter{ 
-            visual => visual.position().x() == col 
-            and visual.position().y().between(0, self.position().y() + 3)}
-		return column.size() < 7
- 	}   
+    
+    method colisionasteCon(alguien){}
+ 	
+ 	
  }

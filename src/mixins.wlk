@@ -2,6 +2,8 @@ import wollok.game.*
 
 mixin Collectable{
 	
+	method isFicha() = false
+	
     method colisionasteCon(alguien){
         game.say(alguien,self.quote())
     }
@@ -28,6 +30,8 @@ mixin Collectable{
 
 mixin NotCollectable{
 
+	method esFicha() = false
+	
     method esObstaculo() = false
 
     method isCollectable() = false
