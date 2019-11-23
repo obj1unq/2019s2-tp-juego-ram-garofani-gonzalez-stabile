@@ -193,6 +193,7 @@ object llave mixed with Collectable{
     var property image = "assets/treasureKey.png"
     var property position = game.at(7,3)
     var multiverse = 2
+
     method multiverse(value) { multiverse = value }
     method position() = omniverse.position(position, multiverse)
 
