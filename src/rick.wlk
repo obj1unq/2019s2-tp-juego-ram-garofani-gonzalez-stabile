@@ -6,26 +6,26 @@ import omniverse.*
 import directions.*
 import niveles.*
 
-object rick mixed with NotCollectable{
-    var position = game.at(1,1)
-    var multiverse = 1
+object rick inherits OmniObjeto(mposition = game.at(1,1), multiverse = 1) mixed with NotCollectable{
+    //var mposition = game.at(1,1)
+    //var multiverse = 1
     var property grabed = nada
     var property direction = down
     var vidas = 3
     const mochila = []
 
-    method image() =  direction.imageRick()
+    override method imagen() =  direction.imageRick()
 
-    method multiverse(_multiverse) {
+    override method multiverse(_multiverse) {
         multiverse = _multiverse
         grabed.multiverse(multiverse)
     }
 
-    method position() = omniverse.position(position, multiverse)
+    // method position() = omniverse.position(mposition, multiverse)
 
-    method position(_position) {
-        position = _position
-        grabed.position(position)
+    method position(_mposition) {
+        mposition = _mposition
+        grabed.position(mposition)
     }
 
     method travel() { self.takePortal() }
@@ -51,7 +51,7 @@ object rick mixed with NotCollectable{
         self.puedoSacarObjetosDeLaMochila()
         grabed = self.getObjectFromBag(extremo)        
         barra.acomodar(mochila)
-        grabed.position(position)	
+        grabed.position(mposition)	
         //grabed.multiverse(multiverse)
     }
 

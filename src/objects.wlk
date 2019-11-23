@@ -44,7 +44,9 @@ class Ray inherits OmniObjeto{
     var alcance
     const direction
 
-    method image() = direction.imageRay()
+    override method imagen() = direction.imageRay()
+
+    override method image() = self.imagen()
 
     method shot() {
         mposition = direction.nextPosition(mposition)
@@ -94,8 +96,8 @@ object portalgun mixed with Collectable{
     method crearPortalA(multiverseDestino, direction){ // refac crear portal en esta direccion
 
 
-        const portal = new Portal(position = rick.direction().nextPosition(position), multiverse = multiverse, exit =
-                       new Portal(position = rick.direction().nextPosition(position), multiverse = multiverseDestino, exit = null))
+        const portal = new Portal(mposition = rick.direction().nextPosition(position), multiverse = multiverse, exit =
+                       new Portal(mposition = rick.direction().nextPosition(position), multiverse = multiverseDestino, exit = null))
         portal.exit().exit(portal)
         game.addVisual(portal)
         game.addVisual(portal.exit())
@@ -115,15 +117,15 @@ object portalgun mixed with Collectable{
 
 
 
-class Portal mixed with NotCollectable{
-    const position
-    const property multiverse
-    const property image = "assets/portal.gif"
+class Portal inherits OmniObjeto mixed with NotCollectable{
+   // const mposition
+   // const property multiverse
+    const property imagen = "assets/portal.gif"
     var property exit
 
-    method position() = omniverse.position(position, multiverse)
+    //method position() = omniverse.position(mposition, multiverse)
 
-    method image() = if (multiverse == omniverse.current() ) image else "assets/nada.png"
+    //method image() = if (multiverse == omniverse.current() ) image else "assets/nada.png"
 
     override method isPortal() = true
 
@@ -142,9 +144,9 @@ class Portal mixed with NotCollectable{
 }
 
 class Fondo inherits OmniObjeto{
-    const image = "assets/ram-fondo3.png"
+    const property imagen = "assets/ram-fondo3.png"
 
-    method image() = if (multiverse == omniverse.current() ) image else "assets/nada.png"
+    //override method image() = if (multiverse == omniverse.current() ) image else "assets/nada.png"
 
     method colisionasteCon(alguien){}
 
@@ -158,9 +160,9 @@ class Fondo inherits OmniObjeto{
 
 
 class Bloque inherits OmniObjeto{
-    var property image =  "assets/blockOculto.png"
+    var property imagen =  "assets/blockOculto.png"
 
-    method image() = if (multiverse == omniverse.current() ) image else "assets/nada.png"
+    //override method image() = if (multiverse == omniverse.current() ) image else "assets/nada.png"
 
     method colisionasteCon(alguien){}
 

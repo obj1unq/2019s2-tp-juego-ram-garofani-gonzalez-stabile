@@ -5,9 +5,9 @@ class Enemigo inherits OmniObjeto {
     var property numeroEnemigo
     var property direction// = down
 
-    method image() = if (multiverse == omniverse.current() )
-                            direction.imageEnemy(numeroEnemigo)
-                     else "assets/nada.png"
+    override method imagen() = direction.imageEnemy(numeroEnemigo)
+
+    // method image() = if (multiverse == omniverse.current() ) direction.imageEnemy(numeroEnemigo) else "assets/nada.png"
 
     method moveTo(_direction) { self.mposition(_direction.nextPosition(self.mposition())) }
 

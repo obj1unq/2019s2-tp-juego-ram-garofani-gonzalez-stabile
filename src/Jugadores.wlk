@@ -5,7 +5,7 @@ import mixins.*
 import wollok.game.*
 
 class PilaDeFichasDeRick inherits OmniObjeto mixed with Collectable{
-    const property image = "assets/ficha-morty-a.png"
+    const property imagen = "assets/ficha-morty-a.png"
 
     method position(_position) { mposition = _position }
 

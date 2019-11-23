@@ -23,10 +23,13 @@ object omniverse {
 }
 
 class OmniObjeto mixed with NotCollectable {
-    var property mposition // = game.origin()
+    var property mposition
     var property multiverse
+
+    method imagen()
 
     method position() = omniverse.position(mposition, multiverse)
 
+    method image() = if (multiverse == omniverse.current() ) self.imagen() else "assets/nada.png"
     override method mover(){}
 }

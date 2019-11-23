@@ -16,20 +16,20 @@ object random{
 object niveles{
     const property catalogo = [
          new Nivel(
-            fondo = new Fondo(mposition = game.origin(), multiverse = 0, image = "assets/ram-fondo3.png"),
+            fondo = new Fondo(mposition = game.origin(), multiverse = 0, imagen = "assets/ram-fondo3.png"),
             objetos = [] ) ,
          new Nivel(
-            fondo = new Fondo(mposition = game.origin(), multiverse = 1,image = "assets/ram-fondo1.png"),
+            fondo = new Fondo(mposition = game.origin(), multiverse = 1,imagen = "assets/ram-fondo1.png"),
             objetos = [barra, rick, portalgun, raygun] + self.listOfMonstruos(1) ),
          new Nivel(
-            fondo = new Fondo(mposition = game.origin(), multiverse = 2,image = "assets/ram-fondo2.png"),
+            fondo = new Fondo(mposition = game.origin(), multiverse = 2,imagen = "assets/ram-fondo2.png"),
             objetos = [llave] + self.listOfEnemies(2) ),
          new Nivel(
-            fondo = new Fondo(mposition = game.origin(), multiverse = 3,image = "assets/ram-fondo4.png"),
+            fondo = new Fondo(mposition = game.origin(), multiverse = 3,imagen = "assets/ram-fondo4.png"),
             objetos = [nightVisionGoggles],
             zonasProhibidas = areasProhibidas.levelTres()),
          new Nivel(
-            fondo = new Fondo(mposition = game.origin(), multiverse = 4,image = "assets/FondoCuatro.png"),
+            fondo = new Fondo(mposition = game.origin(), multiverse = 4,imagen = "assets/FondoCuatro.png"),
             objetos = [new PilaDeFichasDeRick(mposition = game.at(0,12), multiverse = 4)] )
           ]
 
@@ -92,7 +92,7 @@ object niveles{
 
     method mostrarBloquesEnAreasProhibidas(){
         game.allVisuals().forEach {
-            objeto => if(objeto.esObstaculo()) objeto.image("assets/blocks.png");   //refac este if puede volar con polimorfismo
+            objeto => if(objeto.esObstaculo()) objeto.imagen("assets/blocks.png");   //refac este if puede volar con polimorfismo
         }
     }
 

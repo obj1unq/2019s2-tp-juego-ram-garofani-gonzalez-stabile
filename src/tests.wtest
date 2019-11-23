@@ -68,7 +68,7 @@ describe "RaM tests (muy describe)"{
 	
 	test "Se crea un portal y hay dos portales en el omniverse"{
 		niveles.catalogo().add(new Nivel(
-		 						fondo = new Fondo(mposition = game.origin(), multiverse = 0, image = "assets/ram-fondo3.png"),
+		 						fondo = new Fondo(mposition = game.origin(), multiverse = 0, imagen = "assets/ram-fondo3.png"),
 		  						objetos = [ ]  ))
 	    omniverse.current(0)
 	    portalgun.trigger(3,up)
