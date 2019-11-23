@@ -18,6 +18,7 @@ object config{
         (0..4).forEach{ n => keyboard.num(n).onPressDo({
             numero = n
             console.println("numero = " + numero )
+            indicador.numero(numero)
         }) }
 
         keyboard.up().onPressDo({ rick.moveTo(up) })

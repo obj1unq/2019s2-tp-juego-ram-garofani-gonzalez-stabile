@@ -20,7 +20,7 @@ object niveles{
             objetos = [] ) ,
          new Nivel(
             fondo = new Fondo(mposition = game.origin(), multiverse = 1,imagen = "assets/ram-fondo1.png"),
-            objetos = [barra, rick, portalgun, raygun] + self.listOfMonstruos(1) ),
+            objetos = [barra, indicador, rick, portalgun, raygun] + self.listOfMonstruos(1) ),
          new Nivel(
             fondo = new Fondo(mposition = game.origin(), multiverse = 2,imagen = "assets/ram-fondo2.png"),
             objetos = [llave] + self.listOfEnemies(2) ),

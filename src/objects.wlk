@@ -3,10 +3,21 @@ import omniverse.*
 import mixins.*
 import rick.*
 
+object indicador mixed with NotCollectable{
+    var property numero = 0
+
+    method image() = "assets/"+ numero.toString() + ".png"
+    //method image() = "assets/X.png"
+
+    method position() = game.at(12,13)
+
+}
+
 object barra mixed with NotCollectable{
     // Refac
     const property image = "assets/barra.png"
     const property mposition = game.at(0, 13)
+
     method position() = omniverse.position(mposition, omniverse.current())
 
     method acomodar(mochila){
@@ -44,9 +55,9 @@ class Ray inherits OmniObjeto{
     var alcance
     const direction
 
-    override method imagen() = direction.imageRay()
+    override method imagen() = self.image()
 
-    override method image() = self.imagen()
+    override method image() = direction.imageRay()
 
     method shot() {
         mposition = direction.nextPosition(mposition)
@@ -118,14 +129,8 @@ object portalgun mixed with Collectable{
 
 
 class Portal inherits OmniObjeto mixed with NotCollectable{
-   // const mposition
-   // const property multiverse
     const property imagen = "assets/portal.gif"
     var property exit
-
-    //method position() = omniverse.position(mposition, multiverse)
-
-    //method image() = if (multiverse == omniverse.current() ) image else "assets/nada.png"
 
     override method isPortal() = true
 
@@ -146,8 +151,6 @@ class Portal inherits OmniObjeto mixed with NotCollectable{
 class Fondo inherits OmniObjeto{
     const property imagen = "assets/ram-fondo3.png"
 
-    //override method image() = if (multiverse == omniverse.current() ) image else "assets/nada.png"
-
     method colisionasteCon(alguien){}
 
     method isPortal() = false
@@ -162,8 +165,6 @@ class Fondo inherits OmniObjeto{
 class Bloque inherits OmniObjeto{
     var property imagen =  "assets/blockOculto.png"
 
-    //override method image() = if (multiverse == omniverse.current() ) image else "assets/nada.png"
-
     method colisionasteCon(alguien){}
 
     method esObstaculo() = true
@@ -173,6 +174,7 @@ object nightVisionGoggles mixed with Collectable{
     var property image = "assets/nightVisionGoggles.png"
     var property position = game.at(0,0)
     var multiverse = 3
+
     method multiverse(value) { multiverse = value }
     method position() = omniverse.position(position, multiverse)
 
@@ -185,6 +187,7 @@ object cofre mixed with Collectable{
     var property image = "assets/treasureChest.png"
     var property position = game.at(7,3)
     var multiverse = 3
+
     method multiverse(value) { multiverse = value }
     method position() = omniverse.position(position, multiverse)
 
