@@ -1,5 +1,5 @@
 import wollok.game.*
-import npcs.*
+import monstruos.*
 import directions.*
 
 describe "Test de directions"{

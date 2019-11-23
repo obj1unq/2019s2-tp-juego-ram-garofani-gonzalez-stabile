@@ -1,6 +1,6 @@
 import wollok.game.*
 import niveles.*
-import npcs.*
+import monstruos.*
 import omniverse.*
 import rick.*
 import objects.*

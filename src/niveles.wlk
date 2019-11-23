@@ -2,7 +2,7 @@ import wollok.game.*
 import rick.*
 import omniverse.*
 import objects.*
-import npcs.*
+import monstruos.*
 import directions.*
 import cuatro.*
 import Jugadores.*
