@@ -4,11 +4,13 @@ import omniverse.*
 import mixins.*
 import wollok.game.*
 import directions.*
-
+import monstruos.*
 
 
 class PilaDeFichas inherits OmniObjeto mixed with Collectable{
     const property imagen = "assets/ficha-morty-a.png"
+    
+    var property imagenFicha = ""
 	var listaFichas = []
 	
 	override method esPilaDeFichas() = true
@@ -43,7 +45,7 @@ class PilaDeFichas inherits OmniObjeto mixed with Collectable{
 		listaFichas.add(game.at(self.position().x() , self.posicionLibreEnColumna().y() ))
 		game.addVisual(new Ficha( 	player = self , 
 									position = listaFichas.last(), 
-									image = "assets/ficha-morty-a.png"
+									image = imagenFicha//"assets/ficha-morty-a.png"
 		))
 				
 	}
@@ -88,21 +90,35 @@ class PilaDeFichas inherits OmniObjeto mixed with Collectable{
 				listaFichas.contains(game.at(xPosition + 3 ,yPosition - 3))
 	}	
 	
+	
+	
 }
 
 
 object pedo mixed with NotCollectable{
-	var grabed = new PilaDeFichas(mposition = game.at(12,12), multiverse = 4)
+	var grabed = new PilaDeFichas(mposition = game.at(8,3), multiverse = 4,imagenFicha = "assets/ficha-jerry-a.png")
 	const property image = "assets/Enemy_6_Rigth.png"
-	var property position = game.at(12,12)
-    var multiverse = 4
+	var multiverse = 4
+	var position =  game.at(3,8)
     method multiverse(value) { multiverse = value }
     method position() = omniverse.position(position, multiverse)
-    method irPosicionJugada(){
-    	position = game.at(grabed.posicionLibreEnColumna().x(),self.position().y())
-    }
+
     method jugar(){
     	self.irPosicionJugada()
     	grabed.trigger(position,up)
     }
-}
+    
+    method irPosicionJugada(){    	
+    	(3..9).forEach{n =>
+    		if(!self.esColumnaLibre(n)){
+	    		position = game.at(n + 1, position.y())
+	    	}
+    	}   	
+    }
+ 	method esColumnaLibre(col){
+ 		var column = game.allVisuals().filter{ 
+            visual => visual.position().x() == col 
+            and visual.position().y().between(0, self.position().y() + 3)}
+		return column.size() < 7
+ 	}   
+ }
