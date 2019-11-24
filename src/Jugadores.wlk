@@ -84,7 +84,8 @@ object pedo mixed with NotCollectable{
 	}
 	
 	method jugadaGanadora(jugador){
-		fichasJugadas.forEach{ ficha => 	
+		self.fichasJugadasPor_(jugador).forEach{
+			ficha => 	
 			if(	self.ganoHorizontal(ficha,jugador) or
 				self.ganoVertical(ficha,jugador) or
 				self.ganoDiagonalArriba(ficha,jugador) or
@@ -92,46 +93,46 @@ object pedo mixed with NotCollectable{
 					game.say(rick,"GANE!!!!!!")
 					game.schedule(3000,{game.stop()})
 				}
-			}
-	}
-		
-	method seJugoLaFichaConPosicion_(jugador,pos){
-		return
-		fichasJugadas.any{
-			ficha => ficha.position() == pos and 
-				     ficha.player() == jugador
 		}
 	}
-	method seJugaronLasFichasConPosiciones_(jugador,posUno,posDos,posTres,posCuatro){
-		return  self.seJugoLaFichaConPosicion_(jugador,posUno) and
-				self.seJugoLaFichaConPosicion_(jugador,posDos) and
-				self.seJugoLaFichaConPosicion_(jugador,posTres) and
-				self.seJugoLaFichaConPosicion_(jugador,posCuatro)
+	
+	method fichasJugadasPor_(jugador){
+		return fichasJugadas.filter{ficha => ficha.player() == jugador}
 	}
 	
+	method estanLasFichasConPosiciones(jugador,posUno,posDos,posTres,posCuatro){
+		return 
+		self.fichasJugadasPor_(jugador).filter{
+			ficha => ficha.position() == posUno or
+					 ficha.position() == posDos or
+					 ficha.position() == posTres or
+					 ficha.position() == posCuatro				
+		}.size() == 4
+	}
+
 	method ganoHorizontal(ficha,jugador) {
-		return 	self.seJugaronLasFichasConPosiciones_(jugador,
+		return 	self.estanLasFichasConPosiciones(jugador,
 				game.at(ficha.position().x(), ficha.position().y()),
 				game.at(ficha.position().x() + 1, ficha.position().y()),
 				game.at(ficha.position().x() + 2, ficha.position().y()),
 				game.at(ficha.position().x() + 3, ficha.position().y()))
 	}
 	method ganoVertical(ficha,jugador) {
-		return 	self.seJugaronLasFichasConPosiciones_(jugador,
+		return 	self.estanLasFichasConPosiciones(jugador,
 				game.at(ficha.position().x(), ficha.position().y()),
 				game.at(ficha.position().x(), ficha.position().y() + 1),
 				game.at(ficha.position().x(), ficha.position().y() + 2),
-				game.at(ficha.position().x(), ficha.position().y() + 3)) 
+				game.at(ficha.position().x(), ficha.position().y() + 3))
 	}
 	method ganoDiagonalArriba(ficha,jugador) {
-		return 	self.seJugaronLasFichasConPosiciones_(jugador,
+		return 	self.estanLasFichasConPosiciones(jugador,
 				game.at(ficha.position().x(), ficha.position().y()),
 				game.at(ficha.position().x() + 1 , ficha.position().y() + 1),
 				game.at(ficha.position().x() + 2 , ficha.position().y() + 2),
 				game.at(ficha.position().x() + 3 , ficha.position().y() + 3))  
 	}
 	method ganoDiagonalAbajo(ficha,jugador) {
-		return 	self.seJugaronLasFichasConPosiciones_(jugador,
+		return 	self.estanLasFichasConPosiciones(jugador,
 				game.at(ficha.position().x(),ficha.position().y()),
 				game.at(ficha.position().x() + 1 ,ficha.position().y() - 1),
 				game.at(ficha.position().x() + 2 ,ficha.position().y() - 2),
