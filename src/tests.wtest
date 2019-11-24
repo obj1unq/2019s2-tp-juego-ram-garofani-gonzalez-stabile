@@ -11,8 +11,8 @@ describe "RaM tests (muy describe)"{
 	    game.width(13)
 	    game.height(14)
 	}
-	test "omniverse current is 1"{
-	    assert.equals(1, omniverse.current())
+	test "omniverse current is 5"{
+	    assert.equals(5, omniverse.current())
 	}
 	test "omniverse tiene 13 de ancho y 13 de alto"{
 	    assert.equals(13, omniverse.ancho()) 
