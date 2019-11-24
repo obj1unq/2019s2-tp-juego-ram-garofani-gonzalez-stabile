@@ -153,10 +153,17 @@ object pedo mixed with NotCollectable{
   	
  }
  
- object morty mixed with NotCollectable{
- 	var property image = if (cuatro.winner() == rick) { return "assets/mortyfree.png" }else{ return "assets/mortyTrapped.png"}
+ object morty mixed with NotCollectable{ 	
 	var multiverse = 4
 	var position =  game.at(11,0)
+	method image(){
+ 		return 
+ 		if (cuatro.winner() == rick) { 
+ 			"assets/mortyfree.png"
+ 		}else{ 
+ 			"assets/mortyTrapped.png"
+ 		} 		
+ 	} 
 	method multiverse(value) { multiverse = value }
     method position() = omniverse.position(position, multiverse)
     method colisionasteCon(alguien){}
