@@ -76,8 +76,20 @@ describe "Test de directions"{
 		assert.notThat(right.inEdge(enemigo))
 	}
 	
-	test "Up - nextPosition"{}
-	test "Down - nextPosition"{}
-	test "Left - nextPosition"{}
-	test "Right - nextPosition"{}
+	test "Up - nextPosition"{
+		const pos = game.at(5,3)
+		assert.equals(game.at(5,4),up.next(pos))
+	}
+	test "Down - nextPosition"{
+		const pos = game.at(5,3)
+		assert.equals(game.at(5,2),down.next(pos))
+	}
+	test "Left - nextPosition"{
+		const pos = game.at(5,3)
+		assert.equals(game.at(4,3),left.next(pos))
+	}
+	test "Right - nextPosition"{
+		const pos = game.at(5,3)
+		assert.equals(game.at(6,3),right.next(pos))
+	}
 }
