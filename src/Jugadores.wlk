@@ -50,7 +50,7 @@ object pedo mixed with NotCollectable{
  
  object cuatro{
  	const property fichasJugadas = []
- 	
+ 	var property winner 
  	method ponerFicha(jugador){
 		if(jugador.position().x() < 3 or jugador.position().x() > 9){
 			self.error("Las fichas van dentro del tablero.")
@@ -68,9 +68,16 @@ object pedo mixed with NotCollectable{
 		fichasJugadas.add(ficha)
 		game.addVisual(ficha)	
 		
-		self.jugadaGanadora(jugador)	
+		self.jugadaGanadora(jugador)
+			
 	}
 	
+	method mortyDestinyDependsOf(ganador){
+		if (ganador == rick){
+			winner = ganador
+			game.say(morty,"Gracias Rick ME SALVASTE!!!!!!")
+		}
+	}
 	method getVisualsColumnaActual(posX,posY){
 		return fichasJugadas.filter{ 
 	            ficha => ficha.position().x() == posX
@@ -84,54 +91,75 @@ object pedo mixed with NotCollectable{
 	}
 	
 	method jugadaGanadora(jugador){
-		fichasJugadas.forEach{ ficha => 	
+		self.fichasJugadasPor_(jugador).forEach{ficha => 	
 			if(	self.ganoHorizontal(ficha,jugador) or
 				self.ganoVertical(ficha,jugador) or
 				self.ganoDiagonalArriba(ficha,jugador) or
 				self.ganoDiagonalAbajo(ficha,jugador)){
+<<<<<<< HEAD
 					game.say(rick,"GANE!!!!!!")
 					//game.schedule(3000,{game.stop()})
+=======
+					game.say(jugador,"GANE!!!!!!")
+					self.mortyDestinyDependsOf(jugador)
+					game.schedule(3000,{
+						self.EliminarTodasLasFichas()
+						omniverse.current(6)
+					})
+					game.schedule(7000,{game.stop()})
+>>>>>>> FeatureCuatroEnLinea
 				}
-			}
-	}
-		
-	method seJugoLaFichaConPosicion_(jugador,pos){
-		return
-		fichasJugadas.any{
-			ficha => ficha.position() == pos and 
-				     ficha.player() == jugador
 		}
 	}
-	method seJugaronLasFichasConPosiciones_(jugador,posUno,posDos,posTres,posCuatro){
-		return  self.seJugoLaFichaConPosicion_(jugador,posUno) and
-				self.seJugoLaFichaConPosicion_(jugador,posDos) and
-				self.seJugoLaFichaConPosicion_(jugador,posTres) and
-				self.seJugoLaFichaConPosicion_(jugador,posCuatro)
+	
+	method EliminarTodasLasFichas(){
+		fichasJugadas.forEach{ficha => game.removeVisual(ficha)}
+	}
+	method fichasJugadasPor_(jugador){
+		return fichasJugadas.filter{ficha => ficha.player() == jugador}
 	}
 	
+	method estanLasFichasConPosiciones(jugador,posUno,posDos,posTres,posCuatro){
+		return 
+		self.fichasJugadasPor_(jugador).filter{
+			ficha => ficha.position() == posUno or
+					 ficha.position() == posDos or
+					 ficha.position() == posTres or
+					 ficha.position() == posCuatro				
+		}.size() == 4
+	}
+
+	method gano(ficha, jugador, sx, sy) {
+		return 	self.estanLasFichasConPosiciones(jugador,
+				game.at(ficha.position().x()         , ficha.position().y()),
+				game.at(ficha.position().x() + 1 * sx, ficha.position().y() + 1 * sy),
+				game.at(ficha.position().x() + 2 * sx, ficha.position().y() + 1 * sy),
+				game.at(ficha.position().x() + 3 * sx, ficha.position().y() + 1 * sy))
+	}
+
 	method ganoHorizontal(ficha,jugador) {
-		return 	self.seJugaronLasFichasConPosiciones_(jugador,
+		return 	self.estanLasFichasConPosiciones(jugador,
 				game.at(ficha.position().x(), ficha.position().y()),
 				game.at(ficha.position().x() + 1, ficha.position().y()),
 				game.at(ficha.position().x() + 2, ficha.position().y()),
 				game.at(ficha.position().x() + 3, ficha.position().y()))
 	}
 	method ganoVertical(ficha,jugador) {
-		return 	self.seJugaronLasFichasConPosiciones_(jugador,
+		return 	self.estanLasFichasConPosiciones(jugador,
 				game.at(ficha.position().x(), ficha.position().y()),
 				game.at(ficha.position().x(), ficha.position().y() + 1),
 				game.at(ficha.position().x(), ficha.position().y() + 2),
-				game.at(ficha.position().x(), ficha.position().y() + 3)) 
+				game.at(ficha.position().x(), ficha.position().y() + 3))
 	}
 	method ganoDiagonalArriba(ficha,jugador) {
-		return 	self.seJugaronLasFichasConPosiciones_(jugador,
+		return 	self.estanLasFichasConPosiciones(jugador,
 				game.at(ficha.position().x(), ficha.position().y()),
 				game.at(ficha.position().x() + 1 , ficha.position().y() + 1),
 				game.at(ficha.position().x() + 2 , ficha.position().y() + 2),
 				game.at(ficha.position().x() + 3 , ficha.position().y() + 3))  
 	}
 	method ganoDiagonalAbajo(ficha,jugador) {
-		return 	self.seJugaronLasFichasConPosiciones_(jugador,
+		return 	self.estanLasFichasConPosiciones(jugador,
 				game.at(ficha.position().x(),ficha.position().y()),
 				game.at(ficha.position().x() + 1 ,ficha.position().y() - 1),
 				game.at(ficha.position().x() + 2 ,ficha.position().y() - 2),
@@ -142,4 +170,22 @@ object pedo mixed with NotCollectable{
  		var column = self.getVisualsColumnaActual(posX,posY)
 		return column.size() < 6
  	}
+  	
+ }
+ 
+ object morty mixed with NotCollectable{ 	
+	var multiverse = 4
+	var position =  game.at(11,0)
+	method image(){
+ 		return 
+ 		if (cuatro.winner() == rick) { 
+ 			"assets/mortyfree.png"
+ 		}else{ 
+ 			"assets/mortyTrapped.png"
+ 		} 		
+ 	} 
+	method multiverse(value) { multiverse = value }
+    method position() = omniverse.position(position, multiverse)
+    method colisionasteCon(alguien){}
+    
  }

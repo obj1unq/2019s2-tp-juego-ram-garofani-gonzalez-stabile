@@ -3,7 +3,7 @@ import mixins.*
 import objects.*
 
 object omniverse {
-    var property current = 1
+    var property current = 5
 
     method position(pos, multiverse) = game.at(self.xfor(pos, multiverse), self.yfor(pos, multiverse) )
 

@@ -23,15 +23,23 @@ object niveles{
             objetos = [barra, indicadorDeMDestino, indicadorDeVida, rick, portalgun, raygun] + self.listOfMonstruos(1) ),
          new Nivel(
             fondo = new Fondo(mposition = game.origin(), multiverse = 2,imagen = "assets/ram-fondo2.png"),
-            objetos = [llave] + self.listOfEnemies(2) + self.listOfVenom(2) + self.listOfHealer(2)),
+            objetos = [portalBattery] + self.listOfEnemies(2) + self.listOfVenom(2) + self.listOfHealer(2)),
          new Nivel(
             fondo = new Fondo(mposition = game.origin(), multiverse = 3,imagen = "assets/ram-fondo4.png"),
             objetos = [nightVisionGoggles],
             zonasProhibidas = areasProhibidas.levelTres()),
          new Nivel(
             fondo = new Fondo(mposition = game.origin(), multiverse = 4,imagen = "assets/FondoCuatro.png"),
-            objetos = [new PilaDeFichas(owner = rick,mposition = game.at(0,12), multiverse = 4,imagenFicha = "assets/ficha-morty-a.png"), pedo] )
-          ]
+            objetos = [new PilaDeFichas(owner = rick,mposition = game.at(0,12), multiverse = 4,imagenFicha = "assets/ficha-morty-a.png"), pedo, morty] ),
+         new Nivel(
+            fondo = new Fondo(mposition = game.origin(), multiverse = 5,imagen = "assets/portada.png"),
+            objetos = [] ),
+		new Nivel(
+            fondo = new Fondo(mposition = game.origin(), multiverse = 6,imagen = "assets/final.png"),
+            objetos = [] )  
+            
+           ] 
+
 
     // dead //  var property actual = catalogo.first()
 
@@ -100,8 +108,8 @@ object niveles{
         }
     }
 
-    method ponerCofre(){
-        game.addVisual(cofre)
+    method ponerPortalFinal(){
+        game.addVisual(finalPortal)
     }
 }
 

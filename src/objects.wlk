@@ -194,9 +194,10 @@ object nightVisionGoggles mixed with Collectable{
     }
 }
 
-object cofre mixed with Collectable{
-    var property image = "assets/treasureChest.png"
-    var property position = game.at(7,3)
+object finalPortal mixed with Collectable{
+    //var property image = "assets/treasureChest.png"
+    var property image = "assets/FinalPortal.png"
+    var property position = game.at(7,2)
     var multiverse = 3
 
     method multiverse(value) { multiverse = value }
@@ -205,13 +206,14 @@ object cofre mixed with Collectable{
 
 }
 
-object llave mixed with Collectable{
-    var property image = "assets/treasureKey.png"
+object portalBattery mixed with Collectable{
+    //var property image = "assets/treasureKey.png"
+    var property image = "assets/battery.png"
     var property position = game.at(7,3)
     var multiverse = 2
 
     method multiverse(value) { multiverse = value }
     method position() = omniverse.position(position, multiverse)
 
-    method trigger(destino, direction) { rick.abrirCofre() }
+    method trigger(destino, direction) { rick.activarPortalFinal() }
 }
