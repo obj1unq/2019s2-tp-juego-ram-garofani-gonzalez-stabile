@@ -124,6 +124,14 @@ object pedo mixed with NotCollectable{
 		}.size() == 4
 	}
 
+	method gano(ficha, jugador, sx, sy) {
+		return 	self.estanLasFichasConPosiciones(jugador,
+				game.at(ficha.position().x()         , ficha.position().y()),
+				game.at(ficha.position().x() + 1 * sx, ficha.position().y() + 1 * sy),
+				game.at(ficha.position().x() + 2 * sx, ficha.position().y() + 1 * sy),
+				game.at(ficha.position().x() + 3 * sx, ficha.position().y() + 1 * sy))
+	}
+
 	method ganoHorizontal(ficha,jugador) {
 		return 	self.estanLasFichasConPosiciones(jugador,
 				game.at(ficha.position().x(), ficha.position().y()),
