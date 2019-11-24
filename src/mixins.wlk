@@ -24,13 +24,9 @@ mixin Collectable{
     method verificarInventariable(owner) { }
 
     method mover(){}
-    
-    method esPilaDeFichas() = false
 }
 
 mixin NotCollectable{
-
-	method esFicha() = false
 	
     method esObstaculo() = false
 

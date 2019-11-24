@@ -40,9 +40,6 @@ object rick inherits OmniObjeto(mposition = game.at(1,1), multiverse = 1) mixed 
 
     method trigger(destino) { 
     	grabed.trigger(destino, direction)
-    	if (grabed.esPilaDeFichas()) {
-    		pedo.jugar()
-    	}
     }
 
     method manipularObjetos(extremo){
