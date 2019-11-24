@@ -50,7 +50,7 @@ object pedo mixed with NotCollectable{
  
  object cuatro{
  	const property fichasJugadas = []
- 	
+ 	var property winner 
  	method ponerFicha(jugador){
 		if(jugador.position().x() < 3 or jugador.position().x() > 9){
 			self.error("Las fichas van dentro del tablero.")
@@ -68,9 +68,16 @@ object pedo mixed with NotCollectable{
 		fichasJugadas.add(ficha)
 		game.addVisual(ficha)	
 		
-		self.jugadaGanadora(jugador)	
+		self.jugadaGanadora(jugador)
+			
 	}
 	
+	method mortyDestinyDependsOf(ganador){
+		if (ganador == rick){
+			winner = ganador
+			game.say(morty,"Gracias Rick ME SALVASTE!!!!!!")
+		}
+	}
 	method getVisualsColumnaActual(posX,posY){
 		return fichasJugadas.filter{ 
 	            ficha => ficha.position().x() == posX
@@ -84,13 +91,13 @@ object pedo mixed with NotCollectable{
 	}
 	
 	method jugadaGanadora(jugador){
-		self.fichasJugadasPor_(jugador).forEach{
-			ficha => 	
+		self.fichasJugadasPor_(jugador).forEach{ficha => 	
 			if(	self.ganoHorizontal(ficha,jugador) or
 				self.ganoVertical(ficha,jugador) or
 				self.ganoDiagonalArriba(ficha,jugador) or
 				self.ganoDiagonalAbajo(ficha,jugador)){
-					game.say(rick,"GANE!!!!!!")
+					game.say(jugador,"GANE!!!!!!")
+					self.mortyDestinyDependsOf(jugador)
 					game.schedule(3000,{game.stop()})
 				}
 		}
@@ -143,4 +150,15 @@ object pedo mixed with NotCollectable{
  		var column = self.getVisualsColumnaActual(posX,posY)
 		return column.size() < 6
  	}
+  	
+ }
+ 
+ object morty mixed with NotCollectable{
+ 	var property image = if (cuatro.winner() == rick) { return "assets/mortyfree.png" }else{ return "assets/mortyTrapped.png"}
+	var multiverse = 4
+	var position =  game.at(11,0)
+	method multiverse(value) { multiverse = value }
+    method position() = omniverse.position(position, multiverse)
+    method colisionasteCon(alguien){}
+    
  }

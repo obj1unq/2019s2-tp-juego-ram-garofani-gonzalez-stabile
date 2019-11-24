@@ -30,11 +30,11 @@ object niveles{
             zonasProhibidas = areasProhibidas.levelTres()),
          new Nivel(
             fondo = new Fondo(mposition = game.origin(), multiverse = 4,imagen = "assets/FondoCuatro.png"),
-            objetos = [new PilaDeFichas(owner = rick,mposition = game.at(0,12), multiverse = 4,imagenFicha = "assets/ficha-morty-a.png"), pedo] ),
+            objetos = [new PilaDeFichas(owner = rick,mposition = game.at(0,12), multiverse = 4,imagenFicha = "assets/ficha-morty-a.png"), pedo, morty] ),
          new Nivel(
             fondo = new Fondo(mposition = game.origin(), multiverse = 5,imagen = "assets/portada.png"),
             objetos = [] )  
-          ]
+
 
     var property actual = catalogo.first()
 
