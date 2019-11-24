@@ -96,10 +96,6 @@ object pedo mixed with NotCollectable{
 				self.ganoVertical(ficha,jugador) or
 				self.ganoDiagonalArriba(ficha,jugador) or
 				self.ganoDiagonalAbajo(ficha,jugador)){
-<<<<<<< HEAD
-					game.say(rick,"GANE!!!!!!")
-					//game.schedule(3000,{game.stop()})
-=======
 					game.say(jugador,"GANE!!!!!!")
 					self.mortyDestinyDependsOf(jugador)
 					game.schedule(3000,{
@@ -107,7 +103,6 @@ object pedo mixed with NotCollectable{
 						omniverse.current(6)
 					})
 					game.schedule(7000,{game.stop()})
->>>>>>> FeatureCuatroEnLinea
 				}
 		}
 	}
