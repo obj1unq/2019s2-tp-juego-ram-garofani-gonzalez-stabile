@@ -23,7 +23,7 @@ object niveles{
             objetos = [barra, indicadorDeMDestino, indicadorDeVida, rick, portalgun, raygun] + self.listOfMonstruos(1) ),
          new Nivel(
             fondo = new Fondo(mposition = game.origin(), multiverse = 2,imagen = "assets/ram-fondo2.png"),
-            objetos = [llave] + self.listOfEnemies(2) ),
+            objetos = [llave] + self.listOfEnemies(2) + self.listOfVenom(2) + self.listOfHealer(2)),
          new Nivel(
             fondo = new Fondo(mposition = game.origin(), multiverse = 3,imagen = "assets/ram-fondo4.png"),
             objetos = [nightVisionGoggles],
@@ -33,10 +33,10 @@ object niveles{
             objetos = [new PilaDeFichas(owner = rick,mposition = game.at(0,12), multiverse = 4,imagenFicha = "assets/ficha-morty-a.png"), pedo] )
           ]
 
-    var property actual = catalogo.first()
+    // dead //  var property actual = catalogo.first()
 
     method presentar() {
-        console.println("niveles.presentar")
+        // dead // console.println("niveles.presentar")
         self.presenteFondo()
         self.showAll()
         self.showBlocksInProhibitedAreas()
@@ -59,6 +59,10 @@ object niveles{
                                              enemies, value => enemies.add( self.createNewMonstruo(4, 1)) //refac numero numero
                                              return enemies
                               })
+
+    method listOfHealer(multiverse) = [ new Healer(direction = down, numeroEnemigo = 3, multiverse = multiverse, mposition = game.at(5,5))]
+
+    method listOfVenom(multiverse) = [ new Venom(direction = down, numeroEnemigo = 5, multiverse = multiverse, mposition = game.at(5,5))]
 
     method createNewEnemy(number, multiverse){
             return new Enemigo(

@@ -25,10 +25,8 @@ object rick inherits OmniObjeto(mposition = game.at(1,1), multiverse = 1) mixed 
         grabed.position(mposition)
     }
 
-    method travel() { self.takePortal() }
-
     method takePortal() {
-        game.colliders(self).find{ visible => visible.isPortal() }.travel(self)
+        game.colliders(self).find{ visual => visual.isPortal() }.travel(self)
         barra.acomodar(mochila) // acomoda las referencias de la mochila al nuevo multiverso//refac
     }
 

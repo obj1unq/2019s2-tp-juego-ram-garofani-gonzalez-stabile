@@ -27,7 +27,7 @@ class Enemigo inherits OmniObjeto {
     method alcanzado(visual){ game.removeVisual(self) }
 
     method takePortal() {
-        //game.colliders(self).find{ visible => visible.isPortal() }.travel(self)
+        game.colliders(self).find{ visible => visible.isPortal() }.travel(self)
     }
 }
 

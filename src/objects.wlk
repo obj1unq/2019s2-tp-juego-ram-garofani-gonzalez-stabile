@@ -108,7 +108,7 @@ object portalgun mixed with Collectable{
         self.crearPortalA(multiverseDestino, direction)
     }
 
-    method crearPortalA(multiverseDestino, direction){ // refac crear portal en esta direccion
+    method crearPortalA(multiverseDestino, direction){
 
 
         const portal = new Portal(mposition = rick.direction().nextPosition(position), multiverse = multiverse, exit =
@@ -147,14 +147,14 @@ class Portal inherits OmniObjeto mixed with NotCollectable{
     method travel(traveler) {
             omniverse.current(exit.multiverse())
             traveler.multiverse(exit.multiverse())
-            traveler.position(exit.position())
+            traveler.mposition(exit.position())
             //add time out to fade out
             game.removeVisual(self)
             game.removeVisual(exit)
     }
 
-    method colisionasteCon(alguien){
-        alguien.travel()
+    method colisionasteCon(visual){
+        visual.takePortal()
     }
 
 }
