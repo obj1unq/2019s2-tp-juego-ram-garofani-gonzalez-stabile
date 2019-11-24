@@ -33,7 +33,12 @@ object niveles{
             objetos = [new PilaDeFichas(owner = rick,mposition = game.at(0,12), multiverse = 4,imagenFicha = "assets/ficha-morty-a.png"), pedo, morty] ),
          new Nivel(
             fondo = new Fondo(mposition = game.origin(), multiverse = 5,imagen = "assets/portada.png"),
-            objetos = [] )  ] 
+            objetos = [] ),
+		new Nivel(
+            fondo = new Fondo(mposition = game.origin(), multiverse = 6,imagen = "assets/final.png"),
+            objetos = [] )  
+            
+           ] 
 
 
     var property actual = catalogo.first()

@@ -98,11 +98,18 @@ object pedo mixed with NotCollectable{
 				self.ganoDiagonalAbajo(ficha,jugador)){
 					game.say(jugador,"GANE!!!!!!")
 					self.mortyDestinyDependsOf(jugador)
-					game.schedule(3000,{game.stop()})
+					game.schedule(3000,{
+						self.EliminarTodasLasFichas()
+						omniverse.current(6)
+					})
+					game.schedule(7000,{game.stop()})
 				}
 		}
 	}
 	
+	method EliminarTodasLasFichas(){
+		fichasJugadas.forEach{ficha => game.removeVisual(ficha)}
+	}
 	method fichasJugadasPor_(jugador){
 		return fichasJugadas.filter{ficha => ficha.player() == jugador}
 	}
