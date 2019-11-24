@@ -4,27 +4,25 @@ import Jugadores.*
 import wollok.game.*
 describe "Test de cuatro en linea"{
 	
-	test "Rick pone una ficha"{
+	fixture {
 		omniverse.current(4)
 	    rick.position(game.at(3,8))
 	    rick.multiverse(omniverse.current())
+	}
+	
+	test "Rick pone una ficha"{
 	    rick.grabed(new PilaDeFichas(owner = rick,mposition = game.at(3,8), multiverse = 4,imagenFicha = "assets/ficha-morty-a.png"))
 		cuatro.ponerFicha(rick)
 		assert.equals(1, game.allVisuals().size())
 	}
 	
 	test "Rick pone una ficha fuera del tablero"{
-		omniverse.current(4)
 	    rick.position(game.at(1,8))
-	    rick.multiverse(omniverse.current())
 	    rick.grabed(new PilaDeFichas(owner = rick,mposition = game.at(1,8), multiverse = 4,imagenFicha = "assets/ficha-morty-a.png"))
 		assert.throwsExceptionWithMessage("Las fichas van dentro del tablero.", {cuatro.ponerFicha(rick)})
 	}
 	
 	test "Rick supera la cantidad maxima de fichas de la columna"{
-		omniverse.current(4)
-	    rick.position(game.at(3,8))
-	    rick.multiverse(omniverse.current())
 	    rick.grabed(new PilaDeFichas(owner = rick,mposition = game.at(3,8), multiverse = 4,imagenFicha = "assets/ficha-morty-a.png"))
 	    game.addVisual(rick)
 	    game.addVisual(morty)
@@ -38,9 +36,6 @@ describe "Test de cuatro en linea"{
 	}
 	
 	test "Rick gana en vertical"{
-		omniverse.current(4)
-	    rick.position(game.at(3,8))
-	    rick.multiverse(omniverse.current())
 	    rick.grabed(new PilaDeFichas(owner = rick,mposition = game.at(3,8), multiverse = 4,imagenFicha = "assets/ficha-morty-a.png"))
 	    game.addVisual(rick)
 	    game.addVisual(morty)
@@ -52,12 +47,9 @@ describe "Test de cuatro en linea"{
 	}
 	
 	test "Rick gana en Horizontal"{
-		omniverse.current(4)
-	    rick.multiverse(omniverse.current())
 	    rick.grabed(new PilaDeFichas(owner = rick,mposition = game.at(3,8), multiverse = 4,imagenFicha = "assets/ficha-morty-a.png"))
 	    game.addVisual(rick)
 	    game.addVisual(morty)
-	    rick.position(game.at(3,8))
 	    cuatro.ponerFicha(rick)
 	    rick.position(game.at(4,8))
 	    cuatro.ponerFicha(rick)
