@@ -1,5 +1,7 @@
 import wollok.game.*
 import omniverse.*
+import rick.*
+import directions.*
 
 class Enemigo inherits OmniObjeto {
     var property numeroEnemigo
@@ -24,8 +26,9 @@ class Enemigo inherits OmniObjeto {
 
     method alcanzado(visual){ game.removeVisual(self) }
 
-    method takePortal() {}
-
+    method takePortal() {
+        //game.colliders(self).find{ visible => visible.isPortal() }.travel(self)
+    }
 }
 
 class Monstruo inherits Enemigo{
@@ -47,10 +50,22 @@ class Tropper inherits Enemigo{
 
     override method alcanzado(visual){ }
 
+
 }
 
 class Venom inherits Enemigo{
 
     override method damage() = -4
+
+    // hunt rick
+    override method mover(){
+        const dx = rick.mposition().x() - mposition.x()
+        const dy = rick.mposition().y() - mposition.y()
+        direction = if (dx.abs() > dy.abs()) { if (dx > 0) right else left } else { if (dy > 0) up else down }
+        direction.toNewMposition(self)
+        self.schedule()
+    }
+
+    override method schedule() { game.schedule(700, { self.mover() }) }
 
 }
