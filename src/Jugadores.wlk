@@ -11,12 +11,11 @@ class PilaDeFichas inherits OmniObjeto mixed with Collectable{
     const property imagen = "assets/ficha-morty-a.png"
     const owner
     var property imagenFicha = ""
-	const property listaFichas = []	
-
+    
     method position(_position) { mposition = _position }
     
     method trigger(destino, direction){
-        cuatro.ponerFicha(owner.grabed())
+        cuatro.ponerFicha(owner)
 		pedo.jugar()
     }	
 }
@@ -31,17 +30,17 @@ object pedo mixed with NotCollectable{
     method position() = omniverse.position(position, multiverse)
 
     method jugar(){
-    	self.irPosicionJugada()
-    	cuatro.ponerFicha(grabed)
+    	self.irPosicionParaJugada()
+    	cuatro.ponerFicha(self)
     }
     
-    method irPosicionJugada(){   
+    method irPosicionParaJugada(){   
     	var random = (3).randomUpTo(9).roundUp(0)    	
     	if(cuatro.esColumnaLibre(random,position.y())){
     		position = game.at(random, position.y())
     		grabed.mposition(game.at(random, position.y()))    		
     	}else{
-    		self.irPosicionJugada()
+    		self.irPosicionParaJugada()
     	}
     }
     
@@ -51,6 +50,7 @@ object pedo mixed with NotCollectable{
  
  object cuatro{
  	const property fichasJugadas = []
+ 	
  	method ponerFicha(jugador){
 		if(jugador.position().x() < 3 or jugador.position().x() > 9){
 			self.error("Las fichas van dentro del tablero.")
@@ -58,34 +58,33 @@ object pedo mixed with NotCollectable{
 		if(self.getVisualsColumnaActual(jugador.position().x(),jugador.position().y()).size() == 6){
 			self.error("Aca no entran mas fichas.")
 		}
-		jugador.listaFichas().add(game.at(jugador.position().x() , self.posicionLibreEnColumna(jugador).y() ))
+		const pos = game.at(jugador.position().x() , self.posicionLibreEnColumna(jugador).y() )
 		
-		game.addVisual(new Ficha(player = self , 
-							     position = jugador.listaFichas().last(), 
-								 image = jugador.imagenFicha()
-		))			
+		const ficha = new Ficha(player = jugador , 
+							     position = pos, 
+								 image = jugador.grabed().imagenFicha()								 
+								 )
+								 
+		fichasJugadas.add(ficha)
+		game.addVisual(ficha)	
 		
 		self.jugadaGanadora(jugador)	
 	}
 	
 	method getVisualsColumnaActual(posX,posY){
-		return self.todasLasFichasJugadas().filter{ 
-	            pos => pos.x() == posX
-	            and pos.y().between(0, posY + 3)
+		return fichasJugadas.filter{ 
+	            ficha => ficha.position().x() == posX
+	            and ficha.position().y().between(0, posY + 3)
 	            }
 	}
-	
-	method todasLasFichasJugadas(){
-		return rick.grabed().listaFichas() + pedo.grabed().listaFichas()
-	}
-	
+		
 	method posicionLibreEnColumna(jugador) {
 		var column = self.getVisualsColumnaActual(jugador.position().x(), jugador.position().y())
 		return game.at(jugador.position().x(), column.size() + 2)
 	}
 	
 	method jugadaGanadora(jugador){
-		jugador.listaFichas().forEach{ ficha => 	
+		fichasJugadas.forEach{ ficha => 	
 			if(	self.ganoHorizontal(ficha,jugador) or
 				self.ganoVertical(ficha,jugador) or
 				self.ganoDiagonalArriba(ficha,jugador) or
@@ -95,30 +94,48 @@ object pedo mixed with NotCollectable{
 				}
 			}
 	}
+		
+	method seJugoLaFichaConPosicion_(jugador,pos){
+		return
+		fichasJugadas.any{
+			ficha => ficha.position() == pos and 
+				     ficha.player() == jugador
+		}
+	}
+	method seJugaronLasFichasConPosiciones_(jugador,posUno,posDos,posTres,posCuatro){
+		return  self.seJugoLaFichaConPosicion_(jugador,posUno) and
+				self.seJugoLaFichaConPosicion_(jugador,posDos) and
+				self.seJugoLaFichaConPosicion_(jugador,posTres) and
+				self.seJugoLaFichaConPosicion_(jugador,posCuatro)
+	}
 	
 	method ganoHorizontal(ficha,jugador) {
-		return 	jugador.listaFichas().contains(game.at(ficha.x(), ficha.y())) and 
-				jugador.listaFichas().contains(game.at(ficha.x() + 1, ficha.y())) and
-				jugador.listaFichas().contains(game.at(ficha.x() + 2, ficha.y())) and
-				jugador.listaFichas().contains(game.at(ficha.x() + 3, ficha.y()))   
+		return 	self.seJugaronLasFichasConPosiciones_(jugador,
+				game.at(ficha.position().x(), ficha.position().y()),
+				game.at(ficha.position().x() + 1, ficha.position().y()),
+				game.at(ficha.position().x() + 2, ficha.position().y()),
+				game.at(ficha.position().x() + 3, ficha.position().y()))
 	}
 	method ganoVertical(ficha,jugador) {
-		return 	jugador.listaFichas().contains(game.at(ficha.x(), ficha.y())) and 
-				jugador.listaFichas().contains(game.at(ficha.x(), ficha.y() + 1)) and
-				jugador.listaFichas().contains(game.at(ficha.x(), ficha.y() + 2)) and
-				jugador.listaFichas().contains(game.at(ficha.x(), ficha.y() + 3))  
+		return 	self.seJugaronLasFichasConPosiciones_(jugador,
+				game.at(ficha.position().x(), ficha.position().y()),
+				game.at(ficha.position().x(), ficha.position().y() + 1),
+				game.at(ficha.position().x(), ficha.position().y() + 2),
+				game.at(ficha.position().x(), ficha.position().y() + 3)) 
 	}
 	method ganoDiagonalArriba(ficha,jugador) {
-		return 	jugador.listaFichas().contains(game.at(ficha.x(), ficha.y())) and 
-				jugador.listaFichas().contains(game.at(ficha.x() + 1 , ficha.y() + 1)) and
-				jugador.listaFichas().contains(game.at(ficha.x() + 2 , ficha.y() + 2)) and
-				jugador.listaFichas().contains(game.at(ficha.x() + 3 , ficha.y() + 3))  
+		return 	self.seJugaronLasFichasConPosiciones_(jugador,
+				game.at(ficha.position().x(), ficha.position().y()),
+				game.at(ficha.position().x() + 1 , ficha.position().y() + 1),
+				game.at(ficha.position().x() + 2 , ficha.position().y() + 2),
+				game.at(ficha.position().x() + 3 , ficha.position().y() + 3))  
 	}
 	method ganoDiagonalAbajo(ficha,jugador) {
-		return 	jugador.listaFichas().contains(game.at(ficha.x(),ficha.y())) and 
-				jugador.listaFichas().contains(game.at(ficha.x() + 1 ,ficha.y() - 1)) and
-				jugador.listaFichas().contains(game.at(ficha.x() + 2 ,ficha.y() - 2)) and
-				jugador.listaFichas().contains(game.at(ficha.x() + 3 ,ficha.y() - 3))
+		return 	self.seJugaronLasFichasConPosiciones_(jugador,
+				game.at(ficha.position().x(),ficha.position().y()),
+				game.at(ficha.position().x() + 1 ,ficha.position().y() - 1),
+				game.at(ficha.position().x() + 2 ,ficha.position().y() - 2),
+				game.at(ficha.position().x() + 3 ,ficha.position().y() - 3))
 	}	
 	
 	method esColumnaLibre(posX,posY){
