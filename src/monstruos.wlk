@@ -11,27 +11,46 @@ class Enemigo inherits OmniObjeto {
 
     override method mover(){
         direction.toNewMposition(self)
-        game.schedule(500, { self.mover() })
+        self.schedule()
     }
+
+    method schedule() { game.schedule(500, { self.mover() }) }
 
     method damage() = -2
 
     method colisionasteCon(alguien){
         alguien.modificarVida(self.damage())
     }
+
+    method alcanzado(visual){ game.removeVisual(self) }
+
+    method takePortal() {}
+
 }
 
 class Monstruo inherits Enemigo{
 
-    method alcanzado(visual){
-        game.removeVisual(self)
-    }
+    override method schedule() { game.schedule(1000, { self.mover() }) }
 
-    override method mover(){
-        direction.toNewMposition(self)
-        game.schedule(1000, { self.mover() })
-    }
+    override method damage() = super() -1
+}
+
+class Healer inherits Enemigo{
+
+    override method damage() = +1
 
 }
 
+class Tropper inherits Enemigo{
 
+    override method damage() = -10 
+
+    override method alcanzado(visual){ }
+
+}
+
+class Venom inherits Enemigo{
+
+    override method damage() = -4
+
+}

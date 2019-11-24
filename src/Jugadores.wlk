@@ -90,7 +90,7 @@ object pedo mixed with NotCollectable{
 				self.ganoDiagonalArriba(ficha,jugador) or
 				self.ganoDiagonalAbajo(ficha,jugador)){
 					game.say(rick,"GANE!!!!!!")
-					game.schedule(3000,{game.stop()})
+					//game.schedule(3000,{game.stop()})
 				}
 			}
 	}
