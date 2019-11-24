@@ -103,6 +103,7 @@ object portalgun mixed with Collectable{
     method image() = if (multiverse == omniverse.current() ) image else "assets/nada.png"
 
     method trigger(multiverseDestino, direction){
+        self.verificarQueNohayPortalEnLaCeldaEn_(direction)
         self.verificarMultiversoDestinoEsDiferenteAlActual(multiverseDestino)
         self.crearPortalA(multiverseDestino, direction)
     }
@@ -115,6 +116,13 @@ object portalgun mixed with Collectable{
         portal.exit().exit(portal)
         game.addVisual(portal)
         game.addVisual(portal.exit())
+    }
+
+    method verificarQueNohayPortalEnLaCeldaEn_(direction){
+        if (game.getObjectsIn(direction.nextPosition(position)).any{visual => visual.isPortal()}) {
+            game.errorReporter(self)
+            self.error("Ya hay un portal ahí")
+        }
     }
 
     method verificarMultiversoDestinoEsDiferenteAlActual(multiversoDestino){
