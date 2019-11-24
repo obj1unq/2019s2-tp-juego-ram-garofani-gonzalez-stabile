@@ -96,27 +96,27 @@ object rick inherits OmniObjeto(mposition = game.at(1,1), multiverse = 1) mixed 
 
     method ponerseLentes(){
         niveles.mostrarBloquesEnAreasProhibidas()
-        niveles.ponerCofre()
+        niveles.ponerPortalFinal()
     }
 
     method tieneElObjetoEnLaMochila(objeto){
         return mochila.contains(objeto)
     }
 
-    method abrirCofre(){
-        if(!self.encontreElCofre()){
-            self.error("Aca no hay ningun cofre");
+    method activarPortalFinal(){
+        if(!self.encontreElPortalFinal()){
+            self.error("El portal final no esta aqui");
         }
 
-        game.removeVisual(cofre)
+        game.removeVisual(finalPortal)
         game.say(self,"Empieza el final!")
         multiverse = 4
         omniverse.current(multiverse)
         barra.acomodar(mochila)
     }
 
-    method encontreElCofre(){
-        return game.colliders(self).contains(cofre)
+    method encontreElPortalFinal(){
+        return game.colliders(self).contains(finalPortal)
     }
 
     method moveTo(_direction) { // se mueve sin condicion

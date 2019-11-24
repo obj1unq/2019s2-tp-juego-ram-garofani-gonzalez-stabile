@@ -23,7 +23,7 @@ object niveles{
             objetos = [barra, indicador, rick, portalgun, raygun] + self.listOfMonstruos(1) ),
          new Nivel(
             fondo = new Fondo(mposition = game.origin(), multiverse = 2,imagen = "assets/ram-fondo2.png"),
-            objetos = [llave] + self.listOfEnemies(2) ),
+            objetos = [portalBattery] + self.listOfEnemies(2) ),
          new Nivel(
             fondo = new Fondo(mposition = game.origin(), multiverse = 3,imagen = "assets/ram-fondo4.png"),
             objetos = [nightVisionGoggles],
@@ -104,8 +104,8 @@ object niveles{
         }
     }
 
-    method ponerCofre(){
-        game.addVisual(cofre)
+    method ponerPortalFinal(){
+        game.addVisual(finalPortal)
     }
 }
 
