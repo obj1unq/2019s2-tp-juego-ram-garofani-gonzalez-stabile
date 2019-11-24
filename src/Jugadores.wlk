@@ -3,52 +3,143 @@ import rick.*
 import omniverse.*
 import mixins.*
 import wollok.game.*
+import directions.*
+import monstruos.*
 
-class PilaDeFichasDeRick inherits OmniObjeto mixed with Collectable{
+
+class PilaDeFichas inherits OmniObjeto mixed with Collectable{
     const property imagen = "assets/ficha-morty-a.png"
-
+    const owner
+    var property imagenFicha = ""
+    
     method position(_position) { mposition = _position }
-
-
+    
     method trigger(destino, direction){
-        self.ponerFicha()
+        cuatro.ponerFicha(owner)
+		pedo.jugar()
+    }	
+}
+
+
+object pedo mixed with NotCollectable{
+	const property grabed = new PilaDeFichas(owner = self,mposition = game.at(3,8), multiverse = 4,imagenFicha = "assets/ficha-jerry-a.png")
+	const property image = "assets/fart.png"
+	var multiverse = 4
+	var position =  game.at(3,8)
+    method multiverse(value) { multiverse = value }
+    method position() = omniverse.position(position, multiverse)
+
+    method jugar(){
+    	self.irPosicionParaJugada()
+    	cuatro.ponerFicha(self)
     }
-
-	method ponerFicha(){
-		game.addVisual(new Ficha( 	player = self , 
-									position = game.at(self.position().x() , self.posicionLibreEnColumna().y() ), 
-									image = "assets/ficha-morty-a.png"
-		))
-		pc.ponerFicha()
-		//validar jugada individual
-				
-	}
-	
-	method posicionLibreEnColumna() {
-		var column = game.allVisuals().filter{ 
-            visual => visual.position().x() == self.position().x() 
-            and visual.position().y().between(0, self.position().y() + 3)}
-		return game.at(self.position().x(), column.size())
-	}		
-}
-
-object pc {
-	const random = {3.randomUpTo(7).roundUp()}
-	var property position = game.at(random.apply(), random.apply())
-	
-	method ponerFicha(){
+    
+    method irPosicionParaJugada(){   
+    	var random = (3).randomUpTo(9).roundUp(0)    	
+    	if(cuatro.esColumnaLibre(random,position.y())){
+    		position = game.at(random, position.y())
+    		grabed.mposition(game.at(random, position.y()))    		
+    	}else{
+    		self.irPosicionParaJugada()
+    	}
+    }
+    
+    method colisionasteCon(alguien){}
+    
+ }
+ 
+ object cuatro{
+ 	const property fichasJugadas = []
+ 	
+ 	method ponerFicha(jugador){
+		if(jugador.position().x() < 3 or jugador.position().x() > 9){
+			self.error("Las fichas van dentro del tablero.")
+		}
+		if(self.getVisualsColumnaActual(jugador.position().x(),jugador.position().y()).size() == 6){
+			self.error("Aca no entran mas fichas.")
+		}
+		const pos = game.at(jugador.position().x() , self.posicionLibreEnColumna(jugador).y() )
 		
-		 game.addVisual(new Ficha( player = self , 
-		 					position = game.at(random.apply(), self.posicionLibreEnColumna().y()), 
-		 					image = "assets/ficha-jerry-a.png"
-		 ))
+		const ficha = new Ficha(player = jugador , 
+							     position = pos, 
+								 image = jugador.grabed().imagenFicha()								 
+								 )
+								 
+		fichasJugadas.add(ficha)
+		game.addVisual(ficha)	
+		
+		self.jugadaGanadora(jugador)	
 	}
 	
-	method posicionLibreEnColumna() {
-		var column = game.allVisuals().filter{ 
-            visual => visual.position().x() == self.position().x() 
-            and visual.position().y().between(0, self.position().y() + 3)}
-		return game.at(self.position().x(), column.size())
+	method getVisualsColumnaActual(posX,posY){
+		return fichasJugadas.filter{ 
+	            ficha => ficha.position().x() == posX
+	            and ficha.position().y().between(0, posY + 3)
+	            }
 	}
-}
-
+		
+	method posicionLibreEnColumna(jugador) {
+		var column = self.getVisualsColumnaActual(jugador.position().x(), jugador.position().y())
+		return game.at(jugador.position().x(), column.size() + 2)
+	}
+	
+	method jugadaGanadora(jugador){
+		fichasJugadas.forEach{ ficha => 	
+			if(	self.ganoHorizontal(ficha,jugador) or
+				self.ganoVertical(ficha,jugador) or
+				self.ganoDiagonalArriba(ficha,jugador) or
+				self.ganoDiagonalAbajo(ficha,jugador)){
+					game.say(rick,"GANE!!!!!!")
+					game.schedule(3000,{game.stop()})
+				}
+			}
+	}
+		
+	method seJugoLaFichaConPosicion_(jugador,pos){
+		return
+		fichasJugadas.any{
+			ficha => ficha.position() == pos and 
+				     ficha.player() == jugador
+		}
+	}
+	method seJugaronLasFichasConPosiciones_(jugador,posUno,posDos,posTres,posCuatro){
+		return  self.seJugoLaFichaConPosicion_(jugador,posUno) and
+				self.seJugoLaFichaConPosicion_(jugador,posDos) and
+				self.seJugoLaFichaConPosicion_(jugador,posTres) and
+				self.seJugoLaFichaConPosicion_(jugador,posCuatro)
+	}
+	
+	method ganoHorizontal(ficha,jugador) {
+		return 	self.seJugaronLasFichasConPosiciones_(jugador,
+				game.at(ficha.position().x(), ficha.position().y()),
+				game.at(ficha.position().x() + 1, ficha.position().y()),
+				game.at(ficha.position().x() + 2, ficha.position().y()),
+				game.at(ficha.position().x() + 3, ficha.position().y()))
+	}
+	method ganoVertical(ficha,jugador) {
+		return 	self.seJugaronLasFichasConPosiciones_(jugador,
+				game.at(ficha.position().x(), ficha.position().y()),
+				game.at(ficha.position().x(), ficha.position().y() + 1),
+				game.at(ficha.position().x(), ficha.position().y() + 2),
+				game.at(ficha.position().x(), ficha.position().y() + 3)) 
+	}
+	method ganoDiagonalArriba(ficha,jugador) {
+		return 	self.seJugaronLasFichasConPosiciones_(jugador,
+				game.at(ficha.position().x(), ficha.position().y()),
+				game.at(ficha.position().x() + 1 , ficha.position().y() + 1),
+				game.at(ficha.position().x() + 2 , ficha.position().y() + 2),
+				game.at(ficha.position().x() + 3 , ficha.position().y() + 3))  
+	}
+	method ganoDiagonalAbajo(ficha,jugador) {
+		return 	self.seJugaronLasFichasConPosiciones_(jugador,
+				game.at(ficha.position().x(),ficha.position().y()),
+				game.at(ficha.position().x() + 1 ,ficha.position().y() - 1),
+				game.at(ficha.position().x() + 2 ,ficha.position().y() - 2),
+				game.at(ficha.position().x() + 3 ,ficha.position().y() - 3))
+	}	
+	
+	method esColumnaLibre(posX,posY){
+ 		var column = self.getVisualsColumnaActual(posX,posY)
+		return column.size() < 6
+ 	}
+ }

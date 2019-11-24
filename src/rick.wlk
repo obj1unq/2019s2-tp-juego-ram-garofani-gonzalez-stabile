@@ -5,6 +5,7 @@ import misc.*
 import omniverse.*
 import directions.*
 import niveles.*
+import Jugadores.*
 
 object rick inherits OmniObjeto(mposition = game.at(1,1), multiverse = 1) mixed with NotCollectable{
     var property grabed = nada
@@ -33,7 +34,9 @@ object rick inherits OmniObjeto(mposition = game.at(1,1), multiverse = 1) mixed 
 
     method alcanzado() {}
 
-    method trigger(destino) { grabed.trigger(destino, direction) }
+    method trigger(destino) { 
+    	grabed.trigger(destino, direction)
+    }
 
     method manipularObjetos(extremo){
         //self.verificarSiHayCollectable()
@@ -105,6 +108,9 @@ object rick inherits OmniObjeto(mposition = game.at(1,1), multiverse = 1) mixed 
 
         game.removeVisual(cofre)
         game.say(self,"Empieza el final!")
+        multiverse = 4
+        omniverse.current(multiverse)
+        barra.acomodar(mochila)
     }
 
     method encontreElCofre(){
