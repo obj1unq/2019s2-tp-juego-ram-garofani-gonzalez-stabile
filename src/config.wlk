@@ -39,6 +39,8 @@ object config{
 		keyboard.space().onPressDo({ rick.trigger(numero) })
 		//Ver otros multiversos		
         keyboard.control().onPressDo({ omniverse.current(lastMultiverso) })
+        //Comenzar juego		
+        keyboard.enter().onPressDo({ omniverse.current(1) })
 
 
         // to Debug
