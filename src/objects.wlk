@@ -110,8 +110,10 @@ class Portal inherits OmniObjeto mixed with NotCollectable{
             traveler.multiverse(exit.multiverse())
             traveler.mposition(exit.position())
             //add time out to fade out
-            game.removeVisual(self)
-            game.removeVisual(exit)
+            game.schedule(1500, {
+                game.removeVisual(self)
+                game.removeVisual(exit)
+            })
     }
 
     method colisionasteCon(visual){

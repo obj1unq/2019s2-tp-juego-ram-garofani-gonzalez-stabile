@@ -1,7 +1,6 @@
 import wollok.game.*
 import omniverse.*
 import mixins.*
-// import rick.*
 
 object indicadorDeVida mixed with NotCollectable{
     var property cantidad = 10
