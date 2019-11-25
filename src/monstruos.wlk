@@ -3,7 +3,7 @@ import omniverse.*
 import rick.*
 import directions.*
 
-class Enemigo inherits OmniObjeto {
+class Enemigo inherits OmniObjeto{
     var property numeroEnemigo
     var property direction
 
