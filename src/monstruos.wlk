@@ -59,9 +59,10 @@ class Venom inherits Enemigo{
 
     override method addCollition() { game.onCollideDo(self, { algo => algo.colisionasteCon(self)}) }
 
-    // hunt rick
+    // hunt rick if in same multiverse
     override method mover(){
-        direction = if (self.rickAtRightOrLeft())
+        if (self.rickInSelfMultiverse())
+            direction = if (self.rickAtRightOrLeft())
                         { if (self.rickAtRight()) right else left } 
                     else 
                         { if (self.rickAtUp()) up else down }
@@ -69,6 +70,8 @@ class Venom inherits Enemigo{
         direction.toNewMposition(self)
         self.schedule()
     }
+
+    method rickInSelfMultiverse() = rick.multiverse() == self.multiverse()
 
     method rickAtRight() = self.deltaToRick().x() > 0
 
