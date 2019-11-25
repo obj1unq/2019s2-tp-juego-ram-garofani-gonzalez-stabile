@@ -95,7 +95,7 @@ object niveles{
 
     method estaFueraDeLosLimites(pos) = pos.x() < 0 or pos.x() > omniverse.ancho()-1 or pos.y() < 0 or pos.y() > omniverse.alto()-1
 
-    method puedeMover(pos) = // not self.esZonaProhibida(pos)
+    method puedeMover(pos) =
             not self.estaFueraDeLosLimites(pos) and not self.esZonaProhibida(pos)
 
     method esZonaProhibida(pos){

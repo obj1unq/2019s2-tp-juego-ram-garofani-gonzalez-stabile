@@ -30,8 +30,6 @@ object rick inherits OmniObjeto(mposition = game.at(1,1), multiverse = 1) mixed 
         barra.acomodar(mochila) // acomoda las referencias de la mochila al nuevo multiverso//refac
     }
 
-    method alcanzado() {}
-
     method trigger(destino) { 
     	grabed.trigger(destino, direction)
     }

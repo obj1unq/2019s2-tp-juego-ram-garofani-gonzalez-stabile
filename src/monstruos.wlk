@@ -59,12 +59,23 @@ class Venom inherits Enemigo{
 
     // hunt rick
     override method mover(){
-        const dx = rick.mposition().x() - mposition.x()
-        const dy = rick.mposition().y() - mposition.y()
-        direction = if (dx.abs() > dy.abs()) { if (dx > 0) right else left } else { if (dy > 0) up else down }
+        direction = if (self.rickAtRightOrLeft())
+                        { if (self.rickAtRight()) right else left } 
+                    else 
+                        { if (self.rickAtUp()) up else down }
+
         direction.toNewMposition(self)
         self.schedule()
     }
+
+    method rickAtRight() = self.deltaToRick().x() > 0
+
+    method rickAtUp() = self.deltaToRick().y() > 0
+
+    method rickAtRightOrLeft() = self.deltaToRick().x().abs() > self.deltaToRick().y().abs() 
+
+    method deltaToRick() = game.at(rick.mposition().x() - mposition.x(),
+                                   rick.mposition().y() - mposition.y() )
 
     override method schedule() { game.schedule(700, { self.mover() }) }
 

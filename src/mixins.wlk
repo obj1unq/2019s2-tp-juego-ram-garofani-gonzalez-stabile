@@ -34,5 +34,7 @@ mixin NotCollectable{
 
     method isPortal() = false
 
-    method mover(){}
+    method mover() {}
+
+    method alcanzado(visual) {}
 }

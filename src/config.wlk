@@ -16,7 +16,6 @@ object config{
         var lastMultiverso = 0
         (0..3).forEach{ n => keyboard.num(n).onPressDo({
             numero = n
-            console.println("numero = " + numero )
             indicadorDeMDestino.numero(numero)
         }) }
 

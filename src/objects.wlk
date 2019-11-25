@@ -110,7 +110,7 @@ class Portal inherits OmniObjeto mixed with NotCollectable{
             traveler.multiverse(exit.multiverse())
             traveler.mposition(exit.position())
             //add time out to fade out
-            game.schedule(1500, {
+            game.schedule(1700, {
                 game.removeVisual(self)
                 game.removeVisual(exit)
             })
@@ -123,7 +123,7 @@ class Portal inherits OmniObjeto mixed with NotCollectable{
 }
 
 class Fondo inherits OmniObjeto{
-    const property imagen // = "assets/ram-fondo3.png"
+    const property imagen 
 
     method colisionasteCon(alguien){}
 
