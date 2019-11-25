@@ -95,7 +95,7 @@ describe "RaM tests (muy describe)"{
 		assert.equals(2, game.allVisuals().filter{obj => obj.isPortal()}.size() )
 		rick.moveTo(rick.direction())
 		assert.notEquals(omniverse.position(position, nroMultiversoDestino), rick.position())
-		rick.travel()
+		rick.takePortal()
 		assert.equals(rick.position(), portalgun.position())
 	}
 

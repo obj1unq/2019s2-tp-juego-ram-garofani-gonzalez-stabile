@@ -15,7 +15,7 @@ object config{
         // teclas de rick
         var numero = 0
         var lastMultiverso = 0
-        (0..4).forEach{ n => keyboard.num(n).onPressDo({
+        (0..3).forEach{ n => keyboard.num(n).onPressDo({
             numero = n
             console.println("numero = " + numero )
             indicadorDeMDestino.numero(numero)
