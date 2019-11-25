@@ -76,7 +76,7 @@ object niveles{
             new Venom(direction = down, numeroEnemigo = 5, multiverse = multiverse, mposition = game.at(5,5))
 
     method createNewTropper(multiverse) =
-            new Tropper(direction = down, numeroEnemigo = 1, multiverse = multiverse, mposition = game.at(5,5))
+            new Tropper(direction = down, numeroEnemigo = 1, multiverse = multiverse, mposition = game.at(5,10))
 
 
     method createNewEnemy(number, multiverse){

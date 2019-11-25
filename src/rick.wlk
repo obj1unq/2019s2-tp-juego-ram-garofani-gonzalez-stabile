@@ -34,6 +34,10 @@ object rick inherits OmniObjeto(mposition = game.at(1,1), multiverse = 1) mixed 
 
     method colisionasteCon(alguien){ }
 
+    override method alcanzado(ray) {
+        self.modificarVida(ray.damage())
+    }
+
     method trigger(destino) { 
     	grabed.trigger(destino, direction)
     }

@@ -18,6 +18,7 @@ object raygun inherits OmniObjeto(mposition = game.at(1,2), multiverse = 1) mixe
 class Ray inherits OmniObjeto{
     var alcance
     const direction
+    const property damage = -1
 
     override method imagen() = self.image()
 
@@ -44,10 +45,12 @@ class Ray inherits OmniObjeto{
     }
 
     method next(){
-        game.schedule(150, { mposition = direction.nextPosition(mposition) self.start() } )
+        game.schedule(300, { mposition = direction.nextPosition(mposition) self.start() } )
     }
 
     method alcanzado(visual){}
+
+    method colisionasteCon(param) {}
 
 }
 

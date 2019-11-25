@@ -2,6 +2,7 @@ import wollok.game.*
 import omniverse.*
 import rick.*
 import directions.*
+import objects.*
 
 class Enemigo inherits OmniObjeto{
     var property numeroEnemigo
@@ -52,6 +53,8 @@ class Healer inherits Enemigo{
 }
 
 class Tropper inherits Enemigo{
+    const intervalo = 4
+    var count = intervalo
 
     override method damage() = -10 
 
@@ -59,6 +62,25 @@ class Tropper inherits Enemigo{
 
     override method addCollition() { self.addDefaultCollition() }
 
+    override method mover() {
+        super()
+        self.countDownOrShot()
+    }
+
+    method countDownOrShot() {
+        if (count == 0) {
+            self.shot()
+            count = intervalo
+        } else {
+            count -= 1
+        }
+    }
+
+    method shot() {
+            new Ray( direction = direction, alcance = 3,
+                     mposition = mposition, multiverse = multiverse,
+                     damage = self.damage() ).shot()
+    }
 }
 
 class Venom inherits Enemigo{
