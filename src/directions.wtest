@@ -2,94 +2,72 @@ import wollok.game.*
 import monstruos.*
 import directions.*
 
-describe "Test de directions"{
-	fixture{
+describe "Test de directions" {
+
+	fixture {
 		game.height(14)
 		game.width(13)
 	}
-	test "Up - Esta en el borde - True"{		
-		const enemigo = new Enemigo(mposition = game.at(5,12),
-									numeroEnemigo = 1,
-									multiverse = 1,
-									direction = down)
-									
-		assert.that(up.inEdge(enemigo))							
 
+	test "Up - Esta en el borde - True" {
+		const enemigo = new Enemigo(mposition = game.at(5, 12), numeroEnemigo = 1, multiverse = 1, direction = down)
+		assert.that(up.inEdge(enemigo))
 	}
-	test "Up - Esta en el borde - False"{
-		const enemigo = new Enemigo(mposition = game.at(7,3),
-									numeroEnemigo = 1,
-									multiverse = 1,
-									direction = down)
-									
+
+	test "Up - Esta en el borde - False" {
+		const enemigo = new Enemigo(mposition = game.at(7, 3), numeroEnemigo = 1, multiverse = 1, direction = down)
 		assert.notThat(up.inEdge(enemigo))
 	}
-	
-	test "Down - Esta en el borde - True"{
-		const enemigo = new Enemigo(mposition = game.at(5,0),
-									numeroEnemigo = 1,
-									multiverse = 1,
-									direction = down)
-									
+
+	test "Down - Esta en el borde - True" {
+		const enemigo = new Enemigo(mposition = game.at(5, 0), numeroEnemigo = 1, multiverse = 1, direction = down)
 		assert.that(down.inEdge(enemigo))
-	}	
-	test "Down - Esta en el borde - False"{
-		const enemigo = new Enemigo(mposition = game.at(3,3),
-									numeroEnemigo = 1,
-									multiverse = 1,
-									direction = down)
-									
+	}
+
+	test "Down - Esta en el borde - False" {
+		const enemigo = new Enemigo(mposition = game.at(3, 3), numeroEnemigo = 1, multiverse = 1, direction = down)
 		assert.notThat(down.inEdge(enemigo))
 	}
-	
-	test "Left - Esta en el borde - True"{
-		const enemigo = new Enemigo(mposition = game.at(0,3),
-									numeroEnemigo = 1,
-									multiverse = 1,
-									direction = down)
-									
+
+	test "Left - Esta en el borde - True" {
+		const enemigo = new Enemigo(mposition = game.at(0, 3), numeroEnemigo = 1, multiverse = 1, direction = down)
 		assert.that(left.inEdge(enemigo))
-	}	
-	test "Left - Esta en el borde - False"{
-		const enemigo = new Enemigo(mposition = game.at(7,3),
-									numeroEnemigo = 1,
-									multiverse = 1,
-									direction = down)
-									
+	}
+
+	test "Left - Esta en el borde - False" {
+		const enemigo = new Enemigo(mposition = game.at(7, 3), numeroEnemigo = 1, multiverse = 1, direction = down)
 		assert.notThat(left.inEdge(enemigo))
 	}
-	
-	test "Right - Esta en el borde - True"{
-		const enemigo = new Enemigo(mposition = game.at(12,3),
-									numeroEnemigo = 1,
-									multiverse = 1,
-									direction = down)
-									
+
+	test "Right - Esta en el borde - True" {
+		const enemigo = new Enemigo(mposition = game.at(12, 3), numeroEnemigo = 1, multiverse = 1, direction = down)
 		assert.that(right.inEdge(enemigo))
-	}	
-	test "Right - Esta en el borde - False"{
-		const enemigo = new Enemigo(mposition = game.at(7,3),
-									numeroEnemigo = 1,
-									multiverse = 1,
-									direction = down)
-									
+	}
+
+	test "Right - Esta en el borde - False" {
+		const enemigo = new Enemigo(mposition = game.at(7, 3), numeroEnemigo = 1, multiverse = 1, direction = down)
 		assert.notThat(right.inEdge(enemigo))
 	}
-	
-	test "Up - nextPosition"{
-		const pos = game.at(5,3)
-		assert.equals(game.at(5,4),up.next(pos))
+
+	test "Up - nextPosition" {
+		const pos = game.at(5, 3)
+		assert.equals(game.at(5, 4), up.next(pos))
 	}
-	test "Down - nextPosition"{
-		const pos = game.at(5,3)
-		assert.equals(game.at(5,2),down.next(pos))
+
+	test "Down - nextPosition" {
+		const pos = game.at(5, 3)
+		assert.equals(game.at(5, 2), down.next(pos))
 	}
-	test "Left - nextPosition"{
-		const pos = game.at(5,3)
-		assert.equals(game.at(4,3),left.next(pos))
+
+	test "Left - nextPosition" {
+		const pos = game.at(5, 3)
+		assert.equals(game.at(4, 3), left.next(pos))
 	}
-	test "Right - nextPosition"{
-		const pos = game.at(5,3)
-		assert.equals(game.at(6,3),right.next(pos))
+
+	test "Right - nextPosition" {
+		const pos = game.at(5, 3)
+		assert.equals(game.at(6, 3), right.next(pos))
 	}
+
 }
+

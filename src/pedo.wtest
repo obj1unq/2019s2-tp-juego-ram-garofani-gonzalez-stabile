@@ -3,20 +3,22 @@ import rick.*
 import cuatro.*
 import wollok.game.*
 
-describe "fart tambien sabe jugar"{
-		
+describe "fart tambien sabe jugar" {
+
 	fixture {
 		omniverse.current(4)
-	    rick.position(game.at(3,8))
-	    rick.multiverse(omniverse.current())
+		rick.position(game.at(3, 8))
+		rick.multiverse(omniverse.current())
 	}
-	
-	test "fart tambien juega"{
-		rick.grabed(new PilaDeFichas(owner = rick,mposition = game.at(3,8), multiverse = 4,imagenFicha = "assets/ficha-morty-a.png"))
+
+	test "fart tambien juega" {
+		rick.grabed(new PilaDeFichas(owner = rick, mposition = game.at(3, 8), multiverse = 4, imagenFicha = "assets/ficha-morty-a.png"))
 		cuatro.ponerFicha(rick)
 		cuatro.ponerFicha(fart)
 		cuatro.ponerFicha(rick)
 		cuatro.ponerFicha(fart)
 		assert.equals(4, game.allVisuals().size())
 	}
+
 }
+

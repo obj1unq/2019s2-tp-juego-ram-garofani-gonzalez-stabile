@@ -1,46 +1,48 @@
 import wollok.game.*
 
-mixin Collectable{
-	
+mixin Collectable {
+
 	method isFicha() = false
-	
-    method colisionasteCon(alguien){
-        game.say(alguien,self.quote())
-    }
 
-    method quote() = [
-            "Hare guiso de lentejas con esto!",
-            "Wubba lubba dub dub",
-            "A veces la ciencia es mas arte que ciencia",
-            "No so fast!"
-        ].anyOne()
+	method colisionasteCon(alguien) {
+		game.say(alguien, self.quote())
+	}
 
-    method esObstaculo() = false
+	method quote() = [ "Hare guiso de lentejas con esto!", "Wubba lubba dub dub", "A veces la ciencia es mas arte que ciencia", "No so fast!" ].anyOne()
 
-    method isCollectable() = true
+	method esObstaculo() = false
 
-    method isPortal() = false
+	method isCollectable() = true
 
-    method verificarInventariable(owner) { }
+	method isPortal() = false
 
-    method addCollition() {}
+	method verificarInventariable(owner) {
+	}
 
-    method mover(){}
+	method addCollition() {
+	}
+
+	method mover() {
+	}
 
 }
 
-mixin NotCollectable{
-	
-    method esObstaculo() = false
+mixin NotCollectable {
 
-    method isCollectable() = false
+	method esObstaculo() = false
 
-    method isPortal() = false
+	method isCollectable() = false
 
-    method addCollition() {}
+	method isPortal() = false
 
-    method mover() {}
+	method addCollition() {
+	}
 
-    method alcanzado(visual) {}
+	method mover() {
+	}
+
+	method alcanzado(visual) {
+	}
 
 }
+

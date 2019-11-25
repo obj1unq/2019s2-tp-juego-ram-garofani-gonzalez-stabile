@@ -4,114 +4,139 @@ import rick.*
 import directions.*
 import objects.*
 
-class Enemigo inherits OmniObjeto{
-    var property numeroEnemigo
-    var property direction
+class Enemigo inherits OmniObjeto {
 
-    override method imagen() = direction.imageEnemy(numeroEnemigo)
+	var property numeroEnemigo
+	var property direction
 
-    method moveTo(_direction) { self.mposition(_direction.nextPosition(self.mposition())) }
+	override method imagen() = direction.imageEnemy(numeroEnemigo)
 
-    override method mover(){
-        direction.toNewMposition(self)
-        self.schedule()
-    }
+	method moveTo(_direction) {
+		self.mposition(_direction.nextPosition(self.mposition()))
+	}
 
-    method schedule() { game.schedule(500, { self.mover() }) }
+	override method mover() {
+		direction.toNewMposition(self)
+		self.schedule()
+	}
 
-    method damage() = -2
+	method schedule() {
+		game.schedule(500, { self.mover()})
+	}
 
-    method colisionasteCon(alguien){
-        alguien.modificarVida(self.damage())
-    }
+	method damage() = -2
 
-    method alcanzado(visual){ game.removeVisual(self) }
+	method colisionasteCon(alguien) {
+		alguien.modificarVida(self.damage())
+	}
 
-    method takePortal() {
-        game.colliders(self).find{ visible => visible.isPortal() }.travel(self)
-    }
+	method alcanzado(visual) {
+		game.removeVisual(self)
+	}
 
-    method addDefaultCollition() { game.onCollideDo(self, { algo => algo.colisionasteCon(self)}) }
+	method takePortal() {
+		game.colliders(self).find{ visible => visible.isPortal()}.travel(self)
+	}
 
-    method modificarVida(param) {}
+	method addDefaultCollition() {
+		game.onCollideDo(self, { algo => algo.colisionasteCon(self)})
+	}
+
+	method modificarVida(param) {
+	}
+
 }
 
-class Monstruo inherits Enemigo{
+class Monstruo inherits Enemigo {
 
-    override method schedule() { game.schedule(1000, { self.mover() }) }
+	override method schedule() {
+		game.schedule(1000, { self.mover()})
+	}
 
-    override method addCollition() {}
+	override method addCollition() {
+	}
 
-    override method damage() = super() -1
+	override method damage() = super() - 1
+
 }
 
-class Healer inherits Enemigo{
+class Healer inherits Enemigo {
 
-    override method damage() = +1
+	override method damage() = +1
 
-    override method addCollition() {}
+	override method addCollition() {
+	}
+
 }
 
-class Tropper inherits Enemigo{
-    const intervalo = 4
-    var count = intervalo
+class Tropper inherits Enemigo {
 
-    override method damage() = -10 
+	const intervalo = 4
+	var count = intervalo
 
-    override method alcanzado(visual){ }
+	override method damage() = -10
 
-    override method addCollition() { self.addDefaultCollition() }
+	override method alcanzado(visual) {
+	}
 
-    override method mover() {
-        super()
-        self.countDownOrShot()
-    }
+	override method addCollition() {
+		self.addDefaultCollition()
+	}
 
-    method countDownOrShot() {
-        if (count == 0) {
-            self.shot()
-            count = intervalo
-        } else {
-            count -= 1
-        }
-    }
+	override method mover() {
+		super()
+		self.countDownOrShot()
+	}
 
-    method shot() {
-            new Ray( direction = direction, alcance = 3,
+	method countDownOrShot() {
+		if (count == 0) {
+			self.shot()
+			count = intervalo
+		} else {
+			count -= 1
+		}
+	}
+
+	method shot() {
+		new Ray( direction = direction, alcance = 3,
                      mposition = mposition, multiverse = multiverse,
                      damage = self.damage() ).shot()
-    }
-}
-
-class Venom inherits Enemigo{
-
-    override method damage() = -4
-
-    override method addCollition() { self.addDefaultCollition() }
-
-    // hunt rick if in same multiverse
-    override method mover(){
-        if (self.rickInSelfMultiverse())
-            direction = if (self.rickAtRightOrLeft())
-                        { if (self.rickAtRight()) right else left } 
-                    else 
-                        { if (self.rickAtUp()) up else down }
-
-        direction.toNewMposition(self)
-        self.schedule()
-    }
-
-    method rickInSelfMultiverse() = rick.multiverse() == self.multiverse()
-
-    method rickAtRight() = self.deltaToRick().x() > 0
-
-    method rickAtUp() = self.deltaToRick().y() > 0
-
-    method rickAtRightOrLeft() = self.deltaToRick().x().abs() > self.deltaToRick().y().abs() 
-
-    method deltaToRick() = game.at(rick.mposition().x() - mposition.x(),
-                                   rick.mposition().y() - mposition.y() )
-
-    override method schedule() { game.schedule(700, { self.mover() }) }
+	}
 
 }
+
+class Venom inherits Enemigo {
+
+	override method damage() = -4
+
+	override method addCollition() {
+		self.addDefaultCollition()
+	}
+
+	// hunt rick if in same multiverse
+	override method mover() {
+		if (self.rickInSelfMultiverse()) direction = if (self.rickAtRightOrLeft()) {
+			if (self.rickAtRight()) right else left
+		} else {
+			if (self.rickAtUp()) up else down
+		}
+		direction.toNewMposition(self)
+		self.schedule()
+	}
+
+	method rickInSelfMultiverse() = rick.multiverse() == self.multiverse()
+
+	method rickAtRight() = self.deltaToRick().x() > 0
+
+	method rickAtUp() = self.deltaToRick().y() > 0
+
+	method rickAtRightOrLeft() = self.deltaToRick().x().abs() > self.deltaToRick().y().abs()
+
+	method deltaToRick() = game.at(rick.mposition().x() - mposition.x(), rick.mposition().y() - mposition.y())
+
+	override method schedule() {
+		game.schedule(700, { self.mover()})
+	}
+
+}
+

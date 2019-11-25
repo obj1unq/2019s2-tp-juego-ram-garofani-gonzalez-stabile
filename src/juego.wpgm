@@ -4,12 +4,11 @@ import wollok.game.*
 import niveles.*
 
 program RaM {
-
-    game.title("RaM")
-    game.height(14)
-    game.width(13)
-    niveles.presentar()
-    config.teclas()
-    config.configurarColisiones()
-    game.start()
+	game.title("RaM")
+	game.height(14)
+	game.width(13)
+	niveles.presentar()
+	config.teclas()
+	config.configurarColisiones()
+	game.start()
 }

@@ -1,93 +1,103 @@
 import wollok.game.*
 import niveles.*
 
+mixin Common {
 
-mixin Common{
+	method inEdge(objeto)
 
-    method inEdge(objeto)
+	method toNewMposition(objeto) {
+		if (self.inEdge(objeto)) self.reverse(objeto) else objeto.moveTo(objeto.direction())
+	}
 
-    method toNewMposition(objeto) { if (self.inEdge(objeto)) self.reverse(objeto) else objeto.moveTo(objeto.direction()) }
+	method reverse(objeto) {
+		objeto.direction(self.oposite())
+	}
 
-    method reverse(objeto) { objeto.direction(self.oposite()) }
+	method oposite()
 
-    method oposite()
+	method next(position)
 
-    method next(position)
-
-    method nextPosition(position) = if (niveles.puedeMover(self.next(position))) self.next(position) else position
+	method nextPosition(position) = if (niveles.puedeMover(self.next(position))) self.next(position) else position
 
 }
 
-object up mixed with Common{
+object up mixed with Common {
 
-    override method inEdge(objeto) = objeto.mposition().y() == game.height()-2
+	override method inEdge(objeto) = objeto.mposition().y() == game.height() - 2
 
-    override method oposite() = down
-	
+	override method oposite() = down
+
 	method siguiente() = right
-	
+
 	method anterior() = left
 
-    method imageRick() = "assets/RickBack.png"
+	method imageRick() = "assets/RickBack.png"
 
-    method imageEnemy(numeroEnemigo) = "assets/Enemy_"+numeroEnemigo+"_Back.png"
+	method imageEnemy(numeroEnemigo) = "assets/Enemy_" + numeroEnemigo + "_Back.png"
 
-    method imageRay() = "assets/v-ray-red.png"
+	method imageRay() = "assets/v-ray-red.png"
 
-    override method next(position) = game.at(position.x(), (position.y() + 1).min(game.height()))
+	override method next(position) = game.at(position.x(), (position.y() + 1).min(game.height()))
 
 }
-object down mixed with Common{
 
-    override method inEdge(objeto) = objeto.mposition().y() == 0
+object down mixed with Common {
 
-    override method oposite() = up
+	override method inEdge(objeto) = objeto.mposition().y() == 0
 
-    method imageRick() = "assets/RickFront.png"
+	override method oposite() = up
 
-    method imageEnemy(numeroEnemigo) = "assets/Enemy_"+numeroEnemigo+"_Front.png"
+	method imageRick() = "assets/RickFront.png"
 
-    method imageRay() = "assets/v-ray-red.png"
+	method imageEnemy(numeroEnemigo) = "assets/Enemy_" + numeroEnemigo + "_Front.png"
 
-    override method next(position) = game.at(position.x(), (position.y() - 1).max(0))
+	method imageRay() = "assets/v-ray-red.png"
+
+	override method next(position) = game.at(position.x(), (position.y() - 1).max(0))
 
 	method siguiente() = left
-	
+
 	method anterior() = right
+
 }
-object left mixed with Common{
 
-    override method inEdge(objeto) = objeto.mposition().x() == 0
+object left mixed with Common {
 
-    override method oposite() = right
+	override method inEdge(objeto) = objeto.mposition().x() == 0
 
-    method imageRick() = "assets/RickLeft.png"
+	override method oposite() = right
 
-    method imageEnemy(numeroEnemigo) = "assets/Enemy_"+numeroEnemigo+"_Left.png"
+	method imageRick() = "assets/RickLeft.png"
 
-    method imageRay() = "assets/h-ray-red.png"
+	method imageEnemy(numeroEnemigo) = "assets/Enemy_" + numeroEnemigo + "_Left.png"
 
-    override method next(position) = game.at((position.x() - 1).max(0), position.y())
+	method imageRay() = "assets/h-ray-red.png"
+
+	override method next(position) = game.at((position.x() - 1).max(0), position.y())
 
 	method siguiente() = up
-	
+
 	method anterior() = down
+
 }
-object right mixed with Common{
 
-    override method inEdge(objeto) = objeto.mposition().x() == game.width()-1
+object right mixed with Common {
 
-    override method oposite() = left
+	override method inEdge(objeto) = objeto.mposition().x() == game.width() - 1
 
-    method imageRick() = "assets/RickRight.png"
+	override method oposite() = left
 
-    method imageEnemy(numeroEnemigo) = "assets/Enemy_"+numeroEnemigo+"_Rigth.png"
+	method imageRick() = "assets/RickRight.png"
 
-    method imageRay() = "assets/h-ray-red.png"
+	method imageEnemy(numeroEnemigo) = "assets/Enemy_" + numeroEnemigo + "_Rigth.png"
 
-    override method next(position) =  game.at((position.x() + 1).min(game.width()), position.y())
-    
-    method siguiente() = down
-    
-    method anterior() = up
+	method imageRay() = "assets/h-ray-red.png"
+
+	override method next(position) = game.at((position.x() + 1).min(game.width()), position.y())
+
+	method siguiente() = down
+
+	method anterior() = up
+
 }
+

@@ -4,38 +4,47 @@ import barra.*
 import objects.*
 
 object omniverse {
-    var property current = 5
 
-    method position(pos, multiverse) = game.at(self.xfor(pos, multiverse), self.yfor(pos, multiverse) )
+	var property current = 5
 
-    method xfor(pos, multiverse) = self.origenXde(multiverse) + pos.x()
+	method position(pos, multiverse) = game.at(self.xfor(pos, multiverse), self.yfor(pos, multiverse))
 
-    method yfor(pos, multiverse) = self.origenYde(multiverse) + pos.y()
+	method xfor(pos, multiverse) = self.origenXde(multiverse) + pos.x()
 
-    method ancho() = game.width()
+	method yfor(pos, multiverse) = self.origenYde(multiverse) + pos.y()
 
-    method alto() = game.height() - barra.altura()
+	method ancho() = game.width()
 
-    method origenXde(multiverse) = self.ancho() * self.distanciaACurrent(multiverse)
+	method alto() = game.height() - barra.altura()
 
-    method origenYde(multiverse) = self.alto() * self.distanciaACurrent(multiverse)
+	method origenXde(multiverse) = self.ancho() * self.distanciaACurrent(multiverse)
 
-    method distanciaACurrent(multiverse) = multiverse - current
+	method origenYde(multiverse) = self.alto() * self.distanciaACurrent(multiverse)
+
+	method distanciaACurrent(multiverse) = multiverse - current
+
 }
 
 class OmniObjeto mixed with NotCollectable {
-    var property mposition
-    var property multiverse
 
-    method imagen()
+	var property mposition
+	var property multiverse
 
-    method position() = omniverse.position(mposition, multiverse)
+	method imagen()
 
-    method image() = if (multiverse == omniverse.current() ) self.imagen() else "assets/nada.png"
+	method position() = omniverse.position(mposition, multiverse)
 
-    override method addCollition() { self.addNullCollition() }
+	method image() = if (multiverse == omniverse.current()) self.imagen() else "assets/nada.png"
 
-    method addNullCollition() {}
+	override method addCollition() {
+		self.addNullCollition()
+	}
 
-    override method mover(){}
+	method addNullCollition() {
+	}
+
+	override method mover() {
+	}
+
 }
+
