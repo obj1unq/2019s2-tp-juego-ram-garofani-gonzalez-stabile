@@ -109,7 +109,7 @@ class Portal inherits OmniObjeto mixed with NotCollectable{
            // no cambiar si noes rick 
            // omniverse.current(exit.multiverse)
             traveler.multiverse(exit.multiverse())
-            traveler.mposition(exit.position())
+            traveler.mposition(exit.mposition())
 
             game.schedule(1700, {
                 game.removeVisual(self)
