@@ -49,7 +49,6 @@ object rick inherits OmniObjeto(mposition = game.at(1,1), multiverse = 1) mixed 
         grabed = self.getObjectFromBag(extremo)        
         barra.acomodar(mochila)
         grabed.position(mposition)	
-        //grabed.multiverse(multiverse)
     }
 
     method grab() {
@@ -81,13 +80,17 @@ object rick inherits OmniObjeto(mposition = game.at(1,1), multiverse = 1) mixed 
     method modificarVida(deltaDeVida) {
         indicador.cambiar(deltaDeVida)
         
+        if (deltaDeVida > 0)
+            game.say(self, "Gracias!!!")
+        else
+            // aca feedback visual
+            game.say(self, "Outch!!!!!")
+
         if (indicador.esCero()) {
             game.say(self, "Perdi!!!!!\nBye Bye!")
             // pensar ir a pantalla con estadisticas
-            game.schedule(3000,{game.stop()})
-        } else
-            game.say(self, "Outch!!!!!")
-            // aca feedback visual
+            game.schedule(10000,{game.stop()})
+        }
     }
 
     method ponerseLentes(){
