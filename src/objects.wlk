@@ -100,7 +100,7 @@ object portalgun mixed with Collectable{
 
 
 class Portal inherits OmniObjeto mixed with NotCollectable{
-    const property imagen = "assets/portal.gif"
+    const property imagen = "assets/portal.png"
     var property exit
 
     override method isPortal() = true

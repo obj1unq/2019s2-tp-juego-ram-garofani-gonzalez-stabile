@@ -1,6 +1,6 @@
 import omniverse.*
 import rick.*
-import Jugadores.*
+import cuatro.*
 import wollok.game.*
 
 describe "pedo tambien sabe jugar"{
@@ -17,6 +17,6 @@ describe "pedo tambien sabe jugar"{
 		cuatro.ponerFicha(pedo)
 		cuatro.ponerFicha(rick)
 		cuatro.ponerFicha(pedo)
-		assert.equals(4, game.allVisuals().size())
+		assert.equals(8, game.allVisuals().size())
 	}
 }

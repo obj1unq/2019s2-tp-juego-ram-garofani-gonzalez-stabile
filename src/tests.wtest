@@ -48,7 +48,6 @@ describe "RaM tests (muy describe)"{
 	}
 	test "rick esta en el universo visible"{
 	    omniverse.current(1)
-	    //rick.oposition(7,2, omniverse.current())
 	    rick.position(game.at(7,2))
 	    rick.multiverse(omniverse.current())
 	    assert.equals(game.at(7,2), rick.position())
@@ -67,13 +66,11 @@ describe "RaM tests (muy describe)"{
 	}
 	
 	test "Se crea un portal y hay dos portales en el omniverse"{
-		niveles.catalogo().add(new Nivel(
-		 						fondo = new Fondo(mposition = game.origin(), multiverse = 0, imagen = "assets/ram-fondo3.png"),
-		  						objetos = [ ]  ))
+        const visualsCountCero = game.allVisuals().size())
 	    omniverse.current(0)
 	    portalgun.trigger(3,up)
+	    assert.equals(visualsCountCero + 2, game.allVisuals().size())
 	    assert.that(game.allVisuals().all{visual => visual.isPortal()})
-	    assert.equals(2, game.allVisuals().size())
 	}
 	
 	test "Se crea un portal y rick pasa por el apareciondo en el otro universo"{
