@@ -69,7 +69,7 @@ describe "RaM tests (muy describe)"{
 	test "Se crea un portal y hay dos portales en el omniverse"{
 	    omniverse.current(0)
 	    portalgun.trigger(3,up)
-	    atssert.equals(2, game.allVisuals().size())
+	    assert.equals(2, game.allVisuals().size())
 	    assert.that(game.allVisuals().all{visual => visual.isPortal()})
 	}
 	
