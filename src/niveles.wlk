@@ -5,7 +5,6 @@ import objects.*
 import monstruos.*
 import directions.*
 import cuatro.*
-import Jugadores.*
 import areasProhibidas.*
 
 object random{
