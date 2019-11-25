@@ -20,7 +20,7 @@ object niveles{
             objetos = [] ) ,
          new Nivel(
             fondo = new Fondo(mposition = game.origin(), multiverse = 1,imagen = "assets/ram-fondo1.png"),
-            objetos = [barra, indicadorDeMDestino, indicadorDeVida, rick, portalgun, raygun] + self.listOfMonstruos(1) ),
+            objetos = [barra, indicadorDeMDestino, indicadorDeVida, rick, portalgun, raygun] + self.listOfMonstruos(1) + self.listOfTropper(1) ),
          new Nivel(
             fondo = new Fondo(mposition = game.origin(), multiverse = 2,imagen = "assets/ram-fondo2.png"),
             objetos = [portalBattery] + self.listOfEnemies(2) + self.listOfVenom(2) + self.listOfHealer(2)),
@@ -41,10 +41,8 @@ object niveles{
            ] 
 
 
-    // dead //  var property actual = catalogo.first()
 
     method presentar() {
-        // dead // console.println("niveles.presentar")
         self.presenteFondo()
         self.showAll()
         self.showBlocksInProhibitedAreas()
@@ -72,8 +70,13 @@ object niveles{
 
     method listOfVenom(multiverse) = [ self.createNewVenom(multiverse) ]
 
+    method listOfTropper(multiverse) = [ self.createNewTropper(multiverse) ]
+
     method createNewVenom(multiverse) =
             new Venom(direction = down, numeroEnemigo = 5, multiverse = multiverse, mposition = game.at(5,5))
+
+    method createNewTropper(multiverse) =
+            new Tropper(direction = down, numeroEnemigo = 1, multiverse = multiverse, mposition = game.at(5,5))
 
 
     method createNewEnemy(number, multiverse){
