@@ -10,6 +10,7 @@ describe "RaM tests (muy describe)"{
 	fixture {
 	    game.width(13)
 	    game.height(14)
+        game.clear() // por que no se limpia el entorno en cada test
 	}
 	test "omniverse current is 5"{
 	    assert.equals(5, omniverse.current())
@@ -66,10 +67,9 @@ describe "RaM tests (muy describe)"{
 	}
 	
 	test "Se crea un portal y hay dos portales en el omniverse"{
-        const visualsCountCero = game.allVisuals().size())
 	    omniverse.current(0)
 	    portalgun.trigger(3,up)
-	    assert.equals(visualsCountCero + 2, game.allVisuals().size())
+	    atssert.equals(2, game.allVisuals().size())
 	    assert.that(game.allVisuals().all{visual => visual.isPortal()})
 	}
 	
@@ -78,7 +78,6 @@ describe "RaM tests (muy describe)"{
 		const nroMultiversoDestino = 3
 		const position = game.at(3, 7)
 	
-		game.clear()
 		omniverse.current(nroMultiversoOrigen)
 		portalgun.position(omniverse.position(position, nroMultiversoOrigen))
 	    game.addVisual(rick)
