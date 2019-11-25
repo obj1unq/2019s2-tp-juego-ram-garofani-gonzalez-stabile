@@ -1,5 +1,6 @@
 import wollok.game.*
 import mixins.*
+import barra.*
 import objects.*
 
 object omniverse {

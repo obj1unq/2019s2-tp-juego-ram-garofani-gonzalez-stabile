@@ -1,13 +1,12 @@
 import rick.*
 import omniverse.*
 import misc.*
+import barra.*
 import objects.*
 import wollok.game.*
 import niveles.*
 import directions.*
 import wollok.game.*
-import Fichas.*
-import Jugadores.*
 
 object config{
 

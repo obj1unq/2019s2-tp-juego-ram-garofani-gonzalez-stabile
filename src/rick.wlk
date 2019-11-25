@@ -1,11 +1,11 @@
 import wollok.game.*
+import barra.*
 import objects.*
 import mixins.*
 import misc.*
 import omniverse.*
 import directions.*
 import niveles.*
-import Jugadores.*
 
 object rick inherits OmniObjeto(mposition = game.at(1,1), multiverse = 1) mixed with NotCollectable{
     var property grabed = nada

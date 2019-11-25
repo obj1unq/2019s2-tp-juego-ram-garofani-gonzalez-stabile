@@ -1,6 +1,7 @@
 import wollok.game.*
 import rick.*
 import omniverse.*
+import barra.*
 import objects.*
 import monstruos.*
 import directions.*
