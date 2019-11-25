@@ -137,6 +137,8 @@ object rick inherits OmniObjeto(mposition = game.at(1,1), multiverse = 1) mixed 
         mochila.remove(obj)
         return obj
     }
+
+    method ganaste(rescatado) { game.say(rescatado, "Gracias Rick ME SALVASTE!!!!!!") }
 }
 
 

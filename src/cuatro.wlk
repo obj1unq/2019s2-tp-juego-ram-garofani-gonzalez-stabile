@@ -57,7 +57,8 @@ object fart mixed with NotCollectable{
  
  object cuatro{
  	const property fichasJugadas = []
- 	var property winner 
+    var property resuelto = false // por perfomance :(
+
  	method ponerFicha(jugador){
 		if(jugador.position().x() < 3 or jugador.position().x() > 9){
 			self.error("Las fichas van dentro del tablero.")
@@ -79,12 +80,10 @@ object fart mixed with NotCollectable{
 			
 	}
 	
-	method mortyDestinyDependsOf(ganador){
-		if (ganador == rick){
-			winner = ganador
-			game.say(morty,"Gracias Rick ME SALVASTE!!!!!!")
-		}
+	method mortyRescatadoPor(ganador){
+        rick.ganaste(morty)
 	}
+
 	method getVisualsColumnaActual(posX,posY){
 		return fichasJugadas.filter{ 
 	            ficha => ficha.position().x() == posX
@@ -96,19 +95,23 @@ object fart mixed with NotCollectable{
 		var column = self.getVisualsColumnaActual(jugador.position().x(), jugador.position().y())
 		return game.at(jugador.position().x(), column.size() + 2)
 	}
-	
+
+    method seResuelveCon(ficha, jugador) = self.gano(ficha,jugador,1,0) or
+                        self.gano(ficha,jugador,0,1) or
+                        self.gano(ficha,jugador,1,1) or
+                        self.gano(ficha,jugador,1,-1)
+
 	method jugadaGanadora(jugador){
 		self.fichasJugadasPor_(jugador).forEach{ficha => 	
-			if(	self.gano(ficha,jugador,1,0) or
-				self.gano(ficha,jugador,0,1) or
-				self.gano(ficha,jugador,1,1) or
-				self.gano(ficha,jugador,1,-1)){
+			if(	self.seResuelveCon(ficha, jugador) ){
 					game.say(jugador,"GANE!!!!!!")
-					self.mortyDestinyDependsOf(jugador)
+					self.mortyRescatadoPor(jugador)
+                    resuelto = true
 					game.schedule(3000,{
 						self.EliminarTodasLasFichas()
 						omniverse.current(6)
 					})
+                    // space stop
 					game.schedule(7000,{game.stop()})
 				}
 		}
@@ -151,7 +154,7 @@ object fart mixed with NotCollectable{
 	var position =  game.at(11,0)
 	method image(){
  		return 
- 		if (cuatro.winner() == rick) { 
+ 		if (cuatro.resuelto()) { 
  			"assets/mortyfree.png"
  		}else{ 
  			"assets/mortyTrapped.png"

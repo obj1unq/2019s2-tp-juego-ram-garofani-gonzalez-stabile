@@ -43,7 +43,7 @@ describe "Test de cuatro en linea"{
 	    cuatro.ponerFicha(rick)
 	    cuatro.ponerFicha(rick)
 	    cuatro.ponerFicha(rick)
-	    assert.equals(rick, cuatro.winner())
+	    assert.that(cuatro.resuelto())
 	}
 	
 	test "Rick gana en Horizontal"{
@@ -57,7 +57,7 @@ describe "Test de cuatro en linea"{
 	    cuatro.ponerFicha(rick)
 	    rick.position(game.at(6,8))
 	    cuatro.ponerFicha(rick)
-	    assert.equals(rick, cuatro.winner())
+	    assert.that(cuatro.resuelto())
 	}
 	
 }
