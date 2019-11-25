@@ -1,0 +1,22 @@
+import omniverse.*
+import rick.*
+import Jugadores.*
+import wollok.game.*
+
+describe "pedo tambien sabe jugar"{
+		
+	fixture {
+		omniverse.current(4)
+	    rick.position(game.at(3,8))
+	    rick.multiverse(omniverse.current())
+	}
+	
+	test "pedo tambien juega"{
+		rick.grabed(new PilaDeFichas(owner = rick,mposition = game.at(3,8), multiverse = 4,imagenFicha = "assets/ficha-morty-a.png"))
+		cuatro.ponerFicha(rick)
+		cuatro.ponerFicha(pedo)
+		cuatro.ponerFicha(rick)
+		cuatro.ponerFicha(pedo)
+		assert.equals(4, game.allVisuals().size())
+	}
+}
