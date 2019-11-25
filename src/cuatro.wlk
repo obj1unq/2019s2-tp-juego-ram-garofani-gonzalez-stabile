@@ -23,12 +23,12 @@ class PilaDeFichas inherits OmniObjeto mixed with Collectable{
     
     method trigger(destino, direction){
         cuatro.ponerFicha(owner)
-		pedo.jugar()
+		fart.jugar()
     }	
 }
 
 
-object pedo mixed with NotCollectable{
+object fart mixed with NotCollectable{
 	const property grabed = new PilaDeFichas(owner = self,mposition = game.at(3,8), multiverse = 4,imagenFicha = "assets/ficha-jerry-a.png")
 	const property image = "assets/fart.png"
 	var multiverse = 4
