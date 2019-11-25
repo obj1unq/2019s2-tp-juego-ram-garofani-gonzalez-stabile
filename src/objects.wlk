@@ -106,10 +106,11 @@ class Portal inherits OmniObjeto mixed with NotCollectable{
     override method isPortal() = true
 
     method travel(traveler) {
-            omniverse.current(exit.multiverse())
+           // no cambiar si noes rick 
+           // omniverse.current(exit.multiverse)
             traveler.multiverse(exit.multiverse())
             traveler.mposition(exit.position())
-            //add time out to fade out
+
             game.schedule(1700, {
                 game.removeVisual(self)
                 game.removeVisual(exit)

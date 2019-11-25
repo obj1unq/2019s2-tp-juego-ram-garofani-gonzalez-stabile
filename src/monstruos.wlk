@@ -57,6 +57,8 @@ class Venom inherits Enemigo{
 
     override method damage() = -4
 
+    override method addCollition() { game.onCollideDo(self, { algo => algo.colisionasteCon(self)}) }
+
     // hunt rick
     override method mover(){
         direction = if (self.rickAtRightOrLeft())
@@ -79,4 +81,5 @@ class Venom inherits Enemigo{
 
     override method schedule() { game.schedule(700, { self.mover() }) }
 
+    method modificarVida(param) {} 
 }

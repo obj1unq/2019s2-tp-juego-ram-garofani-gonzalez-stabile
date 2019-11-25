@@ -23,7 +23,10 @@ mixin Collectable{
 
     method verificarInventariable(owner) { }
 
+    method addCollition() {}
+
     method mover(){}
+
 }
 
 mixin NotCollectable{
@@ -34,7 +37,10 @@ mixin NotCollectable{
 
     method isPortal() = false
 
+    method addCollition() {}
+
     method mover() {}
 
     method alcanzado(visual) {}
+
 }

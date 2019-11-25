@@ -32,5 +32,8 @@ class OmniObjeto mixed with NotCollectable {
     method position() = omniverse.position(mposition, multiverse)
 
     method image() = if (multiverse == omniverse.current() ) self.imagen() else "assets/nada.png"
+
+    method addCollition() {}
+
     override method mover(){}
 }

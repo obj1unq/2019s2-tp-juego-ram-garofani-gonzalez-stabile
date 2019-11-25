@@ -26,9 +26,13 @@ object rick inherits OmniObjeto(mposition = game.at(1,1), multiverse = 1) mixed 
     }
 
     method takePortal() {
-        game.colliders(self).find{ visual => visual.isPortal() }.travel(self)
+        const portal = game.colliders(self).find{ visual => visual.isPortal() }
+        omniverse.current(portal.exit().multiverse())
+        portal.travel(self)
         barra.acomodar(mochila) // acomoda las referencias de la mochila al nuevo multiverso//refac
     }
+
+    method colisionasteCon(alguien){ }
 
     method trigger(destino) { 
     	grabed.trigger(destino, direction)

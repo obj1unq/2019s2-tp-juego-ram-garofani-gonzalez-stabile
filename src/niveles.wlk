@@ -70,7 +70,11 @@ object niveles{
 
     method listOfHealer(multiverse) = [ new Healer(direction = down, numeroEnemigo = 3, multiverse = multiverse, mposition = game.at(5,5))]
 
-    method listOfVenom(multiverse) = [ new Venom(direction = down, numeroEnemigo = 5, multiverse = multiverse, mposition = game.at(5,5))]
+    method listOfVenom(multiverse) = [ self.createNewVenom(multiverse) ]
+
+    method createNewVenom(multiverse) =
+            new Venom(direction = down, numeroEnemigo = 5, multiverse = multiverse, mposition = game.at(5,5))
+
 
     method createNewEnemy(number, multiverse){
             return new Enemigo(
@@ -126,6 +130,7 @@ class Nivel{
     method show(){ // refac con presentarFondo()
         objetos.forEach{
             visual => game.addVisual(visual)
+            visual.addCollition()
             visual.mover() //arrancar movil
         }
     }
