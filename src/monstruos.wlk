@@ -29,11 +29,17 @@ class Enemigo inherits OmniObjeto{
     method takePortal() {
         game.colliders(self).find{ visible => visible.isPortal() }.travel(self)
     }
+
+    method addDefaultCollition() { game.onCollideDo(self, { algo => algo.colisionasteCon(self)}) }
+
+    method modificarVida(param) {}
 }
 
 class Monstruo inherits Enemigo{
 
     override method schedule() { game.schedule(1000, { self.mover() }) }
+
+    override method addCollition() {}
 
     override method damage() = super() -1
 }
@@ -42,6 +48,7 @@ class Healer inherits Enemigo{
 
     override method damage() = +1
 
+    override method addCollition() {}
 }
 
 class Tropper inherits Enemigo{
@@ -50,6 +57,7 @@ class Tropper inherits Enemigo{
 
     override method alcanzado(visual){ }
 
+    override method addCollition() { self.addDefaultCollition() }
 
 }
 
@@ -57,7 +65,7 @@ class Venom inherits Enemigo{
 
     override method damage() = -4
 
-    override method addCollition() { game.onCollideDo(self, { algo => algo.colisionasteCon(self)}) }
+    override method addCollition() { self.addDefaultCollition() }
 
     // hunt rick if in same multiverse
     override method mover(){
@@ -84,5 +92,4 @@ class Venom inherits Enemigo{
 
     override method schedule() { game.schedule(700, { self.mover() }) }
 
-    method modificarVida(param) {} 
 }
