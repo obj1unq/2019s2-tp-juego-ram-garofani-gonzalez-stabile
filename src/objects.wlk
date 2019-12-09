@@ -28,10 +28,10 @@ class Ray inherits OmniObjeto {
 	override method image() = direction.imageRay()
 
 	method shot() {
-		mposition = direction.nextPosition(mposition)
-		game.addVisual(self)
-		game.onCollideDo(self, { visual => visual.alcanzado(self)})
-		self.start()
+		//mposition = direction.nextPosition(mposition)
+		//game.addVisual(self)
+		//game.onCollideDo(self, { visual => visual.alcanzado(self)})
+		//self.start()
 	}
 
 	method start() {
